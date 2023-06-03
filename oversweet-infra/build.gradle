@@ -1,0 +1,6 @@
+dependencies {
+
+
+    implementation project(':oversweet-common')
+    implementation project(':oversweet-domain')
+}

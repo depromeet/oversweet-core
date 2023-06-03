@@ -1,0 +1,81 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+
+
+// 하위 모든 프로젝트 공통 세팅
+subprojects {
+	group = 'com.depromeet'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '17'
+
+	apply plugin: 'java'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'org.springframework.boot'
+
+	repositories {
+		mavenCentral()
+	}
+
+	// 하위 모듈에서 공통으로 사용하는 세팅 추가
+	dependencies {
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+
+		implementation 'org.springframework.boot:spring-boot-starter'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	}
+
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
+
+}
+
+project(':oversweet-api') {
+	bootJar { enabled = true }
+	jar { enabled = false }
+
+	dependencies {
+		implementation project(':oversweet-common') // 컴파일 시 oversweet-common 로딩
+		implementation project(':oversweet-domain') // 컴파일 시 oversweet-domain 로딩
+
+
+	}
+}
+
+project(':oversweet-common') {
+	bootJar { enabled = false }
+	jar { enabled = true }
+
+	dependencies {
+	}
+
+}
+
+project(':oversweet-domain') {
+	bootJar { enabled = false }
+	jar { enabled = true }
+
+	dependencies {
+		implementation project(':oversweet-common') // 컴파일 시 oversweet-common 로딩
+	}
+}
+
+
+project(':oversweet-infra') {
+	bootJar { enabled = true }
+	jar { enabled = false }
+
+	dependencies {
+		implementation project(':oversweet-common') // 컴파일 시 oversweet-common 로딩
+		implementation project(':oversweet-domain') // 컴파일 시 oversweet-domain 로딩
+	}
+}
+
+
+
+
