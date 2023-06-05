@@ -9,13 +9,8 @@ public class TestController {
 
     @GetMapping("/test")
     public String test() {
-
         TestException testException = new TestException("testException");
-
-
-
-        return testException.getMessage();
-
-
+        TestDomain testDomain = new TestDomain("testDomain");
+        return testException.getMessage() + testDomain.getName();
     }
 }

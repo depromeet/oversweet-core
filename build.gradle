@@ -35,47 +35,5 @@ subprojects {
 
 }
 
-project(':oversweet-api') {
-	bootJar { enabled = true }
-	jar { enabled = false }
-
-	dependencies {
-		implementation project(':oversweet-common') // 컴파일 시 oversweet-common 로딩
-		implementation project(':oversweet-domain') // 컴파일 시 oversweet-domain 로딩
-
-
-	}
-}
-
-project(':oversweet-common') {
-	bootJar { enabled = false }
-	jar { enabled = true }
-
-	dependencies {
-	}
-
-}
-
-project(':oversweet-domain') {
-	bootJar { enabled = false }
-	jar { enabled = true }
-
-	dependencies {
-		implementation project(':oversweet-common') // 컴파일 시 oversweet-common 로딩
-	}
-}
-
-
-project(':oversweet-infra') {
-	bootJar { enabled = true }
-	jar { enabled = false }
-
-	dependencies {
-		implementation project(':oversweet-common') // 컴파일 시 oversweet-common 로딩
-		implementation project(':oversweet-domain') // 컴파일 시 oversweet-domain 로딩
-	}
-}
-
-
 
 

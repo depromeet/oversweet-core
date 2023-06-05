@@ -1,6 +1,12 @@
 dependencies {
+    // 컴파일시 로딩 되어야 하는 모듈
+    implementation project(':oversweet-common')
+
+    // 모듈에 맞는 의존성 추가
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.h2database:h2'
-
-    implementation project(':oversweet-common')
 }
+
+
+bootJar { enabled = false }
+jar { enabled = true }
