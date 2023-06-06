@@ -7,6 +7,3 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
 }
 
-
-bootJar { enabled = false }
-jar { enabled = true }

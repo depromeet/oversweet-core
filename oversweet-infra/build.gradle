@@ -5,6 +5,3 @@ dependencies {
 
     // 모듈에 맞는 의존성 추가
 }
-
-bootJar { enabled = false }
-jar { enabled = true }

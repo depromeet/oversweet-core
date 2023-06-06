@@ -33,6 +33,10 @@ subprojects {
 		useJUnitPlatform()
 	}
 
+	// api를 제외한 나머지 모듈에 해당
+	bootJar { enabled = false }
+	jar { enabled = true }
+
 }
 
 
