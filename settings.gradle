@@ -1,0 +1,5 @@
+rootProject.name = 'oversweet'
+include 'oversweet-api'
+include 'oversweet-common'
+include 'oversweet-domain'
+include 'oversweet-infra'

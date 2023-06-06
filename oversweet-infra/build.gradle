@@ -1,0 +1,7 @@
+dependencies {
+    // 컴파일시 로딩 되어야 하는 모듈
+    implementation project(':oversweet-common')
+    implementation project(':oversweet-domain')
+
+    // 모듈에 맞는 의존성 추가
+}

@@ -1,0 +1,43 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+
+
+// 하위 모든 프로젝트 공통 세팅
+subprojects {
+	group = 'com.depromeet'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '17'
+
+	apply plugin: 'java'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'org.springframework.boot'
+
+	repositories {
+		mavenCentral()
+	}
+
+	// 하위 모듈에서 공통으로 사용하는 세팅 추가
+	dependencies {
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+
+		implementation 'org.springframework.boot:spring-boot-starter'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	}
+
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
+
+	// api를 제외한 나머지 모듈에 해당
+	bootJar { enabled = false }
+	jar { enabled = true }
+
+}
+
+
+
