@@ -13,4 +13,8 @@ public class TestController {
         TestDomain testDomain = new TestDomain("testDomain");
         return testException.getMessage() + testDomain.getName();
     }
+    @GetMapping("/health")
+    public String health(){
+        return "health";
+    }
 }
