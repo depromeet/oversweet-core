@@ -23,7 +23,7 @@ public class DrinkEntity extends BaseTimeEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "franchise_id", nullable = false)
+    @JoinColumn(name = "franchise_id", foreignKey = @ForeignKey(name = "fk_drink_to_franchise"), nullable = false)
     private FranchiseEntity franchise;
 
     @Column(name = "size", nullable = false)

@@ -20,10 +20,10 @@ public class DrinkBookmarkEntity extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_drinkBookmark_to_member"), nullable = false)
     private MemberEntity member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "drink_id", nullable = false)
+    @JoinColumn(name = "drink_id", foreignKey = @ForeignKey(name = "fk_drinkBookmark_to_drink"), nullable = false)
     private DrinkEntity drink;
 }
