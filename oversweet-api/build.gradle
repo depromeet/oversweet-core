@@ -6,8 +6,6 @@ dependencies {
     // 모듈에 맞는 의존성 추가
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    implementation 'mysql:mysql-connector-java:8.0.33'
 }
 
 
