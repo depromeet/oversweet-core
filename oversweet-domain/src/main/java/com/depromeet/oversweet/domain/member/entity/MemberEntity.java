@@ -26,7 +26,7 @@ public class MemberEntity extends BaseTimeEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "nickname", nullable = false)
+    @Column(name = "nickname")
     private String nickname;
 
     @Column(name = "email")
@@ -43,18 +43,18 @@ public class MemberEntity extends BaseTimeEntity {
     private String imageUrl;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender", nullable = false)
+    @Column(name = "gender")
     private Gender gender;
 
-    @Column(name = "weight", nullable = false)
+    @Column(name = "weight")
     private Integer weight;
 
-    @Column(name = "height", nullable = false)
+    @Column(name = "height")
     private Integer height;
 
-    @Column(name = "age", nullable = false)
+    @Column(name = "age")
     private Integer age;
 
-    @Column(name = "daily_sugar", nullable = false)
+    @Column(name = "daily_sugar")
     private Integer dailySugar;
 }
