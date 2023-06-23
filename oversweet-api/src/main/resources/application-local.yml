@@ -9,6 +9,16 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-        show_sql: true
-        format_sql: true
+        format_sql: true # 포맷 형식
+        highlight_sql: true # sql 하이라이팅
         default_batch_fetch_size: 1000
+        use_sql_comments: true # 개발자가 작성한 JPQL 확인 가능
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace # SQL 파라미터가 어떤 값이 들어가는지 확인 가능
+        SQL: debug # SQL 쿼리 확인 가능 (JPQL X)
