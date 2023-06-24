@@ -16,6 +16,3 @@ assignees: ''
 - [ ] 새로운 기능 A 추가
 
 
-## ✅ Issue check list
-
-- [ ] 확인할 중점 사항
