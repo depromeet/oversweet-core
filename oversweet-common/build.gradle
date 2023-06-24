@@ -1,4 +1,5 @@
 dependencies {
-
+    // swagger 설정, oversweet-api 모듈에서 사용해야 하기에 implementation 대신 api 사용
+    api 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
 }
 
