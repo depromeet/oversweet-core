@@ -1,9 +1,12 @@
 spring:
+  # DB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3307/oversweet?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Seoul
     username: root
     password: root
+
+  # JPA
   jpa:
     hibernate:
       ddl-auto: create
@@ -18,8 +21,5 @@ logging:
   level:
     org:
       hibernate:
-        type:
-          descriptor:
-            sql: trace # SQL 파라미터가 어떤 값이 들어가는지 확인 가능
         SQL: debug # SQL 쿼리 확인 가능 (JPQL X)
 
