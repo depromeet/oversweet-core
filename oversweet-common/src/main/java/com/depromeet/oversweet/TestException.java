@@ -1,14 +1,11 @@
 package com.depromeet.oversweet;
 
-public class TestException extends RuntimeException {
+import com.depromeet.oversweet.exception.ErrorCode;
+import com.depromeet.oversweet.exception.OverSweetException;
 
-    private final String message;
+public class TestException extends OverSweetException {
 
-    public TestException(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
+    public TestException(ErrorCode errorCode) {
+        super(errorCode);
     }
 }
