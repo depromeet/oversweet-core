@@ -17,6 +17,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Table(name = "franchise_bookmark")
 @Entity
 @Getter
@@ -35,4 +37,11 @@ public class FranchiseBookmarkEntity extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "franchise_id", foreignKey = @ForeignKey(name = "fk_franchiseBookmark_to_franchise"), nullable = false)
     private FranchiseEntity franchise;
+
+
+    public FranchiseBookmarkEntity(MemberEntity member, FranchiseEntity franchise, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        super(createdAt, updatedAt);
+        this.member = member;
+        this.franchise = franchise;
+    }
 }

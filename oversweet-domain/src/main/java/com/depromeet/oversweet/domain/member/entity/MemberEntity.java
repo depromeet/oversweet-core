@@ -12,8 +12,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Table(name = "member")
 @Entity
@@ -57,4 +60,20 @@ public class MemberEntity extends BaseTimeEntity {
 
     @Column(name = "daily_sugar")
     private Integer dailySugar;
+
+    @Builder
+    public MemberEntity(Long id, String nickname, String email, SocialProvider socialProvider, String socialId, String imageUrl, Gender gender, Integer weight, Integer height, Integer age, Integer dailySugar, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        super(createdAt, updatedAt);
+        this.id = id;
+        this.nickname = nickname;
+        this.email = email;
+        this.socialProvider = socialProvider;
+        this.socialId = socialId;
+        this.imageUrl = imageUrl;
+        this.gender = gender;
+        this.weight = weight;
+        this.height = height;
+        this.age = age;
+        this.dailySugar = dailySugar;
+    }
 }

@@ -22,4 +22,12 @@ public class BaseTimeEntity {
     @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    public BaseTimeEntity() {
+    }
+
+    public BaseTimeEntity(LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }
