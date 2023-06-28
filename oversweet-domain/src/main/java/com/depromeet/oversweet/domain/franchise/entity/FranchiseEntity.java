@@ -12,7 +12,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 
 @Table(name = "franchise")
 @Entity
@@ -32,8 +31,7 @@ public class FranchiseEntity extends BaseTimeEntity {
     private String imageUrl;
 
     @Builder
-    public FranchiseEntity(Long id, String name, String imageUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        super(createdAt, updatedAt);
+    public FranchiseEntity(Long id, String name, String imageUrl) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;

@@ -14,10 +14,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 
 @Table(name = "franchise_bookmark")
 @Entity
@@ -39,8 +39,9 @@ public class FranchiseBookmarkEntity extends BaseTimeEntity {
     private FranchiseEntity franchise;
 
 
-    public FranchiseBookmarkEntity(MemberEntity member, FranchiseEntity franchise, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        super(createdAt, updatedAt);
+    @Builder
+    public FranchiseBookmarkEntity(Long id, MemberEntity member, FranchiseEntity franchise) {
+        this.id = id;
         this.member = member;
         this.franchise = franchise;
     }

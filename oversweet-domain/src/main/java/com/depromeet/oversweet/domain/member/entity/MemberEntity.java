@@ -16,7 +16,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 
 @Table(name = "member")
 @Entity
@@ -62,8 +61,7 @@ public class MemberEntity extends BaseTimeEntity {
     private Integer dailySugar;
 
     @Builder
-    public MemberEntity(Long id, String nickname, String email, SocialProvider socialProvider, String socialId, String imageUrl, Gender gender, Integer weight, Integer height, Integer age, Integer dailySugar, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        super(createdAt, updatedAt);
+    public MemberEntity(Long id, String nickname, String email, SocialProvider socialProvider, String socialId, String imageUrl, Gender gender, Integer weight, Integer height, Integer age, Integer dailySugar) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
