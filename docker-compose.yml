@@ -1,0 +1,10 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0.33
+    container_name: oversweet-core
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: oversweet
