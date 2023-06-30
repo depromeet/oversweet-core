@@ -1,6 +1,6 @@
 package com.depromeet.oversweet.bookmark.service;
 
-import com.depromeet.oversweet.bookmark.dto.FranchiseBookMarkedResponseDto;
+import com.depromeet.oversweet.bookmark.dto.response.FranchiseBookMarkedResponseDto;
 import com.depromeet.oversweet.domain.bookmark.entity.FranchiseBookmarkEntity;
 import com.depromeet.oversweet.domain.bookmark.repository.FindFranchiseBookMarkRepository;
 import lombok.RequiredArgsConstructor;

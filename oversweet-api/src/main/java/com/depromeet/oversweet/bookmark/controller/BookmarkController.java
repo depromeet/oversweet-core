@@ -1,6 +1,6 @@
 package com.depromeet.oversweet.bookmark.controller;
 
-import com.depromeet.oversweet.bookmark.dto.FranchiseBookMarkedResponseDto;
+import com.depromeet.oversweet.bookmark.dto.response.FranchiseBookMarkedResponseDto;
 import com.depromeet.oversweet.bookmark.service.FranchiseBookMarkSearchService;
 import com.depromeet.oversweet.response.DataResponse;
 import io.swagger.v3.oas.annotations.Operation;
