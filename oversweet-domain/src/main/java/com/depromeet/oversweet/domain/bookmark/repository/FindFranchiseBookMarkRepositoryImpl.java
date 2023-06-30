@@ -25,7 +25,7 @@ public class FindFranchiseBookMarkRepositoryImpl implements FindFranchiseBookMar
      */
     @Override
     @Transactional(readOnly = true)
-    public List<FranchiseBookmarkEntity> findByMemberId(final Long memberId) {
+    public List<FranchiseBookmarkEntity> findFranchiseBookMarkByMemberId(final Long memberId) {
         return franchiseBookMarkJpaRepository.findByMemberId(memberId);
     }
 }

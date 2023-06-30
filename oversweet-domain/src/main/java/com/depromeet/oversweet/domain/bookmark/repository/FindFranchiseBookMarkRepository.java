@@ -8,5 +8,5 @@ import java.util.List;
  * 즐겨 찾기한 프랜차이즈 조회 Interface
  */
 public interface FindFranchiseBookMarkRepository {
-    List<FranchiseBookmarkEntity> findByMemberId(final Long memberId);
+    List<FranchiseBookmarkEntity> findFranchiseBookMarkByMemberId(final Long memberId);
 }
