@@ -14,8 +14,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 
 @Table(name = "franchise_bookmark")
 @Entity
@@ -35,4 +37,12 @@ public class FranchiseBookmarkEntity extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "franchise_id", foreignKey = @ForeignKey(name = "fk_franchiseBookmark_to_franchise"), nullable = false)
     private FranchiseEntity franchise;
+
+
+    @Builder
+    public FranchiseBookmarkEntity(Long id, MemberEntity member, FranchiseEntity franchise) {
+        this.id = id;
+        this.member = member;
+        this.franchise = franchise;
+    }
 }
