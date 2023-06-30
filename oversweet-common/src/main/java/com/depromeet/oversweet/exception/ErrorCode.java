@@ -17,6 +17,9 @@ public enum ErrorCode {
     INVALID_TYPE_VALUE(HttpStatus.BAD_REQUEST, "C004", "입력 값의 타입이 올바르지 않습니다."),
     HANDLE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "C005", "접근이 거부 되었습니다."),
 
+    // Member (유저)
+    NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "M001", "존재 하지 않는 유저 입니다."),
+
     // Test
     TEST_EXCEPTION(HttpStatus.BAD_REQUEST, "T001", "테스트 에러");
 
