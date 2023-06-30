@@ -36,7 +36,7 @@ public class BookmarkController {
     @GetMapping("/franchises")
     public ResponseEntity<DataResponse<FranchiseBookMarkedResponseDto>> searchFranchiseBookMarked() {
         FranchiseBookMarkedResponseDto responseDto = franchiseBookMarkSearchService.searchFranchiseBookMarked(100L);
-        return new ResponseEntity<>(DataResponse.of(OK, "즐겨 찾기한 프랜차이즈 목록을 조회 성공", responseDto), OK);
+        return ResponseEntity.ok(DataResponse.of(OK, "즐겨 찾기한 프랜차이즈 목록 조회 성공", responseDto));
     }
 
 }
