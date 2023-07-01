@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -55,4 +56,17 @@ public class DrinkEntity extends BaseTimeEntity {
 
     @Column(name = "is_minimum", nullable = false)
     private Boolean isMinimum;
+
+    @Builder
+    public DrinkEntity(final Long id, final String name, final FranchiseEntity franchise, final Integer size, final Integer sugar, final Integer calorie, final String imageUrl, final DrinkCategory category, final Boolean isMinimum) {
+        this.id = id;
+        this.name = name;
+        this.franchise = franchise;
+        this.size = size;
+        this.sugar = sugar;
+        this.calorie = calorie;
+        this.imageUrl = imageUrl;
+        this.category = category;
+        this.isMinimum = isMinimum;
+    }
 }
