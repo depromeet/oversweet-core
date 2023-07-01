@@ -1,4 +1,4 @@
-package com.depromeet.oversweet.bookmark.dto;
+package com.depromeet.oversweet.bookmark.dto.response;
 
 import com.depromeet.oversweet.domain.bookmark.entity.FranchiseBookmarkEntity;
 import io.swagger.v3.oas.annotations.media.Schema;

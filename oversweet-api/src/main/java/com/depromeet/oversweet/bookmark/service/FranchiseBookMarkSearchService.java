@@ -1,6 +1,6 @@
 package com.depromeet.oversweet.bookmark.service;
 
-import com.depromeet.oversweet.bookmark.dto.FranchiseBookMarkedResponseDto;
+import com.depromeet.oversweet.bookmark.dto.response.FranchiseBookMarkedResponseDto;
 import com.depromeet.oversweet.domain.bookmark.entity.FranchiseBookmarkEntity;
 import com.depromeet.oversweet.domain.bookmark.repository.FindFranchiseBookMarkRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class FranchiseBookMarkSearchService {
      * @return 즐겨찾기한 프랜차이즈 목록
      */
     public FranchiseBookMarkedResponseDto searchFranchiseBookMarked(final Long memberId) {
-        final List<FranchiseBookmarkEntity> bookMarks = findFranchiseBookMarkRepository.findByMemberId(memberId);
+        final List<FranchiseBookmarkEntity> bookMarks = findFranchiseBookMarkRepository.findFranchiseBookMarkByMemberId(memberId);
         return new FranchiseBookMarkedResponseDto(bookMarks);
     }
 }
