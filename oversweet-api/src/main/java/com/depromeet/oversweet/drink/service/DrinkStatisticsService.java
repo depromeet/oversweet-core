@@ -40,7 +40,7 @@ public class DrinkStatisticsService {
         final LocalDateTimeInfo dateTimeInfo = LocalDateTimeInfo.getDailyDateTime();
 
         // 해당 유저의 오늘(데일리) 섭취 음료 조회 Repository
-        final List<RecordEntity> dailyRecords = findRecordsRepository.findDailyRecordsByLocalDatetime(memberId, dateTimeInfo.startDateTime(), dateTimeInfo.endDateTime());
+        final List<RecordEntity> dailyRecords = findRecordsRepository.findDailyRecordsByLocalDatetime(findMember.getId(), dateTimeInfo.startDateTime(), dateTimeInfo.endDateTime());
 
         // 일급 컬렉션으로 그 객체에 계산 로직 위임.
         final DrinkStatisticsTotalInfo drinkStatisticsTotalInfo = new DrinkStatisticsTotalInfo(dailyRecords);
