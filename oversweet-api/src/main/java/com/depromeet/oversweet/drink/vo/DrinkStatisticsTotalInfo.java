@@ -5,6 +5,9 @@ import com.depromeet.oversweet.drink.dto.DrinkDailySugarTotalStatisticsInfo;
 
 import java.util.List;
 
+/*
+    RecordEntity를 이용해서 총합 (당, 칼로리, 남은 당)을 계산하기 위한 클래스입니다.
+ */
 public record DrinkStatisticsTotalInfo(
         List<RecordEntity> recordEntities
 ){
