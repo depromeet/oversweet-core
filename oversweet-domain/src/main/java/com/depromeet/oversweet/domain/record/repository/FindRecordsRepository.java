@@ -9,5 +9,5 @@ import java.util.List;
  * 유저의 데일리(하루) 음료 조회 Interface
  */
 public interface FindRecordsRepository {
-    List<RecordEntity> findDailyRecordsByLocalDatetime(final Long memberId, final LocalDateTime startDate, LocalDateTime endDate);
+    List<RecordEntity> findDailyRecordsByLocalDateTime(final Long memberId, final LocalDateTime startDate, LocalDateTime endDate);
 }

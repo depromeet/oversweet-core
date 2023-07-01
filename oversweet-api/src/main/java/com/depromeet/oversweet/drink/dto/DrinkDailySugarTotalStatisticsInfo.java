@@ -24,10 +24,10 @@ public record DrinkDailySugarTotalStatisticsInfo(
         boolean isExcess
 ) {
     public static DrinkDailySugarTotalStatisticsInfo of(final int dailySugar, final int remainingDailySugar, final int dailyTotalSugar, final int dailyTotalCalorie) {
-        return new DrinkDailySugarTotalStatisticsInfo(dailySugar, isCheckRemainingSugar(remainingDailySugar), dailyTotalSugar, dailyTotalCalorie, isSugarExceeded(dailyTotalSugar, dailySugar));
+        return new DrinkDailySugarTotalStatisticsInfo(dailySugar, checkRemainingSugar(remainingDailySugar), dailyTotalSugar, dailyTotalCalorie, isSugarExceeded(dailyTotalSugar, dailySugar));
     }
 
-    private static int isCheckRemainingSugar(final int remainingDailySugar) {
+    private static int checkRemainingSugar(final int remainingDailySugar) {
         if (remainingDailySugar >= 0) {
             return remainingDailySugar;
         }

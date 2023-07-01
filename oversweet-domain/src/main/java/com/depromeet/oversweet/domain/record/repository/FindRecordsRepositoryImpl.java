@@ -29,7 +29,7 @@ public class FindRecordsRepositoryImpl implements FindRecordsRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public List<RecordEntity> findDailyRecordsByLocalDatetime(final Long memberId, final LocalDateTime startDate, final LocalDateTime endDate) {
+    public List<RecordEntity> findDailyRecordsByLocalDateTime(final Long memberId, final LocalDateTime startDate, final LocalDateTime endDate) {
 
         return queryFactory.selectFrom(recordEntity)
                 .join(recordEntity.drink, drinkEntity).fetchJoin() // xxToOne
