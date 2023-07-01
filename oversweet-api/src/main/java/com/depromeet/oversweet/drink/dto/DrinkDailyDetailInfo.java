@@ -3,6 +3,9 @@ package com.depromeet.oversweet.drink.dto;
 import com.depromeet.oversweet.domain.drink.entity.DrinkEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+/**
+ * 음료 디테일 정보 DTO
+ */
 public record DrinkDailyDetailInfo(
         @Schema(description = "음료 ID", example = "1") Long id,
 

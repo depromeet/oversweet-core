@@ -6,6 +6,10 @@ import com.depromeet.oversweet.exception.member.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+/**
+ * 유저 정보 조회 레포지토리
+ * 주로 optional 처리를 담당하며, 상위 service 계층에는 optional을 반환하지 않는다.
+ */
 @Repository
 @RequiredArgsConstructor
 public class FindMemberRepositoryImpl implements FindMemberRepository{

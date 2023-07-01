@@ -15,6 +15,9 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.List;
 
+/**
+ * 음료 통계 서비스
+ */
 @Service
 @RequiredArgsConstructor
 public class DrinkStatisticsService {
@@ -22,10 +25,16 @@ public class DrinkStatisticsService {
     private final FindDailyRecordsRepository findDailyRecordsRepository;
     private final FindMemberRepository findMemberRepository;
 
+    /**
+     * 유저의 데일리(하루) 음료 당 통계 및 음료 목록 조회
+     *
+     * @param memberId 유저 ID
+     * @return 유저의 데일리(하루) 음료 당 통계 및 음료 목록 정보
+     */
     public DrinkDailySugarStatisticsResponse retrieveUserDailySugarStatistics(final Long memberId) {
         // TODO 유저 검증
 
-        // 유저의 하루 적정 섭취량 가져오기
+        // 유저의 하루 적정 섭취량 가져오기 ( 유저의 정보를 가져온 후 찾기 )
         final MemberEntity findMember = findMemberRepository.findById(memberId);
 
         // 오늘 (데일리 날짜 확인) 00:00 ~ 23:59

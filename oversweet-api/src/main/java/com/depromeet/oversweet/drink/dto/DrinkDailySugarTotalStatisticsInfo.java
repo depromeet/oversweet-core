@@ -1,8 +1,11 @@
 package com.depromeet.oversweet.drink.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
 
+
+/**
+ * 유저가 먹은 음료 당, 칼로리 통계 정보 DTO
+ */
 public record DrinkDailySugarTotalStatisticsInfo(
 
         @Schema(description = "하루 적정 당 섭취량", example = "25")

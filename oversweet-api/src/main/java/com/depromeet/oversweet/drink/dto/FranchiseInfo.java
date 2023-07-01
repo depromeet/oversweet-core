@@ -3,6 +3,9 @@ package com.depromeet.oversweet.drink.dto;
 import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+/**
+ * 프랜차이즈 정보 DTO
+ */
 public record FranchiseInfo(
 
         @Schema(description = "프랜차이즈 ID", example = "1") Long id,

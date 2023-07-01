@@ -13,6 +13,11 @@ import static com.depromeet.oversweet.domain.franchise.entity.QFranchiseEntity.f
 import static com.depromeet.oversweet.domain.member.entity.QMemberEntity.memberEntity;
 import static com.depromeet.oversweet.domain.record.entity.QRecordEntity.recordEntity;
 
+/**
+ * 유저의 데일리(하루) 음료 조회 구현체
+ * QueryDsl로 레코드 엔티티와 관련된 Drink, Franchise를 패치조인으로 가져온다
+ * 참고 블로그 https://jojoldu.tistory.com/457?category=637935
+ */
 @Repository
 public class FindDailyRecordsRepositoryImpl implements FindDailyRecordsRepository {
 
@@ -33,6 +38,5 @@ public class FindDailyRecordsRepositoryImpl implements FindDailyRecordsRepositor
                 .where(recordEntity.createdAt.between(startDate, endDate))
                 .fetch();
 
-        // 참고 : https://jojoldu.tistory.com/457?category=637935
     }
 }

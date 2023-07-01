@@ -23,6 +23,10 @@ public class DrinkController {
 
     private final DrinkStatisticsService drinkStatisticsService;
 
+    /**
+     * 유저 하루(데일리) 먹은 당 통계 및 음료 목록 조회.
+     * 추후 로그인 기능 구현 후, 로그인한 유저의 ID를 받아와야 함 (ex. @AuthenticationPrincipal User user)
+     */
     @Operation(summary = "하루 당 섭취량 통계 조회", description = "유저가 하루 먹은 당 통계를 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "유저가 하루 먹은 당 통계 조회."))
     @GetMapping("/statistics/daily")
