@@ -5,6 +5,7 @@ import com.depromeet.oversweet.exception.ErrorCode;
 import com.depromeet.oversweet.exception.member.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 유저 정보 조회 레포지토리
@@ -17,6 +18,7 @@ public class FindMemberRepositoryImpl implements FindMemberRepository{
     private final MemberJpaRepository memberJpaRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public MemberEntity findById(final Long memberId) {
        return memberJpaRepository.findById(memberId)
                 .orElseThrow(() -> new NotFoundMemberException(ErrorCode.NOT_FOUND_MEMBER));

@@ -4,13 +4,13 @@ import com.depromeet.oversweet.domain.record.entity.RecordEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.depromeet.oversweet.domain.drink.entity.QDrinkEntity.drinkEntity;
 import static com.depromeet.oversweet.domain.franchise.entity.QFranchiseEntity.franchiseEntity;
-import static com.depromeet.oversweet.domain.member.entity.QMemberEntity.memberEntity;
 import static com.depromeet.oversweet.domain.record.entity.QRecordEntity.recordEntity;
 
 /**
@@ -19,22 +19,22 @@ import static com.depromeet.oversweet.domain.record.entity.QRecordEntity.recordE
  * 참고 블로그 https://jojoldu.tistory.com/457?category=637935
  */
 @Repository
-public class FindDailyRecordsRepositoryImpl implements FindDailyRecordsRepository {
+public class FindRecordsRepositoryImpl implements FindRecordsRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public FindDailyRecordsRepositoryImpl(final EntityManager em) {
+    public FindRecordsRepositoryImpl(final EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<RecordEntity> findDailyRecordsByLocalDatetime(final Long memberId, final LocalDateTime startDate, final LocalDateTime endDate) {
 
         return queryFactory.selectFrom(recordEntity)
-                .join(recordEntity.member, memberEntity).fetchJoin() // xxToOne
                 .join(recordEntity.drink, drinkEntity).fetchJoin() // xxToOne
                 .join(recordEntity.drink.franchise, franchiseEntity).fetchJoin() // xxToOne
-                .where(memberEntity.id.eq(memberId))
+                .where(recordEntity.member.id.eq(memberId))
                 .where(recordEntity.createdAt.between(startDate, endDate))
                 .fetch();
 
