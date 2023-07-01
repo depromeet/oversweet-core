@@ -41,4 +41,12 @@ public class RecordEntity extends BaseTimeEntity {
 
     @Column(name = "intake_sugar", nullable = false)
     private Integer intakeSugar;
+
+    public int totalSugar() {
+        return this.count * this.intakeSugar;
+    }
+
+    public int totalCalorie() {
+        return this.count * this.drink.getCalorie();
+    }
 }

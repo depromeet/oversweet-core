@@ -3,16 +3,15 @@ package com.depromeet.oversweet.drink.service;
 import com.depromeet.oversweet.domain.member.entity.MemberEntity;
 import com.depromeet.oversweet.domain.member.repository.FindMemberRepository;
 import com.depromeet.oversweet.domain.record.entity.RecordEntity;
-import com.depromeet.oversweet.domain.record.repository.FindDailyRecordsRepository;
+import com.depromeet.oversweet.domain.record.repository.FindRecordsRepository;
 import com.depromeet.oversweet.drink.dto.DrinkDailyDetailInfo;
 import com.depromeet.oversweet.drink.dto.DrinkDailySugarStatisticsResponse;
 import com.depromeet.oversweet.drink.dto.DrinkDailySugarTotalStatisticsInfo;
+import com.depromeet.oversweet.drink.vo.DrinkStatisticsTotalInfo;
+import com.depromeet.oversweet.drink.vo.LocalDateTimeInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DrinkStatisticsService {
 
-    private final FindDailyRecordsRepository findDailyRecordsRepository;
+    private final FindRecordsRepository findRecordsRepository;
     private final FindMemberRepository findMemberRepository;
 
     /**
@@ -38,21 +37,17 @@ public class DrinkStatisticsService {
         final MemberEntity findMember = findMemberRepository.findById(memberId);
 
         // 오늘 (데일리 날짜 확인) 00:00 ~ 23:59
-        final LocalDateTime nowDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
-        final LocalDateTime startDateTime = nowDateTime.with(LocalTime.MIN);
-        final LocalDateTime endDateTime = nowDateTime.with(LocalTime.MAX);
+        final LocalDateTimeInfo dateTimeInfo = LocalDateTimeInfo.getDailyDateTime();
 
         // 해당 유저의 오늘(데일리) 섭취 음료 조회 Repository
-        final List<RecordEntity> dailyRecords = findDailyRecordsRepository.findDailyRecordsByLocalDatetime(memberId, startDateTime, endDateTime);
+        final List<RecordEntity> dailyRecords = findRecordsRepository.findDailyRecordsByLocalDatetime(memberId, dateTimeInfo.startDateTime(), dateTimeInfo.endDateTime());
 
-        // 조회 한 데이터 가공 하기. ( 당 섭취량 계산, 칼로리 계산 )
-        final int totalIntakeSugar = getTotalIntakeSugar(dailyRecords);
-        final int totalCalorie = getTotalCalorie(dailyRecords);
-        final int remainingSugar = getRemainingSugar(dailyRecords, findMember.getDailySugar());
-
+        // 일급 컬렉션으로 그 객체에 계산 로직 위임.
+        final DrinkStatisticsTotalInfo drinkStatisticsTotalInfo = new DrinkStatisticsTotalInfo(dailyRecords);
+        
         // Response로 만들어 주기
-        final DrinkDailySugarTotalStatisticsInfo totalStatisticsInfo =
-                DrinkDailySugarTotalStatisticsInfo.of(findMember.getDailySugar(), remainingSugar, totalIntakeSugar, totalCalorie);
+        final DrinkDailySugarTotalStatisticsInfo totalStatisticsInfo = 
+                drinkStatisticsTotalInfo.getTotalStatisticsInfo(findMember.getDailySugar());
 
         final List<DrinkDailyDetailInfo> dailyDetailInfo = getDailyDrinks(dailyRecords);
 
@@ -69,29 +64,5 @@ public class DrinkStatisticsService {
                 .map(dr -> {
                     return DrinkDailyDetailInfo.of(dr.getDrink());
                 }).toList();
-    }
-
-    private int getTotalIntakeSugar(final List<RecordEntity> recordEntities) {
-        return recordEntities.stream()
-                .mapToInt(RecordEntity::getIntakeSugar)
-                .sum();
-    }
-
-    private int getTotalCalorie(final List<RecordEntity> dailyRecords) {
-        return dailyRecords.stream()
-                .mapToInt(record -> record.getDrink().getCalorie())
-                .sum();
-    }
-
-    private int getRemainingSugar(final List<RecordEntity> recordEntities, final Integer memberDailySugar) {
-        final int totalIntakeSugar = getTotalIntakeSugar(recordEntities);
-        final int remainingSugar = memberDailySugar - totalIntakeSugar;
-
-        // 당 섭취량을 초과했을경우 -1로 보내주기.
-        if (0 > remainingSugar) {
-            return -1;
-        }
-
-        return remainingSugar;
     }
 }
