@@ -12,20 +12,20 @@ public record DrinkStatisticsTotalInfo(
         List<RecordEntity> recordEntities
 ){
     public DrinkDailySugarTotalStatisticsInfo getTotalStatisticsInfo(final int dailySugar){
-        final int totalIntakeSugar = getTotalIntakeSugar(recordEntities);
-        final int totalCalorie = getTotalCalorie(recordEntities);
+        final int totalIntakeSugar = getTotalIntakeSugar();
+        final int totalCalorie = getTotalCalorie();
         final int remainingSugar = getRemainingSugar(totalIntakeSugar, dailySugar);
 
         return DrinkDailySugarTotalStatisticsInfo.of(dailySugar, remainingSugar, totalIntakeSugar, totalCalorie);
     }
-    private int getTotalIntakeSugar(final List<RecordEntity> recordEntities) {
+    private int getTotalIntakeSugar() {
         return recordEntities.stream()
                 .mapToInt(RecordEntity::totalSugar)
                 .sum();
     }
 
-    private int getTotalCalorie(final List<RecordEntity> dailyRecords) {
-        return dailyRecords.stream()
+    private int getTotalCalorie() {
+        return recordEntities.stream()
                 .mapToInt(RecordEntity::totalCalorie)
                 .sum();
     }
