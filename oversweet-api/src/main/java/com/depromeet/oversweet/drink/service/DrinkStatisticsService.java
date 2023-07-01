@@ -84,7 +84,7 @@ public class DrinkStatisticsService {
     }
 
     private int getRemainingSugar(final List<RecordEntity> recordEntities, final Integer memberDailySugar) {
-        final Integer totalIntakeSugar = getTotalIntakeSugar(recordEntities);
+        final int totalIntakeSugar = getTotalIntakeSugar(recordEntities);
         final int remainingSugar = memberDailySugar - totalIntakeSugar;
 
         // 당 섭취량을 초과했을경우 -1로 보내주기.
