@@ -3,15 +3,19 @@ package com.depromeet.oversweet.bookmark.controller;
 import com.depromeet.oversweet.bookmark.dto.response.DrinkBookMarkedResponseDto;
 import com.depromeet.oversweet.bookmark.dto.response.FranchiseBookMarkedResponseDto;
 import com.depromeet.oversweet.bookmark.service.DrinkBookMarkSearchService;
+import com.depromeet.oversweet.bookmark.service.FranchiseBookMarkRegisterService;
 import com.depromeet.oversweet.bookmark.service.FranchiseBookMarkSearchService;
 import com.depromeet.oversweet.response.DataResponse;
+import com.depromeet.oversweet.response.MessageResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,11 +29,12 @@ public class BookmarkController {
 
     private final FranchiseBookMarkSearchService franchiseBookMarkSearchService;
     private final DrinkBookMarkSearchService drinkBookMarkSearchService;
+    private final FranchiseBookMarkRegisterService franchiseBookMarkRegisterService;
 
 
     /**
      * 유저가 즐겨 찾기한 프랜차이즈 목록 조회
-     * 추후 로그인 기능 구현 후, 로그인한 유저의 ID를 받아와야 함 (ex. @AuthenticationPrincipal User user)
+     * TODO : 추후 로그인 기능 구현 후, 로그인한 유저의 ID를 받아와야 함 (ex. @AuthenticationPrincipal User user)
      */
     @Operation(summary = "즐겨 찾기한 프랜차이즈 목록 조회", description = "유저가 즐겨 찾기한 프랜차이즈 목록을 조회한다.")
     @ApiResponses({
@@ -45,7 +50,7 @@ public class BookmarkController {
 
     /**
      * 유저가 즐겨 찾기한 음료 목록 조회
-     * 추후 로그인 기능 구현 후, 로그인한 유저의 ID를 받아와야 함 (ex. @AuthenticationPrincipal User user)
+     * TODO : 추후 로그인 기능 구현 후, 로그인한 유저의 ID를 받아와야 함 (ex. @AuthenticationPrincipal User user)
      */
     @Operation(summary = "즐겨 찾기한 음료 목록 조회", description = "유저가 즐겨 찾기한 음료 목록을 조회한다.")
     @ApiResponses({
@@ -56,6 +61,22 @@ public class BookmarkController {
     public ResponseEntity<DataResponse<DrinkBookMarkedResponseDto>> searchDrinkBookMarked() {
         DrinkBookMarkedResponseDto responseDto = drinkBookMarkSearchService.searchDrinkBookMarked(100L);
         return ResponseEntity.ok(DataResponse.of(OK, "즐겨 찾기한 음료 목록 조회 성공", responseDto));
+    }
+
+
+    /**
+     * 유저가 특정 프랜차이즈를 즐겨 찾기 할 수 있다.
+     * TODO : 추후 로그인 기능 구현 후, 로그인한 유저의 ID를 받아와야 함 (ex. @AuthenticationPrincipal User user)
+     */
+    @Operation(summary = "프랜차이즈 즐겨 찾기", description = "유저가 특정 프랜차이즈를 즐겨 찾기 할 수 있다.")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200", description = "프랜차이즈 즐겨 찾기 성공")
+    })
+    @GetMapping("/franchises/{franchiseId}")
+    public ResponseEntity<MessageResponse> markFranchiseAsBookMark(@PathVariable @Parameter(description = "프랜차이즈 고유 Id") Long franchiseId) {
+        franchiseBookMarkRegisterService.register(100L, franchiseId);
+        return ResponseEntity.ok(MessageResponse.of(OK, "프랜차이즈 즐겨 찾기 등록 성공"));
     }
 
 }

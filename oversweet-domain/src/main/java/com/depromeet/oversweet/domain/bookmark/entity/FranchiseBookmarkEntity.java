@@ -45,4 +45,9 @@ public class FranchiseBookmarkEntity extends BaseTimeEntity {
         this.member = member;
         this.franchise = franchise;
     }
+
+    public FranchiseBookmarkEntity(MemberEntity member, FranchiseEntity franchise) {
+        this.member = member;
+        this.franchise = franchise;
+    }
 }

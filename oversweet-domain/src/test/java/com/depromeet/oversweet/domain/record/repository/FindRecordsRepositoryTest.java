@@ -1,5 +1,6 @@
 package com.depromeet.oversweet.domain.record.repository;
 
+import com.depromeet.oversweet.domain.TestConfig;
 import com.depromeet.oversweet.domain.config.JpaEntityConfig;
 import com.depromeet.oversweet.domain.drink.entity.DrinkEntity;
 import com.depromeet.oversweet.domain.drink.enums.DrinkCategory;
@@ -50,8 +51,6 @@ class FindRecordsRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // DataJpaTest 를 사용하기 위해 entity의 필수값을 모두 넣어줘야 한다.
-        // createdAt, updatedAt 은 Spring Boot Test가 아닌 DataJpaTest에 의해 값을 채워넣지 못 해 직접 넣어줘야 한다.
         final MemberEntity memberEntity = getMemberEntity();
         memberJpaRepository.save(memberEntity);
 
@@ -64,6 +63,8 @@ class FindRecordsRepositoryTest {
         final RecordEntity recordEntity = getRecordEntity(memberEntity, drinkEntity);
         recordJpaRepository.save(recordEntity);
     }
+
+
 
     @Test
     void 유저의_고유_ID를_유저의_데일리_당_통계_조회() {
