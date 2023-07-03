@@ -68,17 +68,6 @@ public class MemberEntity extends BaseTimeEntity {
         this.socialProvider = socialProvider;
     }
 
-    public MemberEntity(final Long id, final Gender gender, final Integer weight, final Integer height,
-                        final Integer age, final String nickname, final Integer dailySugar) {
-        this.id = id;
-        this.gender = gender;
-        this.weight = weight;
-        this.height = height;
-        this.age = age;
-        this.nickname = nickname;
-        this.dailySugar = dailySugar;
-    }
-
     public boolean checkRequiredInfoExist() {
         return this.gender == null || this.weight == null || this.height == null
                 || this.age == null || this.dailySugar == null;
