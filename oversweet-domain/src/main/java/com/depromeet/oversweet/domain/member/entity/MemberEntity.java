@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -57,4 +58,39 @@ public class MemberEntity extends BaseTimeEntity {
 
     @Column(name = "daily_sugar")
     private Integer dailySugar;
+
+    @Builder
+    public MemberEntity(final String socialId, final String nickname,
+                        final String email, final SocialProvider socialProvider) {
+        this.socialId = socialId;
+        this.nickname = nickname;
+        this.email = email;
+        this.socialProvider = socialProvider;
+    }
+
+    public MemberEntity(final Long id, final Gender gender, final Integer weight, final Integer height,
+                        final Integer age, final String nickname, final Integer dailySugar) {
+        this.id = id;
+        this.gender = gender;
+        this.weight = weight;
+        this.height = height;
+        this.age = age;
+        this.nickname = nickname;
+        this.dailySugar = dailySugar;
+    }
+
+    public boolean checkRequiredInfoExist() {
+        return this.gender == null || this.weight == null || this.height == null
+                || this.age == null || this.dailySugar == null;
+    }
+
+    public void updateRequiredInfo(final Gender gender, final Integer weight, final Integer height,
+                                   final Integer age, final String nickname) {
+        this.gender = gender;
+        this.weight = weight;
+        this.height = height;
+        this.age = age;
+        this.nickname = nickname;
+        this.dailySugar = this.gender.equals(Gender.MALE) ? 36 : 24;
+    }
 }
