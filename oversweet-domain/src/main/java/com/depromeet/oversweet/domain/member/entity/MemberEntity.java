@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Table(name = "member")
 @Entity
 @Getter
@@ -59,7 +60,7 @@ public class MemberEntity extends BaseTimeEntity {
     @Column(name = "daily_sugar")
     private Integer dailySugar;
 
-    @Builder
+   @Builder
     public MemberEntity(final String socialId, final String nickname,
                         final String email, final SocialProvider socialProvider) {
         this.socialId = socialId;
@@ -81,5 +82,19 @@ public class MemberEntity extends BaseTimeEntity {
         this.age = age;
         this.nickname = nickname;
         this.dailySugar = this.gender.equals(Gender.MALE) ? 36 : 24;
+    }
+  
+    public MemberEntity(Long id, String nickname, String email, SocialProvider socialProvider, String socialId, String imageUrl, Gender gender, Integer weight, Integer height, Integer age, Integer dailySugar) {
+        this.id = id;
+        this.nickname = nickname;
+        this.email = email;
+        this.socialProvider = socialProvider;
+        this.socialId = socialId;
+        this.imageUrl = imageUrl;
+        this.gender = gender;
+        this.weight = weight;
+        this.height = height;
+        this.age = age;
+        this.dailySugar = dailySugar;
     }
 }

@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -41,4 +42,23 @@ public class RecordEntity extends BaseTimeEntity {
 
     @Column(name = "intake_sugar", nullable = false)
     private Integer intakeSugar;
+
+    @Builder
+    public RecordEntity(final Long id, final MemberEntity member, final DrinkEntity drink, final Integer count, final Integer intakeSugar) {
+        this.id = id;
+        this.member = member;
+        this.drink = drink;
+        this.count = count;
+        this.intakeSugar = intakeSugar;
+    }
+
+
+
+    public int totalSugar() {
+        return this.count * this.intakeSugar;
+    }
+
+    public int totalCalorie() {
+        return this.count * this.drink.getCalorie();
+    }
 }

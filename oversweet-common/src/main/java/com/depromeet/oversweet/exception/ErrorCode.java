@@ -22,6 +22,15 @@ public enum ErrorCode {
     NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "M001", "존재 하지 않는 유저 입니다."),
     MISSING_REQUIRED_INFO_ERROR(HttpStatus.UNAUTHORIZED, "M002", "필수 정보를 기입하지 않았습니다."),
 
+    // Member (유저)
+    NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "M001", "존재 하지 않는 유저 입니다."),
+
+    // BookMark (즐겨찾기)
+    ALREADY_FRANCHISE_BOOK_MARKED(HttpStatus.BAD_REQUEST, "B001", "이미 즐겨찾기한 프랜차이즈 입니다."),
+
+    // Franchise (프랜차이즈)
+    NOT_FOUND_FRANCHISE(HttpStatus.NOT_FOUND, "F001", "존재 하지 않는 프랜차이즈 입니다."),
+
     // Test
     TEST_EXCEPTION(HttpStatus.BAD_REQUEST, "T001", "테스트 에러");
 

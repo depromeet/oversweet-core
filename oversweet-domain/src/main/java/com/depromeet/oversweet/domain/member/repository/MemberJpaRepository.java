@@ -9,4 +9,3 @@ public interface MemberJpaRepository extends JpaRepository<MemberEntity, Long> {
 
     MemberEntity findBySocialId(String socialId);
 }
-

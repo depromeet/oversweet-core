@@ -1,7 +1,7 @@
 package com.depromeet.oversweet.domain.franchise.service;
 
 import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
-import com.depromeet.oversweet.domain.franchise.repository.FranchiseEntityRepository;
+import com.depromeet.oversweet.domain.franchise.repository.FranchiseJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FranchisePureService {
 
-    private final FranchiseEntityRepository franchiseEntityRepository;
+    private final FranchiseJpaRepository franchiseJpaRepository;
 
     /**
      * 프랜차이즈 이름을 반환한다.
@@ -25,7 +25,7 @@ public class FranchisePureService {
      * @return 프랜차이즈 이름
      */
     public String getFranchiseName(Long franchiseId) {
-        return franchiseEntityRepository.findById(franchiseId)
+        return franchiseJpaRepository.findById(franchiseId)
                 .orElseThrow(() -> new RuntimeException("프랜차이즈가 존재하지 않습니다."))
                 .getName();
     }
@@ -36,7 +36,7 @@ public class FranchisePureService {
      * @return 프랜차이즈 이름 목록
      */
     public List<String> getFranchiseNames(List<Long> franchiseIds) {
-        return franchiseEntityRepository.findAllByFranchiseIds(franchiseIds)
+        return franchiseJpaRepository.findAllByFranchiseIds(franchiseIds)
                 .stream()
                 .map(FranchiseEntity::getName)
                 .collect(Collectors.toList());
