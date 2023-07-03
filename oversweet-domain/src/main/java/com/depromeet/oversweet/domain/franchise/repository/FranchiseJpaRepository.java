@@ -7,5 +7,4 @@ import java.util.Optional;
 
 public interface FranchiseJpaRepository extends JpaRepository<FranchiseEntity, Long>, FranchiseEntityFilter {
 
-    Optional<FranchiseEntity> findById(Long franchiseId);
 }
