@@ -16,9 +16,15 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "C003", "서버 에러"),
     INVALID_TYPE_VALUE(HttpStatus.BAD_REQUEST, "C004", "입력 값의 타입이 올바르지 않습니다."),
     HANDLE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "C005", "접근이 거부 되었습니다."),
+    FEIGN_CLIENT_ERROR(HttpStatus.BAD_REQUEST, "C006", "정보를 가져올 수 없습니다."),
+
+    // Member
+    NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "M001", "존재 하지 않는 유저 입니다."),
+    MISSING_REQUIRED_INFO_ERROR(HttpStatus.UNAUTHORIZED, "M002", "필수 정보를 기입하지 않았습니다."),
 
     // Test
     TEST_EXCEPTION(HttpStatus.BAD_REQUEST, "T001", "테스트 에러");
+
 
     // Depend on Entity (도메인에 따라서 달라지는 경우)
     // 이벤트 Entity 관련
