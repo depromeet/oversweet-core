@@ -10,7 +10,7 @@ import java.util.List;
 public interface FranchiseBookMarkJpaRepository extends JpaRepository<FranchiseBookmarkEntity, Long> {
     List<FranchiseBookmarkEntity> findByMemberId(final Long memberId);
 
-    boolean existsByMemberAndFranchise(MemberEntity member, FranchiseEntity franchise);
+    boolean isExistByMemberAndFranchise(MemberEntity member, FranchiseEntity franchise);
 
 
 }

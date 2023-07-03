@@ -25,7 +25,7 @@ public class RegisterFranchiseBookMarkRepositoryImpl implements RegisterFranchis
      */
     @Override
     @Transactional
-    public void register(MemberEntity member, FranchiseEntity franchise) {
+    public void saveFranchiseBookmark(MemberEntity member, FranchiseEntity franchise) {
         FranchiseBookmarkEntity franchiseBookmark = new FranchiseBookmarkEntity(member, franchise);
         franchiseBookMarkJpaRepository.save(franchiseBookmark);
     }

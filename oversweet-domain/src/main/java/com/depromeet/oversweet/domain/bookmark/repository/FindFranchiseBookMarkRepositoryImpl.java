@@ -44,7 +44,7 @@ public class FindFranchiseBookMarkRepositoryImpl implements FindFranchiseBookMar
     @Override
     @Transactional(readOnly = true)
     public void validateAlreadyFranchiseBookMarked(MemberEntity member, FranchiseEntity franchise) {
-        if (franchiseBookMarkJpaRepository.existsByMemberAndFranchise(member, franchise)) {
+        if (franchiseBookMarkJpaRepository.isExistByMemberAndFranchise(member, franchise)) {
             throw new AlreadyFranchiseBookMarked(ALREADY_FRANCHISE_BOOK_MARKED);
         }
     }

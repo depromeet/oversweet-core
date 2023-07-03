@@ -39,7 +39,7 @@ public class FranchiseBookMarkRegisterService {
         findFranchiseBookMarkRepository.validateAlreadyFranchiseBookMarked(member, franchise);
 
         // 해당 프랜차이즈를 즐겨찾기에 등록한다.
-        registerFranchiseBookMarkRepository.register(member, franchise);
+        registerFranchiseBookMarkRepository.saveFranchiseBookmark(member, franchise);
     }
 
 }
