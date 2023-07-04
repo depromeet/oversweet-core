@@ -12,8 +12,10 @@ public record LocalDateTimeInfo(
         LocalDateTime startDateTime,
         LocalDateTime endDateTime
 ) {
+    public static final String DEFAULT_ZONE_ID = "Asia/Seoul";
+
     public static LocalDateTimeInfo getDailyDateTime(){
-        final LocalDateTime nowDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+        final LocalDateTime nowDateTime = LocalDateTime.now(ZoneId.of(DEFAULT_ZONE_ID));
         final LocalDateTime newStartDateTime = nowDateTime.with(LocalTime.MIN);
         final LocalDateTime newEndDateTime = nowDateTime.with(LocalTime.MAX);
         return new LocalDateTimeInfo(newStartDateTime, newEndDateTime);
