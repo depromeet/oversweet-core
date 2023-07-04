@@ -38,7 +38,8 @@ public class DrinkBookmarkEntity extends BaseTimeEntity {
     private DrinkEntity drink;
 
     @Builder
-    public DrinkBookmarkEntity(final MemberEntity member, final DrinkEntity drink) {
+    public DrinkBookmarkEntity(final Long id, final MemberEntity member, final DrinkEntity drink) {
+        this.id = id;
         this.member = member;
         this.drink = drink;
     }
