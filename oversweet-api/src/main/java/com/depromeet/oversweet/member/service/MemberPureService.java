@@ -6,6 +6,8 @@ import com.depromeet.oversweet.domain.member.repository.UpdateMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MemberPureService {
@@ -13,11 +15,11 @@ public class MemberPureService {
     private final FindMemberRepository findMemberRepository;
     private final UpdateMemberRepository updateMemberRepository;
 
-    public MemberEntity searchMemberByNickname(final String nickname) {
+    public Optional<MemberEntity> searchMemberByNickname(final String nickname) {
         return findMemberRepository.findMemberByNickname(nickname);
     }
 
-    public MemberEntity searchMemberBySocialId(final String socialId) {
+    public Optional<MemberEntity> searchMemberBySocialId(final String socialId) {
         return findMemberRepository.findMemberBySocialId(socialId);
     }
 

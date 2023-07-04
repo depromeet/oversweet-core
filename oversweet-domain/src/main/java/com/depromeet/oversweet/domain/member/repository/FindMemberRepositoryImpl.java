@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static com.depromeet.oversweet.exception.ErrorCode.NOT_FOUND_MEMBER;
 
 /**
@@ -22,13 +24,13 @@ public class FindMemberRepositoryImpl implements FindMemberRepository{
 
     @Override
     @Transactional(readOnly = true)
-    public MemberEntity findMemberByNickname(final String nickname) {
+    public Optional<MemberEntity> findMemberByNickname(final String nickname) {
         return memberJpaRepository.findByNickname(nickname);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public MemberEntity findMemberBySocialId(final String socialId) {
+    public Optional<MemberEntity> findMemberBySocialId(final String socialId) {
         return memberJpaRepository.findBySocialId(socialId);
     }
 
