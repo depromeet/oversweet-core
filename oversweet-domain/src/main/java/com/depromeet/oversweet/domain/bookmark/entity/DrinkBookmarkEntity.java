@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,4 +36,10 @@ public class DrinkBookmarkEntity extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "drink_id", foreignKey = @ForeignKey(name = "fk_drinkBookmark_to_drink"), nullable = false)
     private DrinkEntity drink;
+
+    @Builder
+    public DrinkBookmarkEntity(final MemberEntity member, final DrinkEntity drink) {
+        this.member = member;
+        this.drink = drink;
+    }
 }
