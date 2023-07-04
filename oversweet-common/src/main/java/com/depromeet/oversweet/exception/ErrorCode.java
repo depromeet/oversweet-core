@@ -18,12 +18,9 @@ public enum ErrorCode {
     HANDLE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "C005", "접근이 거부 되었습니다."),
     FEIGN_CLIENT_ERROR(HttpStatus.BAD_REQUEST, "C006", "정보를 가져올 수 없습니다."),
 
-    // Member
-    NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "M001", "존재 하지 않는 유저 입니다."),
-    MISSING_REQUIRED_INFO_ERROR(HttpStatus.UNAUTHORIZED, "M002", "필수 정보를 기입하지 않았습니다."),
-
     // Member (유저)
     NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "M001", "존재 하지 않는 유저 입니다."),
+    NICKNAME_DUPLICATED_ERROR(HttpStatus.BAD_REQUEST, "M002", "중복된 닉네임 입니다."),
 
     // BookMark (즐겨찾기)
     ALREADY_FRANCHISE_BOOK_MARKED(HttpStatus.BAD_REQUEST, "B001", "이미 즐겨찾기한 프랜차이즈 입니다."),
