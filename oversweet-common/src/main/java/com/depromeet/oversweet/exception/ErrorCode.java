@@ -22,9 +22,13 @@ public enum ErrorCode {
 
     // BookMark (즐겨찾기)
     ALREADY_FRANCHISE_BOOK_MARKED(HttpStatus.BAD_REQUEST, "B001", "이미 즐겨찾기한 프랜차이즈 입니다."),
+    ALREADY_DRINK_BOOK_MARKED(HttpStatus.BAD_REQUEST, "B002", "이미 즐겨찾기한 음료 입니다."),
 
     // Franchise (프랜차이즈)
     NOT_FOUND_FRANCHISE(HttpStatus.NOT_FOUND, "F001", "존재 하지 않는 프랜차이즈 입니다."),
+
+    // Drink (음료)
+    NOT_FOUND_DRINK(HttpStatus.NOT_FOUND, "D001", "존재 하지 않는 음료 입니다."),
 
     // Test
     TEST_EXCEPTION(HttpStatus.BAD_REQUEST, "T001", "테스트 에러");

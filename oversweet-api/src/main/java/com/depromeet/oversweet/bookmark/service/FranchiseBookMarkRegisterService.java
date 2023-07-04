@@ -16,11 +16,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class FranchiseBookMarkRegisterService {
 
-    // TODO : 유저 조회하는 Repository 제준님꺼 코드 받아서 진행 (의존성 주입 필요)
     private final FindMemberRepository findMemberRepository;
     private final FindFranchiseRepository findFranchiseRepository;
-    private final RegisterFranchiseBookMarkRepository registerFranchiseBookMarkRepository;
     private final FindFranchiseBookMarkRepository findFranchiseBookMarkRepository;
+    private final RegisterFranchiseBookMarkRepository registerFranchiseBookMarkRepository;
 
     /**
      * 프랜차이즈 북마크를 등록한다.
