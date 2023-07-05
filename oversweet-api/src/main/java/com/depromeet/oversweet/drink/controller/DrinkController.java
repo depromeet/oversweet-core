@@ -50,7 +50,7 @@ public class DrinkController {
     @ApiResponses(@ApiResponse(responseCode = "200", description = "유저가 먹은 주간 당 통계 조회."))
     @GetMapping("/statistics/weekly")
     public ResponseEntity<DataResponse<DrinkWeeklySugarStatisticsResponse>> retrieveUserWeeklySugarStatistics(
-            @RequestBody final DrinkWeeklySugarDateRequest request
+            @RequestBody @Valid final DrinkWeeklySugarDateRequest request
     ) {
         final DrinkWeeklySugarStatisticsResponse response = drinkWeeklyStatisticsService.retrieveUserWeeklySugarStatistics(1L, request);
         return ResponseEntity.ok()

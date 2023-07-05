@@ -1,6 +1,9 @@
 package com.depromeet.oversweet.drink.vo;
 
 import com.depromeet.oversweet.domain.record.entity.RecordEntity;
+import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarInfo;
+import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarTotalStatisticsInfo;
+import com.depromeet.oversweet.drink.dto.response.DrinkWeeklySugarTotalStatisticsInfo;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,22 +31,23 @@ public record DrinkStatisticsTotalInfo(
 
     public List<DrinkDailySugarInfo> getDayOfWeekSugarInfo() {
         return recordEntities.stream()
-                .collect(Collectors.groupingBy(record -> record.getCreatedAt().toLocalDate().atStartOfDay()))
-                .entrySet()
-                .stream()
-                .map(entry -> DrinkDailySugarInfo.of(entry.getKey(), getTotalIntakeSugar(entry.getValue())))
-                .toList();
+                .collect(Collectors.groupingBy(
+                        record -> record.getCreatedAt().toLocalDate(),
+                        Collectors.summingInt(RecordEntity::totalSugar)))
+                .entrySet().stream()
+                .map(entry -> new DrinkDailySugarInfo(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
     }
 
     private int getDailyAverageSugar() {
-        final int totalIntakeSugar = getTotalIntakeSugar();
-        return totalIntakeSugar / recordEntities.size();
-    }
-
-    private int getTotalIntakeSugar(final List<RecordEntity> entities){
-        return entities.stream()
-                .mapToInt(RecordEntity::totalSugar)
-                .sum();
+        return (int) recordEntities.stream()
+                .collect(Collectors.groupingBy(
+                        record -> record.getCreatedAt().toLocalDate(),
+                        Collectors.summingInt(RecordEntity::totalSugar)))
+                .values().stream()
+                .mapToInt(Integer::intValue)
+                .summaryStatistics()
+                .getAverage();
     }
 
     private int getTotalIntakeSugar() {
