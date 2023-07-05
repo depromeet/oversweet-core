@@ -13,7 +13,7 @@ import java.util.List;
 public record DrinkWeeklySugarStatisticsResponse(
         @Schema(description = "유저 디테일 정보") MemberInfo member,
         @Schema(description = "주간 당 통계 차트 정보") List<DrinkDailySugarInfo> weeklyChart,
-        @Schema(description = "주간 당 종합 정보") DrinkWeeklySugarTotalStatisticsInfo weeklyTotalSugarInfo
+        @Schema(description = "주간 당 종합 정보") DrinkWeeklySugarTotalStatisticsInfo weekStatistics
         ) {
 
 }
