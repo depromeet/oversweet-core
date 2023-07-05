@@ -3,10 +3,9 @@ package com.depromeet.oversweet.exception.member;
 import com.depromeet.oversweet.exception.ErrorCode;
 import com.depromeet.oversweet.exception.OverSweetException;
 
-public class NotFoundMemberException extends OverSweetException {
+public class DuplicateNicknameException extends OverSweetException {
 
-    public NotFoundMemberException(ErrorCode errorCode) {
+    public DuplicateNicknameException(ErrorCode errorCode) {
         super(errorCode);
     }
-
 }

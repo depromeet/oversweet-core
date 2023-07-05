@@ -4,4 +4,12 @@ dependencies {
     implementation project(':oversweet-domain')
 
     // 모듈에 맞는 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2022.0.2"
+    }
 }

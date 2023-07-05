@@ -4,3 +4,5 @@ server:
 spring:
   profiles:
     active: local
+  jwt:
+    secret: 3e533ca3b21482b18a75e9ec891f04af50f297014c878fcea78df821cc46466f75ee8cc5471c5bc2dd9005ec342ae7df4f06639671f5db7c9554359a1e2e8def

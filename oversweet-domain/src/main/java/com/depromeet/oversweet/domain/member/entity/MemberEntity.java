@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
 
 @Table(name = "member")
 @Entity
@@ -59,6 +60,21 @@ public class MemberEntity extends BaseTimeEntity {
 
     @Column(name = "daily_sugar")
     private Integer dailySugar;
+
+    public boolean checkRequiredInfoExist() {
+        return Objects.nonNull(this.gender) && Objects.nonNull(this.weight) && Objects.nonNull(this.height) &&
+                Objects.nonNull(this.age) && Objects.nonNull(this.dailySugar);
+    }
+
+    public void updateRequiredInfo(final Gender gender, final Integer weight, final Integer height,
+                                   final Integer age, final String nickname) {
+        this.gender = gender;
+        this.weight = weight;
+        this.height = height;
+        this.age = age;
+        this.nickname = nickname;
+        this.dailySugar = this.gender.equals(Gender.MALE) ? 36 : 24;
+    }
 
     @Builder
     public MemberEntity(Long id, String nickname, String email, SocialProvider socialProvider, String socialId, String imageUrl, Gender gender, Integer weight, Integer height, Integer age, Integer dailySugar) {
