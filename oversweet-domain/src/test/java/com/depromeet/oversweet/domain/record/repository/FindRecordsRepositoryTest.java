@@ -75,7 +75,7 @@ class FindRecordsRepositoryTest {
         final LocalDateTime newEndDateTime = nowDateTime.with(LocalTime.MAX);
 
         // when
-        List<RecordEntity> records = findRecordsRepository.findDailyRecordsByLocalDateTime(userId, newStartDateTime, newEndDateTime);
+        List<RecordEntity> records = findRecordsRepository.findRecordsByLocalDateTime(userId, newStartDateTime, newEndDateTime);
 
         // then
         assertThat(records).hasSize(1);

@@ -1,4 +1,4 @@
-package com.depromeet.oversweet.drink.dto;
+package com.depromeet.oversweet.drink.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

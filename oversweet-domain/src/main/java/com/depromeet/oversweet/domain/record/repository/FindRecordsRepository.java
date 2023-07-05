@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 유저의 데일리(하루) 음료 조회 Interface
+ * 유저의 해당 기간 음료 당 조회 Interface
  */
 public interface FindRecordsRepository {
-    List<RecordEntity> findDailyRecordsByLocalDateTime(final Long memberId, final LocalDateTime startDate, LocalDateTime endDate);
+    List<RecordEntity> findRecordsByLocalDateTime(final Long memberId, final LocalDateTime startDate, LocalDateTime endDate);
 }
