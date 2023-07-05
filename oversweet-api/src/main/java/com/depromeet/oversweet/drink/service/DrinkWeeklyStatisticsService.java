@@ -1,16 +1,15 @@
 package com.depromeet.oversweet.drink.service;
 
-import com.depromeet.oversweet.common.vo.MemberInfo;
+import com.depromeet.oversweet.common.dto.response.MemberInfo;
 import com.depromeet.oversweet.domain.member.entity.MemberEntity;
 import com.depromeet.oversweet.domain.member.repository.FindMemberRepository;
 import com.depromeet.oversweet.domain.record.entity.RecordEntity;
 import com.depromeet.oversweet.domain.record.repository.FindRecordsRepository;
 import com.depromeet.oversweet.drink.dto.request.DrinkWeeklySugarDateRequest;
 import com.depromeet.oversweet.drink.dto.response.DrinkWeeklySugarStatisticsResponse;
-import com.depromeet.oversweet.drink.vo.DrinkDailyDetailInfo;
-import com.depromeet.oversweet.drink.vo.DrinkDailySugarInfo;
+import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarInfo;
 import com.depromeet.oversweet.drink.vo.DrinkStatisticsTotalInfo;
-import com.depromeet.oversweet.drink.vo.DrinkWeeklySugarTotalStatisticsInfo;
+import com.depromeet.oversweet.drink.dto.response.DrinkWeeklySugarTotalStatisticsInfo;
 import com.depromeet.oversweet.drink.vo.LocalDateTimeInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

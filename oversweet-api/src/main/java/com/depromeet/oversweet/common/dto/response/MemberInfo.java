@@ -1,9 +1,9 @@
-package com.depromeet.oversweet.common.vo;
+package com.depromeet.oversweet.common.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * 멤버 정보 Vo
+ * 멤버 정보 dto
  */
 public record MemberInfo(
         @Schema(description = "유저 고유 Id") Long userId,

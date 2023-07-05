@@ -3,6 +3,7 @@ package com.depromeet.oversweet.drink.vo;
 import com.depromeet.oversweet.domain.drink.entity.DrinkEntity;
 import com.depromeet.oversweet.domain.member.entity.MemberEntity;
 import com.depromeet.oversweet.domain.record.entity.RecordEntity;
+import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarTotalStatisticsInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

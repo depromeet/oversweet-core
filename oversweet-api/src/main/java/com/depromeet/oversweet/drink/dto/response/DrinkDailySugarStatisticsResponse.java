@@ -1,7 +1,5 @@
 package com.depromeet.oversweet.drink.dto.response;
 
-import com.depromeet.oversweet.drink.vo.DrinkDailyDetailInfo;
-import com.depromeet.oversweet.drink.vo.DrinkDailySugarTotalStatisticsInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
