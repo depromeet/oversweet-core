@@ -1,5 +1,6 @@
 package com.depromeet.oversweet.drink.vo;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -19,5 +20,10 @@ public record LocalDateTimeInfo(
         final LocalDateTime newStartDateTime = nowDateTime.with(LocalTime.MIN);
         final LocalDateTime newEndDateTime = nowDateTime.with(LocalTime.MAX);
         return new LocalDateTimeInfo(newStartDateTime, newEndDateTime);
+    }
+    public static LocalDateTimeInfo getWeeklyDateTime(final LocalDate startDate, final LocalDate endDate){
+        final LocalDateTime startDateTime = startDate.atTime(LocalTime.MIN);
+        final LocalDateTime endDateTime = endDate.atTime(LocalTime.MAX);
+        return new LocalDateTimeInfo(startDateTime, endDateTime);
     }
 }

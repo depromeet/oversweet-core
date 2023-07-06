@@ -1,5 +1,6 @@
-package com.depromeet.oversweet.drink.dto;
+package com.depromeet.oversweet.drink.dto.response;
 
+import com.depromeet.oversweet.common.dto.response.FranchiseInfo;
 import com.depromeet.oversweet.domain.drink.entity.DrinkEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 

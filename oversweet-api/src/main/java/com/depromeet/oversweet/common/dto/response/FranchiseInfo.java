@@ -1,10 +1,10 @@
-package com.depromeet.oversweet.drink.dto;
+package com.depromeet.oversweet.common.dto.response;
 
 import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * 프랜차이즈 정보 DTO
+ * 프랜차이즈 정보 dto
  */
 public record FranchiseInfo(
 

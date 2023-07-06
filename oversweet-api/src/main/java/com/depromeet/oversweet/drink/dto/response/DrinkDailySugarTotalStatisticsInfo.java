@@ -1,11 +1,13 @@
-package com.depromeet.oversweet.drink.dto;
+package com.depromeet.oversweet.drink.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
 
 
 /**
  * 유저가 먹은 음료 당, 칼로리 통계 정보 DTO
  */
+@Getter
 public class DrinkDailySugarTotalStatisticsInfo {
     @Schema(description = "하루 적정 당 섭취량", example = "25")
     private final int dailySugar;

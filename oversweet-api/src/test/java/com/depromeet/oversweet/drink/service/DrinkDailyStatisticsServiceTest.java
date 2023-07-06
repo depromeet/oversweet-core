@@ -9,7 +9,7 @@ import com.depromeet.oversweet.domain.member.enums.SocialProvider;
 import com.depromeet.oversweet.domain.member.repository.FindMemberRepository;
 import com.depromeet.oversweet.domain.record.entity.RecordEntity;
 import com.depromeet.oversweet.domain.record.repository.FindRecordsRepository;
-import com.depromeet.oversweet.drink.dto.DrinkDailySugarStatisticsResponse;
+import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarStatisticsResponse;
 import com.depromeet.oversweet.drink.vo.LocalDateTimeInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,16 +24,16 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("음료 통계 테스트")
+@DisplayName("음료 데일리(하루) 통계 테스트")
 @MockitoSettings
-class DrinkStatisticsServiceTest {
+class DrinkDailyStatisticsServiceTest {
 
     @Mock
     private FindRecordsRepository findRecordsRepository;
     @Mock
     private FindMemberRepository findMemberRepository;
     @InjectMocks
-    DrinkStatisticsService drinkStatisticsService;
+    DrinkDailyStatisticsService drinkDailyStatisticsService;
 
     private MemberEntity memberEntity;
     private FranchiseEntity franchiseEntity;
@@ -49,18 +49,18 @@ class DrinkStatisticsServiceTest {
 
     @Test
     @DisplayName("해당 유저의 통계 목록을 조회 한다.")
-    void getUserDrinkStatisticsInfo() {
+    void getUserDrinkDailyStatisticsInfo() {
         // given
         LocalDateTimeInfo requestDateTime = LocalDateTimeInfo.getDailyDateTime();
         List<RecordEntity> recordEntities = Arrays.asList(recordEntity);
 
-        Mockito.when(findRecordsRepository.findDailyRecordsByLocalDateTime(memberEntity.getId(), requestDateTime.startDateTime(), requestDateTime.endDateTime()))
+        Mockito.when(findRecordsRepository.findRecordsByLocalDateTime(memberEntity.getId(), requestDateTime.startDateTime(), requestDateTime.endDateTime()))
                 .thenReturn(recordEntities);
         Mockito.when(findMemberRepository.findById(memberEntity.getId()))
                 .thenReturn(memberEntity);
 
         // when
-        DrinkDailySugarStatisticsResponse response = drinkStatisticsService.retrieveUserDailySugarStatistics(memberEntity.getId());
+        DrinkDailySugarStatisticsResponse response = drinkDailyStatisticsService.retrieveUserDailySugarStatistics(memberEntity.getId());
 
         // then
         assertThat(response.dailyDrinks().size() == 1);
