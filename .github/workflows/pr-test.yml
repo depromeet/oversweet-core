@@ -34,7 +34,7 @@ jobs:
 
       # Gradle test를 실행한다
       - name: Test with Gradle
-        run: ./gradlew --info test
+        run: ./gradlew test
 
       # 테스트 후 Result를 보기위해 Publish Unit Test Results step 추가
       - name: Publish Unit Test Results

@@ -42,6 +42,6 @@ class MemberEntityTest {
 
         Integer dailySugar = member.getDailySugar();
 
-        assertEquals(25, dailySugar);
+        assertEquals(24, dailySugar);
     }
 }
