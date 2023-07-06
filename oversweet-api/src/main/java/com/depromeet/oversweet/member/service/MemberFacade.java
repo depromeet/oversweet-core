@@ -19,11 +19,12 @@ import static com.depromeet.oversweet.exception.ErrorCode.NICKNAME_DUPLICATED_ER
 @RequiredArgsConstructor
 public class MemberFacade {
 
-    private final MemberPureService memberPureService;
     private final MemberKakaoService memberKakaoService;
+    private final MemberSearchService memberSearchService;
+    private final MemberUpdateService memberUpdateService;
 
     public void checkNicknameDuplicated(String nickname) {
-        Optional<MemberEntity> member = memberPureService.searchMemberByNickname(nickname);
+        Optional<MemberEntity> member = memberSearchService.searchMemberByNickname(nickname);
         if (member.isPresent()) {
             throw new DuplicateNicknameException(NICKNAME_DUPLICATED_ERROR);
         }
@@ -40,7 +41,7 @@ public class MemberFacade {
     }
 
     public SocialSignInResponse signIn(String socialId, String nickname, String email, SocialProvider socialProvider) {
-        Optional<MemberEntity> memberOptional = memberPureService.searchMemberBySocialId(socialId);
+        Optional<MemberEntity> memberOptional = memberSearchService.searchMemberBySocialId(socialId);
         MemberEntity member;
 
         //정보가 있을 경우 member 의 id 와 필수 정보 기입 여부 반환
@@ -56,21 +57,22 @@ public class MemberFacade {
                 .email(email)
                 .socialProvider(socialProvider)
                 .build();
-        memberPureService.saveMember(member);
+        memberUpdateService.saveMember(member);
 
         return new SocialSignInResponse(member.getId(), false);
     }
 
     public SignUpResponse signUp(SignUpRequest signUpRequest) {
-        MemberEntity member = memberPureService.searchMemberById(signUpRequest.id());
+        MemberEntity member = memberSearchService.searchMemberById(signUpRequest.id());
         member.updateRequiredInfo(signUpRequest.gender(), signUpRequest.weight(),
                 signUpRequest.height(), signUpRequest.age(), signUpRequest.nickname());
 
-        memberPureService.modifyMember(member);
+        memberUpdateService.modifyMember(member);
 
         return SignUpResponse.builder()
                 .id(member.getId())
                 .dailySugar(member.getDailySugar())
                 .build();
     }
+
 }
