@@ -9,4 +9,6 @@ import com.depromeet.oversweet.domain.member.entity.MemberEntity;
 public interface RegisterFranchiseBookMarkRepository {
 
     void saveFranchiseBookmark(final MemberEntity member, final FranchiseEntity franchise);
+
+    void deleteFranchiseBookmark(final MemberEntity member, final FranchiseEntity franchise);
 }

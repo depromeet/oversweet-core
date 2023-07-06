@@ -93,4 +93,20 @@ public class BookmarkController {
         return ResponseEntity.ok(MessageResponse.of(OK, "음료 즐겨 찾기 등록 성공"));
     }
 
+    /**
+     * 유저가 특정 프랜차이즈를 즐겨 찾기 해제 할 수 있다.
+     * TODO : 추후 로그인 기능 구현 후, 로그인한 유저의 ID를 받아와야 함 (ex. @AuthenticationPrincipal User user)
+     */
+    @Operation(summary = "프랜차이즈 즐겨 찾기 해제", description = "유저가 특정 프랜차이즈를 즐겨 찾기 해제 할 수 있다.")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200", description = "프랜차이즈 즐겨 찾기 해제 성공")
+    })
+    @DeleteMapping("/franchises/{franchiseId}")
+    public ResponseEntity<DataResponse<FranchiseBookMarkedResponseDto>> unMarkFranchiseAsBookMark(@PathVariable @Parameter(description = "프랜차이즈 고유 Id") Long franchiseId) {
+        FranchiseBookMarkedResponseDto response = franchiseBookMarkRegisterService.unregister(100L, franchiseId);
+        return ResponseEntity.ok(DataResponse.of(OK, "프랜차이즈 즐겨 찾기 해제 성공", response));
+    }
+
+
 }
