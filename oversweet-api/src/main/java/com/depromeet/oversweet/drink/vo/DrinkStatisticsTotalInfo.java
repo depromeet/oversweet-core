@@ -6,6 +6,7 @@ import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarTotalStatistics
 import com.depromeet.oversweet.drink.dto.response.DrinkWeeklySugarTotalStatisticsInfo;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -35,8 +36,9 @@ public record DrinkStatisticsTotalInfo(
                         record -> record.getCreatedAt().toLocalDate(),
                         Collectors.summingInt(RecordEntity::totalSugar)))
                 .entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
                 .map(entry -> new DrinkDailySugarInfo(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private int getDailyAverageSugar() {

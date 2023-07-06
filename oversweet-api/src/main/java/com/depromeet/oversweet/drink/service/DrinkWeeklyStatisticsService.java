@@ -55,7 +55,7 @@ public class DrinkWeeklyStatisticsService {
         return DrinkWeeklySugarStatisticsResponse.builder()
                 .member(memberInfo)
                 .weeklyChart(dayOfWeekSugarInfo)
-                .weeklyTotalSugarInfo(weeklyTotalStatisticsInfo)
+                .weekStatistics(weeklyTotalStatisticsInfo)
                 .build();
 
     }
