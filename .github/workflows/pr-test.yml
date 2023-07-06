@@ -38,11 +38,17 @@ jobs:
 
       # 테스트 후 Result를 보기위해 Publish Unit Test Results step 추가
       - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: ${{ always() }}  # 테스트가 실패하여도 Report를 보기 위해 `always`로 설정
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
         with:
-          files: build/test-results/**/*.xml
+          files: '**/build/test-results/test/TEST-*.xml'
 
+      - name: If the test fails, register a check comment in the failed code line
+        uses: mikepenz/action-junit-report@v3
+        if: always()
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
+          token: ${{ github.token }}
 
       # gradle 캐싱을 위해 추가
       - name: Cleanup Gradle Cache
