@@ -24,7 +24,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("음료 통계 테스트")
+@DisplayName("음료 데일리(하루) 통계 테스트")
 @MockitoSettings
 class DrinkDailyStatisticsServiceTest {
 
@@ -49,7 +49,7 @@ class DrinkDailyStatisticsServiceTest {
 
     @Test
     @DisplayName("해당 유저의 통계 목록을 조회 한다.")
-    void getUserDrinkStatisticsInfo() {
+    void getUserDrinkDailyStatisticsInfo() {
         // given
         LocalDateTimeInfo requestDateTime = LocalDateTimeInfo.getDailyDateTime();
         List<RecordEntity> recordEntities = Arrays.asList(recordEntity);
