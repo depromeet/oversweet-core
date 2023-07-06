@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 
-@FeignClient(name = "KakaoFeignClient", url = "https://kapi.kakao.com", configuration = FeignConfig.class)
+@FeignClient(name = "kakaoFeignClient", url = "https://kapi.kakao.com", configuration = FeignConfig.class)
 public interface KakaoFeignClient {
 
     @GetMapping(value = "/v2/user/me")
