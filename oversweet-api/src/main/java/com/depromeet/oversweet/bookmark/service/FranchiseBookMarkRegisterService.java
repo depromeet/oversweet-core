@@ -3,7 +3,7 @@ package com.depromeet.oversweet.bookmark.service;
 import com.depromeet.oversweet.bookmark.dto.response.FranchiseBookMarkedResponseDto;
 import com.depromeet.oversweet.domain.bookmark.entity.FranchiseBookmarkEntity;
 import com.depromeet.oversweet.domain.bookmark.repository.FindFranchiseBookMarkRepository;
-import com.depromeet.oversweet.domain.bookmark.repository.RegisterFranchiseBookMarkRepository;
+import com.depromeet.oversweet.domain.bookmark.repository.UpdateFranchiseBookMarkRepository;
 import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
 import com.depromeet.oversweet.domain.franchise.repository.FindFranchiseRepository;
 import com.depromeet.oversweet.domain.member.entity.MemberEntity;
@@ -23,7 +23,7 @@ public class FranchiseBookMarkRegisterService {
     private final FindMemberRepository findMemberRepository;
     private final FindFranchiseRepository findFranchiseRepository;
     private final FindFranchiseBookMarkRepository findFranchiseBookMarkRepository;
-    private final RegisterFranchiseBookMarkRepository registerFranchiseBookMarkRepository;
+    private final UpdateFranchiseBookMarkRepository updateFranchiseBookMarkRepository;
 
     /**
      * 프랜차이즈 북마크를 등록한다.
@@ -42,7 +42,7 @@ public class FranchiseBookMarkRegisterService {
         findFranchiseBookMarkRepository.validateAlreadyFranchiseBookMarked(member, franchise);
 
         // 해당 프랜차이즈를 즐겨찾기에 등록한다.
-        registerFranchiseBookMarkRepository.saveFranchiseBookmark(member, franchise);
+        updateFranchiseBookMarkRepository.saveFranchiseBookmark(member, franchise);
     }
 
     /**
@@ -60,7 +60,7 @@ public class FranchiseBookMarkRegisterService {
         final FranchiseEntity franchise = findFranchiseRepository.findFranchiseById(franchiseId);
 
         // 해당 프랜차이즈를 즐겨찾기에서 삭제한다.
-        registerFranchiseBookMarkRepository.deleteFranchiseBookmark(member, franchise);
+        updateFranchiseBookMarkRepository.deleteFranchiseBookmark(member, franchise);
 
         // 최신 즐겨찾기 목록을 반환한다.
         final List<FranchiseBookmarkEntity> bookMarks = findFranchiseBookMarkRepository.findFranchiseBookMarkByMemberId(memberId);

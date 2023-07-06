@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @RequiredArgsConstructor
-public class RegisterFranchiseBookMarkRepositoryImpl implements RegisterFranchiseBookMarkRepository {
+public class UpdateFranchiseBookMarkRepositoryImpl implements UpdateFranchiseBookMarkRepository {
 
     private final FranchiseBookMarkJpaRepository franchiseBookMarkJpaRepository;
 
