@@ -16,6 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoSettings;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -56,7 +59,7 @@ class DrinkRecordSaveServiceTest {
         //when
         when(findMemberRepository.findMemberById(memberEntity.getId())).thenReturn(memberEntity);
         when(findDrinkRepository.findDrinkById(drinkEntity.getId())).thenReturn(drinkEntity);
-        when(findRecordsRepository.findRecordById(recordEntity.getId())).thenReturn(recordEntity);
+        when(findRecordsRepository.findRecordById(recordEntity.getId())).thenReturn(Optional.ofNullable(recordEntity));
 
         DrinkRecordSaveRequest saveRequest = DrinkRecordSaveRequest.builder()
                 .drinkId(drinkEntity.getId())
@@ -66,9 +69,10 @@ class DrinkRecordSaveServiceTest {
 
         drinkRecordSaveService.saveDrinkRecord(memberEntity.getId(), saveRequest);
 
-        RecordEntity findRecord = findRecordsRepository.findRecordById(recordEntity.getId());
+        Optional<RecordEntity> findRecordOpt = findRecordsRepository.findRecordById(recordEntity.getId());
 
-        assertEquals(recordEntity.getId(), findRecord.getId());
+        assertThat(findRecordOpt.isPresent());
+        assertEquals(recordEntity.getId(), findRecordOpt.get().getId());
     }
 
 }
