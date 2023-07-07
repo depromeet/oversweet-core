@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static com.depromeet.oversweet.domain.drink.entity.QDrinkEntity.drinkEntity;
 import static com.depromeet.oversweet.domain.franchise.entity.QFranchiseEntity.franchiseEntity;
@@ -39,4 +40,15 @@ public class FindRecordsRepositoryImpl implements FindRecordsRepository {
                 .fetch();
 
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<RecordEntity> findRecordById(Long id) {
+        return Optional.ofNullable(queryFactory.selectFrom(recordEntity)
+                .join(recordEntity.drink, drinkEntity).fetchJoin()
+                .join(recordEntity.drink.franchise, franchiseEntity).fetchJoin()
+                .where(recordEntity.member.id.eq(id))
+                .fetchOne());
+    }
 }
+

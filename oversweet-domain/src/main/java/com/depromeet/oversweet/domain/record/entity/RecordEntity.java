@@ -52,8 +52,6 @@ public class RecordEntity extends BaseTimeEntity {
         this.intakeSugar = intakeSugar;
     }
 
-
-
     public int totalSugar() {
         return this.count * this.intakeSugar;
     }
