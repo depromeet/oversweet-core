@@ -30,7 +30,7 @@ public class RecordController {
      * 추후 로그인 기능 구현 후, 로그인한 유저의 ID를 받아와야 함 (ex. @AuthenticationPrincipal User user)
      */
     @Operation(summary = "마신 음료 당 기록", description = "유저가 마신 음료의 당을 기록합니다.")
-    @ApiResponses(@ApiResponse(responseCode = "200", description = "마신 음료 당 기록 성공"))
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "마신 음료 당 기록 성공"))
     @PostMapping("/drink")
     public ResponseEntity<DataResponse<DrinkRecordSaveResponse>> saveDrinkRecord(
             @RequestBody @Valid final DrinkRecordSaveRequest drinkRecordSaveRequest
