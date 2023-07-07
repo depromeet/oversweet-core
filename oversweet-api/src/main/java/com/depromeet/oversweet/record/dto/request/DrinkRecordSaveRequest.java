@@ -9,7 +9,7 @@ import lombok.Builder;
 public record DrinkRecordSaveRequest(
 
         @NotNull
-        @Schema(description = "음료 ID", example = "1") Long id,
+        @Schema(description = "음료 ID", example = "1") Long drinkId,
 
         @NotNull
         @Min(1)

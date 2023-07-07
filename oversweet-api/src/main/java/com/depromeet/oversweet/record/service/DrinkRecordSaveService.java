@@ -30,7 +30,7 @@ public class DrinkRecordSaveService {
 
         final MemberEntity findMember = findMemberRepository.findMemberById(memberId);
 
-        final DrinkEntity findDrink = findDrinkRepository.findDrinkById(drinkRecordSaveRequest.id());
+        final DrinkEntity findDrink = findDrinkRepository.findDrinkById(drinkRecordSaveRequest.drinkId());
 
         RecordEntity record = RecordEntity.builder()
                 .member(findMember)

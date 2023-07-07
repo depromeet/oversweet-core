@@ -59,7 +59,7 @@ class DrinkRecordSaveServiceTest {
         when(findRecordsRepository.findRecordById(recordEntity.getId())).thenReturn(recordEntity);
 
         DrinkRecordSaveRequest saveRequest = DrinkRecordSaveRequest.builder()
-                .id(drinkEntity.getId())
+                .drinkId(drinkEntity.getId())
                 .count(recordEntity.getCount())
                 .intakeSugar(recordEntity.getIntakeSugar())
                 .build();
