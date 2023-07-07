@@ -54,14 +54,17 @@ public class FranchiseSearchServiceTest {
         assertThat(response.size() == 2);
         assertThat(response.get(0).name().equals(firstFranchiseEntity.getName()));
         assertThat(response.get(0).id().equals(firstFranchiseEntity.getId()));
+        assertThat(response.get(0).imageUrl().equals(firstFranchiseEntity.getImageUrl()));
         assertThat(response.get(1).name().equals(secondFranchiseEntity.getName()));
         assertThat(response.get(1).id().equals(secondFranchiseEntity.getId()));
+        assertThat(response.get(1).imageUrl().equals(secondFranchiseEntity.getImageUrl()));
     }
 
     private FranchiseEntity getFranchiseEntity(final Long id, final String name) {
         final FranchiseEntity franchiseEntity = FranchiseEntity.builder()
                 .id(id)
                 .name(name)
+                .imageUrl("test")
                 .build();
         return franchiseEntity;
     }
