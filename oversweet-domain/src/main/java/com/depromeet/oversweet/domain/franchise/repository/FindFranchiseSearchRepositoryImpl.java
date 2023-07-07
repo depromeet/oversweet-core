@@ -4,6 +4,7 @@ import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
 import com.depromeet.oversweet.exception.franchise.NotFoundFranchiseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class FindFranchiseSearchRepositoryImpl implements FindFranchiseSearchRep
     private final FranchiseJpaRepository franchiseJpaRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<FranchiseEntity> findFranchiseByKeyword(final String keyword) {
         return franchiseJpaRepository.findByKeyword(keyword);
     }
