@@ -9,6 +9,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+/**
+ * 레디스 관련 Config 파일
+ */
 @Configuration
 @EnableRedisRepositories
 public class RedisConfig {

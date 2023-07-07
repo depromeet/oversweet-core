@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * 레디스의 접근하여 데이터를 저장하거나 가져오는 Repository 역할 클래스
+ */
 @RequiredArgsConstructor
 @Repository
 public class RedisRepository {

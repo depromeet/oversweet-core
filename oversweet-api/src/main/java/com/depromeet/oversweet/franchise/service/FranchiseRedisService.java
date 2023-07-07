@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+/**
+ * 프랜차이즈 정보를 레디스에 저장하거나 가져오는 서비스
+ */
 @Service
 @RequiredArgsConstructor
 public class FranchiseRedisService {

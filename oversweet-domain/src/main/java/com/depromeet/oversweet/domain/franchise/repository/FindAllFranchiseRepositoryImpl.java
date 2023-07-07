@@ -7,6 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * 프랜차이즈 전체 목록 조회 구현체
+ */
 @Repository
 @RequiredArgsConstructor
 public class FindAllFranchiseRepositoryImpl implements FindAllFranchiseRepository {
