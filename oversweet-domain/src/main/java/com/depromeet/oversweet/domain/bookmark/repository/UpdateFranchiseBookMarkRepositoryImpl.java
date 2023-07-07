@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @RequiredArgsConstructor
-public class RegisterFranchiseBookMarkRepositoryImpl implements RegisterFranchiseBookMarkRepository {
+public class UpdateFranchiseBookMarkRepositoryImpl implements UpdateFranchiseBookMarkRepository {
 
     private final FranchiseBookMarkJpaRepository franchiseBookMarkJpaRepository;
 
@@ -28,5 +28,17 @@ public class RegisterFranchiseBookMarkRepositoryImpl implements RegisterFranchis
     public void saveFranchiseBookmark(MemberEntity member, FranchiseEntity franchise) {
         FranchiseBookmarkEntity franchiseBookmark = new FranchiseBookmarkEntity(member, franchise);
         franchiseBookMarkJpaRepository.save(franchiseBookmark);
+    }
+
+    /**
+     * 특정 프랜차이즈을 즐겨찾기에서 삭제한다.
+     *
+     * @param member API 요청자 Entity
+     * @param franchise 즐겨찾기에서 삭제할 프랜차이즈 Entity
+     */
+    @Override
+    @Transactional
+    public void deleteFranchiseBookmark(MemberEntity member, FranchiseEntity franchise) {
+        franchiseBookMarkJpaRepository.deleteByMemberAndFranchise(member, franchise);
     }
 }

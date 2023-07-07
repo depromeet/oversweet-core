@@ -37,6 +37,9 @@ subprojects {
 
 	tasks.named('test') {
 		useJUnitPlatform()
+
+		// time zone 설정
+		systemProperty 'user.timezone', 'Asia/Seoul'
 	}
 
 	// api를 제외한 나머지 모듈에 해당

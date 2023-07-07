@@ -26,6 +26,6 @@ public class FranchiseBookMarkedInfo {
     }
 
     public FranchiseBookMarkedInfo(FranchiseBookmarkEntity bookMark) {
-        this(bookMark.getId(), bookMark.getFranchise().getImageUrl(), bookMark.getFranchise().getName());
+        this(bookMark.getFranchise().getId(), bookMark.getFranchise().getImageUrl(), bookMark.getFranchise().getName());
     }
 }

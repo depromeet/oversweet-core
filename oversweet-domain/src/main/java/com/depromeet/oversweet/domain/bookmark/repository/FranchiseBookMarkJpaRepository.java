@@ -12,5 +12,5 @@ public interface FranchiseBookMarkJpaRepository extends JpaRepository<FranchiseB
 
     boolean existsByMemberAndFranchise(MemberEntity member, FranchiseEntity franchise);
 
-
+    void deleteByMemberAndFranchise(MemberEntity member, FranchiseEntity franchise);
 }
