@@ -25,12 +25,12 @@ import java.util.List;
 public class FranchiseController {
     private final FranchiseSearchService franchiseSearchService;
 
-    @Operation(summary = "프랜차이즈를 검색 키워드를 통해 조회", description = "프랜차이즈 검색 API")
+    @Operation(summary = "검색 키워드로 해당하는 프랜차이즈 목록 조회", description = "프랜차이즈 검색 API")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "프랜차이즈 검색 성공"))
     @GetMapping("/search")
     public ResponseEntity<DataResponse<List<FranchiseInfo>>> getFranchiseByKeyword(@RequestParam @Parameter(description = "프랜차이즈 검색을 위한 키워드") final String keyword){
         final List<FranchiseInfo> response = franchiseSearchService.getFranchiseByKeyword(keyword);
         return ResponseEntity.ok()
-                .body(DataResponse.of(HttpStatus.OK, "유저가 하루 먹은 당 통계 조회 성공", response));
+                .body(DataResponse.of(HttpStatus.OK, "검색 키워드로 해당하는 프랜차이즈 목록 조회 성공", response));
     }
 }
