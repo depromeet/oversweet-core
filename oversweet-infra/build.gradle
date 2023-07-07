@@ -6,6 +6,7 @@ dependencies {
     // 모듈에 맞는 의존성 추가
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    api 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 dependencyManagement {

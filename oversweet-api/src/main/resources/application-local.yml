@@ -9,13 +9,18 @@ spring:
   # JPA
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true # 포맷 형식
         highlight_sql: true # sql 하이라이팅
         default_batch_fetch_size: 1000
         use_sql_comments: true # 개발자가 작성한 JPQL 확인 가능
+  # Redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
 logging:
   level:
