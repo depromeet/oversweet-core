@@ -15,4 +15,6 @@ public interface DrinkBookMarkJpaRepository extends JpaRepository<DrinkBookmarkE
     List<DrinkBookmarkEntity> findByMemberId(@Param("id") Long id);
 
     boolean existsByMemberAndDrink(MemberEntity member, DrinkEntity drink);
+
+    void deleteByMemberAndDrink(MemberEntity member, DrinkEntity drink);
 }
