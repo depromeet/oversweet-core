@@ -37,7 +37,7 @@ public class DrinkController {
     @ApiResponses(@ApiResponse(responseCode = "200", description = "유저가 하루 먹은 당 통계 조회."))
     @GetMapping("/statistics/daily")
     public ResponseEntity<DataResponse<DrinkDailySugarStatisticsResponse>> retrieveUserDailySugarStatistics() {
-        final DrinkDailySugarStatisticsResponse response = drinkDailyStatisticsService.retrieveUserDailySugarStatistics(1L);
+        final DrinkDailySugarStatisticsResponse response = drinkDailyStatisticsService.retrieveUserDailySugarStatistics(100L);
         return ResponseEntity.ok()
                 .body(DataResponse.of(HttpStatus.OK, "유저가 하루 먹은 당 통계 조회 성공", response));
     }
@@ -52,7 +52,7 @@ public class DrinkController {
     public ResponseEntity<DataResponse<DrinkWeeklySugarStatisticsResponse>> retrieveUserWeeklySugarStatistics(
             @RequestBody @Valid final DrinkWeeklySugarDateRequest request
     ) {
-        final DrinkWeeklySugarStatisticsResponse response = drinkWeeklyStatisticsService.retrieveUserWeeklySugarStatistics(1L, request);
+        final DrinkWeeklySugarStatisticsResponse response = drinkWeeklyStatisticsService.retrieveUserWeeklySugarStatistics(100L, request);
         return ResponseEntity.ok()
                 .body(DataResponse.of(HttpStatus.OK, "유저가 먹은 주간 당 통계 조회 성공", response));
     }
