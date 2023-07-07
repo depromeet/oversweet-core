@@ -39,4 +39,15 @@ public class FindRecordsRepositoryImpl implements FindRecordsRepository {
                 .fetch();
 
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public RecordEntity findRecordById(Long id) {
+        return queryFactory.selectFrom(recordEntity)
+                .join(recordEntity.drink, drinkEntity).fetchJoin()
+                .join(recordEntity.drink.franchise, franchiseEntity).fetchJoin()
+                .where(recordEntity.member.id.eq(id))
+                .fetchOne();
+    }
 }
+

@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface FindRecordsRepository {
     List<RecordEntity> findRecordsByLocalDateTime(final Long memberId, final LocalDateTime startDate, LocalDateTime endDate);
+
+    RecordEntity findRecordById(Long id);
 }
