@@ -3,24 +3,17 @@ package com.depromeet.oversweet.domain.drink.entity;
 import com.depromeet.oversweet.domain.common.entity.BaseTimeEntity;
 import com.depromeet.oversweet.domain.drink.enums.DrinkCategory;
 import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Table(name = "drink")
+@Table(name = "drink",
+        indexes = {
+                @Index(name = "idx_franchise_id_and_name", columnList = "franchise_id,name")
+        }
+)
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
