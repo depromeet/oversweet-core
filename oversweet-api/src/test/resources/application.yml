@@ -1,7 +1,3 @@
 spring:
   profiles:
     active: test
-  data:
-    redis:
-      host: localhost
-      port: 6379

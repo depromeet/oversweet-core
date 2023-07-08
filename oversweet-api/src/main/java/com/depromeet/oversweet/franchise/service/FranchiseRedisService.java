@@ -19,15 +19,15 @@ public class FranchiseRedisService {
     private final RedisRepository redisRepository;
     private final FindAllFranchiseRepository findAllFranchiseRepository;
 
-    public void createFranchiseAtRedis(){
-        final List<FranchiseEntity> findFranchises = findAllFranchiseRepository.findAll();
-        final List<FranchiseInfo> franchiseInfos = findFranchises.stream()
-                .map(FranchiseInfo::of)
-                .toList();
-        redisRepository.saveData(FRANCHISE, franchiseInfos);
-    }
-
-    public List<FranchiseInfo> getFranchiseAtRedis(){
-        return redisRepository.getData(FRANCHISE, FranchiseInfo.class);
+    public List<FranchiseInfo> getFranchises() {
+        List<FranchiseInfo> franchiseInfos = redisRepository.getData(FRANCHISE, FranchiseInfo.class);
+        if (franchiseInfos == null || franchiseInfos.isEmpty()) {
+            final List<FranchiseEntity> findFranchises = findAllFranchiseRepository.findAll();
+            franchiseInfos = findFranchises.stream()
+                    .map(FranchiseInfo::of)
+                    .toList();
+            redisRepository.saveData(FRANCHISE, franchiseInfos);
+        }
+        return franchiseInfos;
     }
 }

@@ -40,20 +40,11 @@ public class FranchiseController {
                 .body(DataResponse.of(HttpStatus.OK, "검색 키워드로 해당하는 프랜차이즈 목록 조회 성공", response));
     }
 
-    @Operation(summary = "레디스에 프랜차이즈 목록 세팅", description = "레디스에 프랜차이즈 목록 세팅 API")
-    @ApiResponses(@ApiResponse(responseCode = "200", description = "레디스에 프랜차이즈 목록 세팅 성공"))
-    @PostMapping("redis")
-    public ResponseEntity<MessageResponse> createFranchiseAtRedis() {
-        franchiseRedisService.createFranchiseAtRedis();
-        return ResponseEntity.ok()
-                .body(MessageResponse.of(OK, "레디스에 프랜차이즈 목록 세팅 성공"));
-    }
-
-    @Operation(summary = "레디스에 저장된 프랜차이즈 목록 조회", description = "레디스에 저장된 프랜차이즈 목록 조회 API")
+    @Operation(summary = "레디스에 저장된 프랜차이즈 목록 조회하거나 없다면 생성합니다.", description = "레디스에 저장된 프랜차이즈 목록 조회 API")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "레디스에 저장된 프랜차이즈 목록 조회 성공"))
     @GetMapping("redis")
-    public ResponseEntity<DataResponse<List<FranchiseInfo>>> getFranchiseAtRedis() {
-        final List<FranchiseInfo> franchise = franchiseRedisService.getFranchiseAtRedis();
+    public ResponseEntity<DataResponse<List<FranchiseInfo>>> getOrCreateFranchiseAtRedis() {
+        final List<FranchiseInfo> franchise = franchiseRedisService.getFranchises();
         return ResponseEntity.ok()
                 .body(DataResponse.of(OK, "레디스에 저장된 프랜차이즈 목록 조회 성공", franchise));
     }
