@@ -1,7 +1,7 @@
 package com.depromeet.oversweet.drink.service;
 
 import com.depromeet.oversweet.bookmark.dto.response.FranchiseInfo;
-import com.depromeet.oversweet.domain.drink.repository.DrinkInfoWithScrapStatus;
+import com.depromeet.oversweet.domain.drink.dto.DrinkInfoWithScrapStatus;
 import com.depromeet.oversweet.domain.drink.repository.FindDrinkRepository;
 import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
 import com.depromeet.oversweet.domain.franchise.repository.FindFranchiseRepository;

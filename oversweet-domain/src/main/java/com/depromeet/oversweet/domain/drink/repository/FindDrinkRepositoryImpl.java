@@ -1,5 +1,6 @@
 package com.depromeet.oversweet.domain.drink.repository;
 
+import com.depromeet.oversweet.domain.drink.dto.DrinkInfoWithScrapStatus;
 import com.depromeet.oversweet.domain.drink.entity.DrinkEntity;
 import com.depromeet.oversweet.exception.drink.NotFoundDrinkException;
 import lombok.RequiredArgsConstructor;

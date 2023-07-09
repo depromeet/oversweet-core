@@ -1,4 +1,4 @@
-package com.depromeet.oversweet.domain.drink.repository;
+package com.depromeet.oversweet.domain.drink.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
