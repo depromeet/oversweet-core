@@ -56,7 +56,7 @@ public class ErrorResponse {
      *
      * @param code ErrorCode Enum 클래스를 넣는다
      */
-    private ErrorResponse(final ErrorCode code) {
+    public ErrorResponse(final ErrorCode code) {
         this.message = code.getMessage();
         this.status = code.getStatus();
         this.code = code.getCode();
