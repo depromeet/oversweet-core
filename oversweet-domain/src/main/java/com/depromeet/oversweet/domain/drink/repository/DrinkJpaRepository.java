@@ -12,7 +12,7 @@ public interface DrinkJpaRepository extends JpaRepository<DrinkEntity, Long> {
 
     List<DrinkEntity> findByFranchiseIdAndName(Long franchiseId, String drinkName);
 
-    @Query("SELECT new com.depromeet.oversweet.domain.drink.repository.DrinkInfoWithScrapStatus(d.id, d.name, d.imageUrl, d.size, d.calorie, d.sugar, " +
+    @Query("SELECT new com.depromeet.oversweet.domain.drink.dto.DrinkInfoWithScrapStatus(d.id, d.name, d.imageUrl, d.size, d.calorie, d.sugar, " +
             "(CASE WHEN db IS NULL THEN false ELSE true END)) " +
             "FROM DrinkEntity d " +
             "LEFT JOIN DrinkBookmarkEntity db ON d.id = db.drink.id AND db.member.id = :memberId " +
