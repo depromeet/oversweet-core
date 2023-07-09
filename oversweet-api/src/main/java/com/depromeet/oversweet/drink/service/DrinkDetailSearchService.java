@@ -6,7 +6,7 @@ import com.depromeet.oversweet.domain.drink.repository.FindDrinkRepository;
 import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
 import com.depromeet.oversweet.domain.franchise.repository.FindFranchiseRepository;
 import com.depromeet.oversweet.drink.dto.request.DrinkInfoRequest;
-import com.depromeet.oversweet.drink.dto.response.DrinkDetailInfoResponseDto;
+import com.depromeet.oversweet.drink.dto.response.DrinkDetailInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,7 @@ public class DrinkDetailSearchService {
      * @param request 음료 정보를 확인하기 위해 필요한 값을 담고 있는 request dto
      * @return 음료 상세 정보
      */
-    public DrinkDetailInfoResponseDto retrieveDrinkDetail(Long memberId, DrinkInfoRequest request) {
+    public DrinkDetailInfoResponse retrieveDrinkDetail(Long memberId, DrinkInfoRequest request) {
         // 프랜차이즈 ID와 음료 이름으로 => 음료가 존재하는지 학인 => 없으면 exception
         findDrinkRepository.checkDrinkExist(request.getFranchiseId(), request.getDrinkName());
 
@@ -39,7 +39,7 @@ public class DrinkDetailSearchService {
         // 음료 정보를 조회 (음료 정보 & 사이즈별 즐겨 찾기 여부)
         List<DrinkInfoWithScrapStatus> drinkDetails = findDrinkRepository.findDrinkDetail(memberId, franchise.getId(), request.getDrinkName());
 
-        return new DrinkDetailInfoResponseDto(new FranchiseInfo(franchise), drinkDetails);
+        return new DrinkDetailInfoResponse(new FranchiseInfo(franchise), drinkDetails);
     }
 
 

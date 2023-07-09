@@ -4,7 +4,7 @@ package com.depromeet.oversweet.drink.controller;
 import com.depromeet.oversweet.drink.dto.request.DrinkInfoRequest;
 import com.depromeet.oversweet.drink.dto.request.DrinkWeeklySugarDateRequest;
 import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarStatisticsResponse;
-import com.depromeet.oversweet.drink.dto.response.DrinkDetailInfoResponseDto;
+import com.depromeet.oversweet.drink.dto.response.DrinkDetailInfoResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkWeeklySugarStatisticsResponse;
 import com.depromeet.oversweet.drink.service.DrinkDailyStatisticsService;
 import com.depromeet.oversweet.drink.service.DrinkDetailSearchService;
@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,8 +68,8 @@ public class DrinkController {
     @Operation(summary = "음료 상세 조회", description = "음료 상세 정보를 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "음료 상세 조회."))
     @GetMapping("/detail")
-    public ResponseEntity<DataResponse<DrinkDetailInfoResponseDto>> retrieveDrinkDetail(@RequestBody @Valid final DrinkInfoRequest request) {
-        DrinkDetailInfoResponseDto response = drinkDetailSearchService.retrieveDrinkDetail(100L, request);
+    public ResponseEntity<DataResponse<DrinkDetailInfoResponse>> retrieveDrinkDetail(@RequestBody @Valid final DrinkInfoRequest request) {
+        DrinkDetailInfoResponse response = drinkDetailSearchService.retrieveDrinkDetail(100L, request);
         return ResponseEntity.ok().body(DataResponse.of(HttpStatus.OK, "음료 상세 조회 성공", response));
     }
 }
