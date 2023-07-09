@@ -1,4 +1,4 @@
-package com.depromeet.oversweet.member.dto;
+package com.depromeet.oversweet.member.dto.request;
 
 import com.depromeet.oversweet.domain.member.enums.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;

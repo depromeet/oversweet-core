@@ -1,4 +1,4 @@
-package com.depromeet.oversweet.member.dto;
+package com.depromeet.oversweet.member.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.depromeet.oversweet.config;
 
-import com.depromeet.oversweet.member.dto.MemberKakaoUserInfoResponse;
+import com.depromeet.oversweet.member.dto.response.MemberKakaoUserInfoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
