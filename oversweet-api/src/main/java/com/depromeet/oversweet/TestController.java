@@ -20,7 +20,7 @@ import static com.depromeet.oversweet.exception.ErrorCode.TEST_EXCEPTION;
 
 @Tag(name = "Test", description = "테스트 API")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/test")
 @RequiredArgsConstructor
 public class TestController {
 
@@ -32,12 +32,12 @@ public class TestController {
         return "health";
     }
 
-    @GetMapping("test-db-connection")
+    @GetMapping("/db-connection")
     public String testDbConnection() {
         return franchisePureService.getFranchiseName(1L);
     }
 
-    @GetMapping("test-querydsl")
+    @GetMapping("/querydsl")
     public List<String> testQuerydsl() {
         return franchisePureService.getFranchiseNames(List.of(1L, 2L));
     }
@@ -46,7 +46,7 @@ public class TestController {
      * 1. OverSweet 을 상속 받은 TestException 검증
      * 2. 정상 데이터 검증
      */
-    @GetMapping("/test-exception-handler/{id}")
+    @GetMapping("/exception-handler/{id}")
     public ResponseEntity<DataResponse<TestDataResponseDto>> testExceptionHandler(@PathVariable("id") Long id) {
         if (id == 1) {
             throw new TestException(TEST_EXCEPTION);
@@ -58,7 +58,7 @@ public class TestController {
     /**
      * Dto로 바인딩 되는 Validation 검증 (NotNull, NotBlank)
      */
-    @GetMapping("/test-exception-handler2")
+    @GetMapping("/exception-handler2")
     public ResponseEntity<DataResponse<TestDataResponseDto>> testExceptionHandler2(@RequestBody @Validated TestDataRequestDto testDataRequestDto) {
         TestDataResponseDto testDataResponseDto = new TestDataResponseDto(testDataRequestDto.getName());
         return new ResponseEntity<>(DataResponse.of(HttpStatus.ACCEPTED, "응답 성공", testDataResponseDto), HttpStatus.ACCEPTED);
