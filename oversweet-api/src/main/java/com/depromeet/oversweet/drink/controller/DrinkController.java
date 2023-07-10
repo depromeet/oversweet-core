@@ -5,9 +5,11 @@ import com.depromeet.oversweet.drink.dto.request.DrinkInfoRequest;
 import com.depromeet.oversweet.drink.dto.request.DrinkWeeklySugarDateRequest;
 import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarStatisticsResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkDetailInfoResponse;
+import com.depromeet.oversweet.drink.dto.response.DrinkRedisInfo;
 import com.depromeet.oversweet.drink.dto.response.DrinkWeeklySugarStatisticsResponse;
 import com.depromeet.oversweet.drink.service.DrinkDailyStatisticsService;
 import com.depromeet.oversweet.drink.service.DrinkDetailSearchService;
+import com.depromeet.oversweet.drink.service.DrinkRedisService;
 import com.depromeet.oversweet.drink.service.DrinkWeeklyStatisticsService;
 import com.depromeet.oversweet.response.DataResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +25,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+import static org.springframework.http.HttpStatus.OK;
+
 @Tag(name = "음료", description = "음료 관련 API")
 @RestController
 @RequestMapping("/api/v1/drinks")
@@ -32,6 +38,7 @@ public class DrinkController {
     private final DrinkDailyStatisticsService drinkDailyStatisticsService;
     private final DrinkWeeklyStatisticsService drinkWeeklyStatisticsService;
     private final DrinkDetailSearchService drinkDetailSearchService;
+    private final DrinkRedisService drinkRedisService;
 
     /**
      * 유저 하루(데일리) 먹은 당 통계 및 음료 목록 조회.
@@ -71,5 +78,14 @@ public class DrinkController {
     public ResponseEntity<DataResponse<DrinkDetailInfoResponse>> retrieveDrinkDetail(@RequestBody @Valid final DrinkInfoRequest request) {
         DrinkDetailInfoResponse response = drinkDetailSearchService.retrieveDrinkDetail(100L, request);
         return ResponseEntity.ok().body(DataResponse.of(HttpStatus.OK, "음료 상세 조회 성공", response));
+    }
+
+    @Operation(summary = "레디스에 저장된 음료 목록 조회하거나 없다면 생성합니다.", description = "레디스에 저장된 음료 목록 조회 API")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "레디스에 저장된 음료 목록 조회 성공"))
+    @GetMapping("/redis")
+    public ResponseEntity<DataResponse<List<DrinkRedisInfo>>> getOrCreateDrinkAtRedis() {
+        final List<DrinkRedisInfo> drinks = drinkRedisService.getDrinks();
+        return ResponseEntity.ok()
+                .body(DataResponse.of(OK, "레디스에 저장된 음료 목록 조회 성공", drinks));
     }
 }

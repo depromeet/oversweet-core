@@ -42,7 +42,7 @@ public class FranchiseController {
 
     @Operation(summary = "레디스에 저장된 프랜차이즈 목록 조회하거나 없다면 생성합니다.", description = "레디스에 저장된 프랜차이즈 목록 조회 API")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "레디스에 저장된 프랜차이즈 목록 조회 성공"))
-    @GetMapping("redis")
+    @GetMapping("/redis")
     public ResponseEntity<DataResponse<List<FranchiseInfo>>> getOrCreateFranchiseAtRedis() {
         final List<FranchiseInfo> franchise = franchiseRedisService.getFranchises();
         return ResponseEntity.ok()
