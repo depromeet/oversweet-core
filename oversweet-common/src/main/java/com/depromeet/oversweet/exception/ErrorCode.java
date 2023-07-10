@@ -38,6 +38,7 @@ public enum ErrorCode {
     // Security (jwt 토큰 및 Security)
     EXPIRED_TOKEN_ERROR(HttpStatus.UNAUTHORIZED, "S001", "토큰이 만료되었습니다."),
     INVALID_TOKEN_ERROR(HttpStatus.UNAUTHORIZED, "S002", "토큰이 유효하지 않습니다."),
+    ACCESS_DENIED(HttpStatus.FORBIDDEN, "S003", "토큰이 존재하지 않아 접근이 불가합니다."),
 
     // Test
     TEST_EXCEPTION(HttpStatus.BAD_REQUEST, "T001", "테스트 에러");
