@@ -32,6 +32,8 @@ public enum ErrorCode {
     // Drink (음료)
     NOT_FOUND_DRINK(HttpStatus.NOT_FOUND, "D001", "존재 하지 않는 음료 입니다."),
 
+    // Redis (레디스)
+    OVERSWEET_REDIS_JSON_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "R001", "레디스 직렬화/역직렬화 과정에서 오류가 발생했습니다."),
     // Test
     TEST_EXCEPTION(HttpStatus.BAD_REQUEST, "T001", "테스트 에러");
 
