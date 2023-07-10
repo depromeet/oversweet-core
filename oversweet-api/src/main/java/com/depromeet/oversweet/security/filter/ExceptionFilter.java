@@ -41,7 +41,7 @@ public class ExceptionFilter extends OncePerRequestFilter {
     }
 
     private void writeErrorResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
-        ErrorResponse errorResponse = new ErrorResponse(errorCode);
+        ErrorResponse errorResponse = ErrorResponse.of(errorCode);
         response.setStatus(errorCode.getStatus());
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
