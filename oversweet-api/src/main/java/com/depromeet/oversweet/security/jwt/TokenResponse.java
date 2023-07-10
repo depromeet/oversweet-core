@@ -1,4 +1,4 @@
-package com.depromeet.oversweet.util;
+package com.depromeet.oversweet.security.jwt;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
