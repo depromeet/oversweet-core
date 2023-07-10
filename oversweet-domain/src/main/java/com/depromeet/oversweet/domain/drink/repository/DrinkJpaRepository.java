@@ -1,6 +1,7 @@
 package com.depromeet.oversweet.domain.drink.repository;
 
 import com.depromeet.oversweet.domain.drink.dto.DrinkInfoWithScrapStatus;
+import com.depromeet.oversweet.domain.drink.dto.DrinkSimpleInfo;
 import com.depromeet.oversweet.domain.drink.entity.DrinkEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,6 @@ public interface DrinkJpaRepository extends JpaRepository<DrinkEntity, Long> {
             "WHERE d.franchise.id = :franchiseId AND d.name = :drinkName ORDER BY d.size ASC")
     List<DrinkInfoWithScrapStatus> findDrinkWithBookmarkStatus(@Param("memberId") Long memberId, @Param("franchiseId") Long franchiseId, @Param("drinkName") String drinkName);
 
+    @Query(value = "select d.id, d.name from drink d", nativeQuery = true)
+    List<DrinkSimpleInfo> findAllDrinkSimpleInfo();
 }

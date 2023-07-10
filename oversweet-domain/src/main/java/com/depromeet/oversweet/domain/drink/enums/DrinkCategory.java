@@ -10,4 +10,5 @@ public enum DrinkCategory {
     ADE,
     TEA,
     SMOOTHIE,
+    JUICE
 }
