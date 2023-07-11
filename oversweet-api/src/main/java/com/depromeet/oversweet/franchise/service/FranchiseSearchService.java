@@ -1,12 +1,20 @@
 package com.depromeet.oversweet.franchise.service;
 
-import com.depromeet.oversweet.common.dto.response.FranchiseInfo;
-import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
-import com.depromeet.oversweet.domain.franchise.repository.FindFranchiseSearchRepository;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.depromeet.oversweet.common.dto.response.FranchiseInfo;
+import com.depromeet.oversweet.domain.bookmark.repository.FindFranchiseBookMarkRepository;
+import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
+import com.depromeet.oversweet.domain.franchise.repository.FindFranchiseSearchRepository;
+import com.depromeet.oversweet.domain.record.dto.RankingDrinks;
+import com.depromeet.oversweet.domain.record.repository.FindRecordsRepository;
+import com.depromeet.oversweet.drink.vo.LocalDateTimeInfo;
+import com.depromeet.oversweet.franchise.dto.response.FranchiseInfoWithScrapStatus;
+import com.depromeet.oversweet.franchise.dto.response.MostPopularDrinkResponse;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * 프랜차이즈 검색 서비스
@@ -14,12 +22,37 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class FranchiseSearchService {
+
     private final FindFranchiseSearchRepository findFranchiseSearchRepository;
+    private final FindRecordsRepository findRecordsRepository;
+    private final FindFranchiseBookMarkRepository findFranchiseBookMarkRepository;
 
     public List<FranchiseInfo> getFranchiseByKeyword(final String keyword) {
         final List<FranchiseEntity> findFranchise = findFranchiseSearchRepository.findFranchiseByKeyword(keyword);
         return findFranchise.stream()
                 .map(franchise -> FranchiseInfo.of(franchise))
                 .toList();
+    }
+
+    /**
+     * 프랜차이즈 기준 가장 인기있는 음료 3개 조회 (어제 기준)
+     * 1, 2, 3위 음료 조회
+     *
+     * @param franchiseId 프랜차이즈 ID
+     */
+    public MostPopularDrinkResponse searchPopularDrinkByFranchiseId(final Long memberId, final Long franchiseId) {
+        // 프랜차이즈 조회
+        FranchiseEntity franchise = findFranchiseSearchRepository.findFranchiseById(franchiseId);
+
+        // 프랜차이즈 즐겨찾기 여부 조회
+        boolean isBookMarked = findFranchiseBookMarkRepository.findFranchiseByMemberIdAndFranchiseId(memberId, franchiseId);
+
+
+        // 가장 많이 기록된 음료 3개 조회
+        LocalDateTimeInfo localDateTimeInfo = LocalDateTimeInfo.getYesterday();
+        RankingDrinks topDrinks = findRecordsRepository
+                .findPopularDrinkRecordsByFranchiseId(franchiseId, localDateTimeInfo.startDateTime(), localDateTimeInfo.endDateTime());
+
+        return new MostPopularDrinkResponse(topDrinks.getRankingDrinks(), FranchiseInfoWithScrapStatus.of(franchise, isBookMarked));
     }
 }

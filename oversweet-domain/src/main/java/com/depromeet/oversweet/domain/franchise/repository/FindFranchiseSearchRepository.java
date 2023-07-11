@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface FindFranchiseSearchRepository {
     List<FranchiseEntity> findFranchiseByKeyword(String keyword);
+
+    FranchiseEntity findFranchiseById(Long franchiseId);
 }

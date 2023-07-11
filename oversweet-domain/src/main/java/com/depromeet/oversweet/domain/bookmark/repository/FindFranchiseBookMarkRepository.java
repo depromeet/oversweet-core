@@ -13,4 +13,6 @@ public interface FindFranchiseBookMarkRepository {
     List<FranchiseBookmarkEntity> findFranchiseBookMarkByMemberId(final Long memberId);
 
     void validateAlreadyFranchiseBookMarked(MemberEntity member, FranchiseEntity franchise);
+
+    boolean findFranchiseByMemberIdAndFranchiseId(Long memberId, Long franchiseId);
 }
