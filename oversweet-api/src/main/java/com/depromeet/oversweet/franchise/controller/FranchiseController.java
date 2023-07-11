@@ -58,9 +58,9 @@ public class FranchiseController {
      */
     @Operation(summary = "프랜차이즈 기준 가장 인기있는 음료 3개 조회 (어제 기준)", description = "프랜차이즈 기준 가장 인기있는 음료 3개 조회 (어제 기준) API")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "프랜차이즈 기준 가장 인기있는 음료 3개 조회 (어제 기준) 성공"))
-    @GetMapping("/{franchiseId}")
-    public ResponseEntity<DataResponse<MostPopularDrinkResponse>> getFranchiseByFranchiseId(@PathVariable @Parameter(description = "프랜차이즈 검색을 위한 키워드") final Long franchiseId,
-                                                                                            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    @GetMapping("/popular/{franchiseId}")
+    public ResponseEntity<DataResponse<MostPopularDrinkResponse>> getPopularDrinksByFranchiseId(@PathVariable @Parameter(description = "프랜차이즈 검색을 위한 키워드") final Long franchiseId,
+                                                                                                @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         MostPopularDrinkResponse response = franchiseSearchService.searchPopularDrinkByFranchiseId(customUserDetails.getId(), franchiseId);
         return ResponseEntity.ok()
                 .body(DataResponse.of(HttpStatus.OK, "프랜차이즈 기준 가장 인기있는 음료 3개 조회 (어제 기준) 성공", response));
