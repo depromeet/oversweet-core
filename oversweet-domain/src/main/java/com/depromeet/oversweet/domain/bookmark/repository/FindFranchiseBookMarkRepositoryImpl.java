@@ -1,16 +1,18 @@
 package com.depromeet.oversweet.domain.bookmark.repository;
 
+import static com.depromeet.oversweet.exception.ErrorCode.ALREADY_FRANCHISE_BOOK_MARKED;
+
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.depromeet.oversweet.domain.bookmark.entity.FranchiseBookmarkEntity;
 import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
 import com.depromeet.oversweet.domain.member.entity.MemberEntity;
 import com.depromeet.oversweet.exception.bookmark.AlreadyFranchiseBookMarked;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
-import static com.depromeet.oversweet.exception.ErrorCode.ALREADY_FRANCHISE_BOOK_MARKED;
 
 /**
  * 프랜차이즈 즐겨찾기 조회 레포지토리
@@ -47,5 +49,17 @@ public class FindFranchiseBookMarkRepositoryImpl implements FindFranchiseBookMar
         if (franchiseBookMarkJpaRepository.existsByMemberAndFranchise(member, franchise)) {
             throw new AlreadyFranchiseBookMarked(ALREADY_FRANCHISE_BOOK_MARKED);
         }
+    }
+
+    /**
+     * 유저가 즐겨 찾기한 프랜차이즈가 존재하는지 확인
+     *
+     * @param memberId    유저 ID
+     * @param franchiseId 프랜차이즈 ID
+     * @return 즐겨 찾기한 프랜차이즈가 존재하는지 여부
+     */
+    @Override
+    public boolean isFranchiseBookMarkedByMemberId(Long memberId, Long franchiseId) {
+        return franchiseBookMarkJpaRepository.existsByMember_IdAndFranchise_Id(memberId, franchiseId);
     }
 }
