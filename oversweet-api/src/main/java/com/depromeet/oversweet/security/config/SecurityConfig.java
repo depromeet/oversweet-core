@@ -1,11 +1,5 @@
 package com.depromeet.oversweet.security.config;
 
-import com.depromeet.oversweet.security.filter.ExceptionFilter;
-import com.depromeet.oversweet.security.filter.JwtAuthenticationFilter;
-import com.depromeet.oversweet.security.handler.JwtAuthenticationEntryPointHandler;
-import com.depromeet.oversweet.security.jwt.JwtTokenProvider;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,6 +11,14 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.depromeet.oversweet.security.filter.ExceptionFilter;
+import com.depromeet.oversweet.security.filter.JwtAuthenticationFilter;
+import com.depromeet.oversweet.security.handler.JwtAuthenticationEntryPointHandler;
+import com.depromeet.oversweet.security.jwt.JwtTokenProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity

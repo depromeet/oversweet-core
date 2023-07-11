@@ -8,7 +8,7 @@ import com.depromeet.oversweet.common.dto.response.FranchiseInfo;
 import com.depromeet.oversweet.domain.bookmark.repository.FindFranchiseBookMarkRepository;
 import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
 import com.depromeet.oversweet.domain.franchise.repository.FindFranchiseSearchRepository;
-import com.depromeet.oversweet.domain.record.dto.RankingDrinks;
+import com.depromeet.oversweet.domain.record.dto.RankingDrink;
 import com.depromeet.oversweet.domain.record.repository.FindRecordsRepository;
 import com.depromeet.oversweet.drink.vo.LocalDateTimeInfo;
 import com.depromeet.oversweet.franchise.dto.response.FranchiseInfoWithScrapStatus;
@@ -45,14 +45,14 @@ public class FranchiseSearchService {
         FranchiseEntity franchise = findFranchiseSearchRepository.findFranchiseById(franchiseId);
 
         // 프랜차이즈 즐겨찾기 여부 조회
-        boolean isBookMarked = findFranchiseBookMarkRepository.findFranchiseByMemberIdAndFranchiseId(memberId, franchiseId);
+        boolean isBookMarked = findFranchiseBookMarkRepository.isFranchiseBookMarkedByMemberId(memberId, franchiseId);
 
 
         // 가장 많이 기록된 음료 3개 조회
         LocalDateTimeInfo localDateTimeInfo = LocalDateTimeInfo.getYesterday();
-        RankingDrinks topDrinks = findRecordsRepository
+        List<RankingDrink> topDrinks = findRecordsRepository
                 .findPopularDrinkRecordsByFranchiseId(franchiseId, localDateTimeInfo.startDateTime(), localDateTimeInfo.endDateTime());
 
-        return new MostPopularDrinkResponse(topDrinks.getRankingDrinks(), FranchiseInfoWithScrapStatus.of(franchise, isBookMarked));
+        return MostPopularDrinkResponse.of(topDrinks, FranchiseInfoWithScrapStatus.of(franchise, isBookMarked));
     }
 }

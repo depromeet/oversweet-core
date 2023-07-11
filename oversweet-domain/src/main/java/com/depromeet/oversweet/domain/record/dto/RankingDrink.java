@@ -1,5 +1,7 @@
 package com.depromeet.oversweet.domain.record.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
+
 import lombok.Getter;
 
 /**
@@ -11,18 +13,12 @@ public class RankingDrink {
     private Long id;
     private String imageUrl;
     private String name;
-    private Long count;
-    private int rank;
 
-    public RankingDrink(Long id, String imageUrl, String name, Long count) {
+    @QueryProjection
+    public RankingDrink(Long id, String imageUrl, String name) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.name = name;
-        this.count = count;
     }
 
-
-    public void markRank(int rank) {
-        this.rank = rank;
-    }
 }

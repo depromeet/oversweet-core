@@ -8,13 +8,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.depromeet.oversweet.domain.record.dto.QRankingDrink;
 import com.depromeet.oversweet.domain.record.dto.RankingDrink;
-import com.depromeet.oversweet.domain.record.dto.RankingDrinks;
 import com.depromeet.oversweet.domain.record.entity.RecordEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -69,17 +67,22 @@ public class FindRecordsRepositoryImpl implements FindRecordsRepository {
      */
     @Override
     @Transactional(readOnly = true)
-    public RankingDrinks findPopularDrinkRecordsByFranchiseId(Long franchiseId, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<RankingDrink> findPopularDrinkRecordsByFranchiseId(Long franchiseId, LocalDateTime startDate, LocalDateTime endDate) {
         // 상위 3개만 조회
-        Pageable topThree = PageRequest.of(0, 3);
-        List<RankingDrink> topRecords = recordJpaRepository
-                .findTop3PopularDrinksByFranchiseIdAndBetweenDates(franchiseId, startDate, endDate, topThree);
-
-        // 조회된 값에서 순위를 매김
-        RankingDrinks rankingDrinks = new RankingDrinks(topRecords);
-        rankingDrinks.markRanking();
-
-        return rankingDrinks;
+        return queryFactory.select(new QRankingDrink(
+                        drinkEntity.id,
+                        drinkEntity.imageUrl,
+                        drinkEntity.name
+                ))
+                .from(recordEntity)
+                .join(recordEntity.drink, drinkEntity)
+                .join(drinkEntity.franchise, franchiseEntity)
+                .where(franchiseEntity.id.eq(franchiseId))
+                .where(recordEntity.createdAt.between(startDate, endDate))
+                .groupBy(drinkEntity.id, drinkEntity.imageUrl, drinkEntity.name)
+                .orderBy(recordEntity.count().desc())
+                .limit(3)
+                .fetch();
     }
 }
 

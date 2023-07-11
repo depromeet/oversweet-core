@@ -59,7 +59,7 @@ public class FindFranchiseBookMarkRepositoryImpl implements FindFranchiseBookMar
      * @return 즐겨 찾기한 프랜차이즈가 존재하는지 여부
      */
     @Override
-    public boolean findFranchiseByMemberIdAndFranchiseId(Long memberId, Long franchiseId) {
+    public boolean isFranchiseBookMarkedByMemberId(Long memberId, Long franchiseId) {
         return franchiseBookMarkJpaRepository.existsByMember_IdAndFranchise_Id(memberId, franchiseId);
     }
 }
