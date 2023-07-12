@@ -3,6 +3,7 @@ package com.depromeet.oversweet.drink.controller;
 
 import com.depromeet.oversweet.drink.dto.request.DrinkInfoRequest;
 import com.depromeet.oversweet.drink.dto.request.DrinkWeeklySugarDateRequest;
+import com.depromeet.oversweet.drink.dto.response.DrinkAllInfoResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarStatisticsResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkDetailInfoResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkRedisInfo;
@@ -10,10 +11,12 @@ import com.depromeet.oversweet.drink.dto.response.DrinkWeeklySugarStatisticsResp
 import com.depromeet.oversweet.drink.service.DrinkDailyStatisticsService;
 import com.depromeet.oversweet.drink.service.DrinkDetailSearchService;
 import com.depromeet.oversweet.drink.service.DrinkRedisService;
+import com.depromeet.oversweet.drink.service.DrinkSearchService;
 import com.depromeet.oversweet.drink.service.DrinkWeeklyStatisticsService;
 import com.depromeet.oversweet.response.DataResponse;
 import com.depromeet.oversweet.security.service.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -24,8 +27,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -36,17 +41,18 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping("/api/v1/drinks")
 @RequiredArgsConstructor
-@SecurityRequirement(name = "accessToken")
 public class DrinkController {
 
     private final DrinkDailyStatisticsService drinkDailyStatisticsService;
     private final DrinkWeeklyStatisticsService drinkWeeklyStatisticsService;
     private final DrinkDetailSearchService drinkDetailSearchService;
     private final DrinkRedisService drinkRedisService;
+    private final DrinkSearchService drinkSearchService;
 
     /**
      * 유저 하루(데일리) 먹은 당 통계 및 음료 목록 조회.
      */
+    @SecurityRequirement(name = "accessToken")
     @Operation(summary = "하루 당 섭취량 통계 조회", description = "유저가 하루 먹은 당 통계를 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "유저가 하루 먹은 당 통계 조회."))
     @GetMapping("/statistics/daily")
@@ -61,6 +67,7 @@ public class DrinkController {
     /**
      * 유저 주간 먹은 당 통계 정보 조회.
      */
+    @SecurityRequirement(name = "accessToken")
     @Operation(summary = "주간 당 섭취량 통계 조회", description = "유저의 주간 당 통계를 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "유저가 먹은 주간 당 통계 조회."))
     @GetMapping("/statistics/weekly")
@@ -92,5 +99,16 @@ public class DrinkController {
         final List<DrinkRedisInfo> drinks = drinkRedisService.getDrinks();
         return ResponseEntity.ok()
                 .body(DataResponse.of(OK, "레디스에 저장된 음료 목록 조회 성공", drinks));
+    }
+
+    @Operation(summary = "해당 프랜차이즈의 음료 목록을 키워드로 조회합니다.", description = "해당 프랜차이즈의 키워드에 매칭되는 음료 조회 API")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "해당 프랜차이즈의 키워드에 매칭되는 음료 조회 성공"))
+    @GetMapping("/{franchiseId}/search")
+    public ResponseEntity<DataResponse<List<DrinkAllInfoResponse>>> getDrinksByKeywordAndFranchise(
+            @PathVariable @Parameter(description = "프랜차이즈 Id") final Long franchiseId,
+            @RequestParam @Parameter(description = "프랜차이즈 검색을 위한 키워드") final String keyword){
+        final List<DrinkAllInfoResponse> drinks = drinkSearchService.getDrinksByKeywordAndFranchise(franchiseId, keyword);
+        return ResponseEntity.ok()
+                .body(DataResponse.of(OK, "해당 프랜차이즈의 키워드에 매칭되는 음료 조회 성공", drinks));
     }
 }
