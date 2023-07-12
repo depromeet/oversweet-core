@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/record")
 @RequiredArgsConstructor
-@SecurityRequirement(name = "accessToken")
 public class RecordController {
 
     private final DrinkRecordSaveService drinkRecordSaveService;
@@ -35,6 +34,7 @@ public class RecordController {
      */
     @Operation(summary = "마신 음료 당 기록", description = "유저가 마신 음료의 당을 기록합니다.")
     @ApiResponses(@ApiResponse(responseCode = "201", description = "마신 음료 당 기록 성공"))
+    @SecurityRequirement(name = "accessToken")
     @PostMapping("/drink")
     public ResponseEntity<DataResponse<DrinkRecordSaveResponse>> saveDrinkRecord(
             @RequestBody @Valid final DrinkRecordSaveRequest drinkRecordSaveRequest,

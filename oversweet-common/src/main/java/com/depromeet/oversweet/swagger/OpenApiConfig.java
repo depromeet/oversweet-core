@@ -1,15 +1,21 @@
 package com.depromeet.oversweet.swagger;
 
 
+import com.depromeet.oversweet.annotation.SecurityExclusion;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.HandlerMethod;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Configuration
 public class OpenApiConfig {
@@ -40,9 +46,20 @@ public class OpenApiConfig {
                         new SecurityScheme()
                                 .type(SecurityScheme.Type.HTTP)
                                 .scheme("bearer")
-                                .bearerFormat("Authorization")
+                                .bearerFormat("JWT")
                                 .in(SecurityScheme.In.HEADER)
                                 .name("Authorization"));
+    }
+
+    @Bean
+    public OperationCustomizer operationCustomizer() {
+        return (Operation operation, HandlerMethod handlerMethod) -> {
+            SecurityExclusion methodAnnotation = handlerMethod.getMethodAnnotation(SecurityExclusion.class);
+            if (Objects.nonNull(methodAnnotation)) {
+                operation.setSecurity(Collections.emptyList());
+            }
+            return operation;
+        };
     }
 
 }
