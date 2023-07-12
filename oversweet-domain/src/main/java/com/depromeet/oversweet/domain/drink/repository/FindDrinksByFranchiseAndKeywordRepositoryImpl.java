@@ -1,11 +1,10 @@
 package com.depromeet.oversweet.domain.drink.repository;
 
 import com.depromeet.oversweet.domain.drink.entity.DrinkEntity;
-import com.depromeet.oversweet.domain.drink.entity.QDrinkEntity;
-import com.depromeet.oversweet.domain.franchise.entity.QFranchiseEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +24,7 @@ public class FindDrinksByFranchiseAndKeywordRepositoryImpl implements FindDrinks
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DrinkEntity> FindDrinksByFranchiseAndKeyword(final Long franchiseId, final String keyword) {
         return queryFactory.selectFrom(drinkEntity)
                 .join(drinkEntity.franchise, franchiseEntity).fetchJoin()
