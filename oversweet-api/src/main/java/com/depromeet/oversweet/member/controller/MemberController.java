@@ -1,5 +1,6 @@
 package com.depromeet.oversweet.member.controller;
 
+import com.depromeet.oversweet.annotation.SecurityExclusion;
 import com.depromeet.oversweet.member.dto.KakaoTokenRequest;
 import com.depromeet.oversweet.member.dto.SignUpRequest;
 import com.depromeet.oversweet.member.dto.SignUpResponse;
@@ -40,6 +41,7 @@ public class MemberController {
 
     @Operation(summary = "닉네임 중복 체크", description = "닉네임 중복 체크 API 입니다.")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "닉네임 사용 가능")})
+    @SecurityExclusion
     @PostMapping("/validation/nickname")
     public ResponseEntity<MessageResponse> checkNicknameDuplicated(@RequestParam String nickname) {
         memberFacade.checkNicknameDuplicated(nickname);
@@ -48,6 +50,7 @@ public class MemberController {
 
     @Operation(summary = "카카오 회원가입 및 로그인 성공", description = "카카오 로그인 API 입니다.")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "카카오 회원가입 및 로그인 성공")})
+    @SecurityExclusion
     @PostMapping("/kakao")
     public ResponseEntity<DataResponse<SocialSignInResponse>> kakaoSignIn(@RequestBody final KakaoTokenRequest kakaoTokenRequest) {
         SocialSignInResponse socialSignInResponse = memberFacade.signInKakao(kakaoTokenRequest);
@@ -65,6 +68,7 @@ public class MemberController {
 
     @Operation(summary = "추가 정보 기입 후 회원가입", description = "추가 정보 기입 후 회원가입 API 입니다.")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "추가 정보 기입 후 회원가입 성공")})
+    @SecurityExclusion
     @PostMapping("/auth")
     public ResponseEntity<DataResponse<SignUpResponse>> signUp(@RequestBody @Valid final SignUpRequest signUpRequest) {
         SignUpResponse signUpResponse = memberFacade.signUp(signUpRequest);
