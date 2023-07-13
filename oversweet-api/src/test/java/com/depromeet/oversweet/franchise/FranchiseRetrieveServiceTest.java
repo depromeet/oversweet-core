@@ -1,11 +1,11 @@
 package com.depromeet.oversweet.franchise;
 
 
-import com.depromeet.oversweet.common.TestSetup;
 import com.depromeet.oversweet.common.dto.response.FranchiseInfo;
 import com.depromeet.oversweet.domain.franchise.entity.FranchiseEntity;
 import com.depromeet.oversweet.domain.franchise.repository.FindFranchiseSearchRepository;
-import com.depromeet.oversweet.franchise.service.FranchiseSearchService;
+import com.depromeet.oversweet.franchise.service.FranchiseRetrieveService;
+import com.depromeet.oversweet.search.service.FranchiseSearchService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("프랜차이즈 검색 테스트")
 @MockitoSettings
-public class FranchiseSearchServiceTest {
+public class FranchiseRetrieveServiceTest {
     @Mock
     private FindFranchiseSearchRepository findFranchiseSearchRepository;
 

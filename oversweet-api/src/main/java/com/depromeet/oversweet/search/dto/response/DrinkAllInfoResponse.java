@@ -1,4 +1,4 @@
-package com.depromeet.oversweet.drink.dto.response;
+package com.depromeet.oversweet.search.dto.response;
 
 import com.depromeet.oversweet.common.dto.response.FranchiseInfo;
 import com.depromeet.oversweet.domain.drink.entity.DrinkEntity;
