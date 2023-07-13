@@ -25,7 +25,7 @@ public class FindDrinksByFranchiseAndKeywordRepositoryImpl implements FindDrinks
 
     @Override
     @Transactional(readOnly = true)
-    public List<DrinkEntity> FindDrinksByFranchiseAndKeyword(final Long franchiseId, final String keyword) {
+    public List<DrinkEntity> findDrinksByFranchiseAndKeyword(final Long franchiseId, final String keyword) {
         return queryFactory.selectFrom(drinkEntity)
                 .join(drinkEntity.franchise, franchiseEntity).fetchJoin()
                 .where(drinkEntity.franchise.id.eq(franchiseId))
