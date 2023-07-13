@@ -1,6 +1,7 @@
 package com.depromeet.oversweet.drink.controller;
 
 
+import com.depromeet.oversweet.annotation.SecurityExclusion;
 import com.depromeet.oversweet.drink.dto.request.DrinkInfoRequest;
 import com.depromeet.oversweet.drink.dto.request.DrinkWeeklySugarDateRequest;
 import com.depromeet.oversweet.drink.dto.response.DrinkAllInfoResponse;
@@ -55,6 +56,7 @@ public class DrinkController {
     @SecurityRequirement(name = "accessToken")
     @Operation(summary = "하루 당 섭취량 통계 조회", description = "유저가 하루 먹은 당 통계를 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "유저가 하루 먹은 당 통계 조회."))
+    @SecurityRequirement(name = "accessToken")
     @GetMapping("/statistics/daily")
     public ResponseEntity<DataResponse<DrinkDailySugarStatisticsResponse>> retrieveUserDailySugarStatistics(
             @AuthenticationPrincipal CustomUserDetails userDetails
@@ -70,6 +72,7 @@ public class DrinkController {
     @SecurityRequirement(name = "accessToken")
     @Operation(summary = "주간 당 섭취량 통계 조회", description = "유저의 주간 당 통계를 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "유저가 먹은 주간 당 통계 조회."))
+    @SecurityRequirement(name = "accessToken")
     @GetMapping("/statistics/weekly")
     public ResponseEntity<DataResponse<DrinkWeeklySugarStatisticsResponse>> retrieveUserWeeklySugarStatistics(
             @RequestBody @Valid final DrinkWeeklySugarDateRequest request,
@@ -81,19 +84,23 @@ public class DrinkController {
     }
 
     /**
-     *  음료 상세 조회
-     *  추후 로그인 기능 구현 후, 로그인한 유저의 ID를 받아와야 함 (ex. @AuthenticationPrincipal User user)
+     * 음료 상세 조회
      */
     @Operation(summary = "음료 상세 조회", description = "음료 상세 정보를 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "음료 상세 조회."))
+    @SecurityRequirement(name = "accessToken")
     @GetMapping("/detail")
-    public ResponseEntity<DataResponse<DrinkDetailInfoResponse>> retrieveDrinkDetail(@RequestBody @Valid final DrinkInfoRequest request) {
-        DrinkDetailInfoResponse response = drinkDetailSearchService.retrieveDrinkDetail(100L, request);
+    public ResponseEntity<DataResponse<DrinkDetailInfoResponse>> retrieveDrinkDetail(
+            @RequestBody @Valid final DrinkInfoRequest request,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        DrinkDetailInfoResponse response = drinkDetailSearchService.retrieveDrinkDetail(userDetails.getId(), request);
         return ResponseEntity.ok().body(DataResponse.of(HttpStatus.OK, "음료 상세 조회 성공", response));
     }
 
     @Operation(summary = "레디스에 저장된 음료 목록 조회하거나 없다면 생성합니다.", description = "레디스에 저장된 음료 목록 조회 API")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "레디스에 저장된 음료 목록 조회 성공"))
+    @SecurityExclusion
     @GetMapping("/redis")
     public ResponseEntity<DataResponse<List<DrinkRedisInfo>>> getOrCreateDrinkAtRedis() {
         final List<DrinkRedisInfo> drinks = drinkRedisService.getDrinks();

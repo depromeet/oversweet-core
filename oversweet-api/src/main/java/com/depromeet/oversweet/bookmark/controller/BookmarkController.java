@@ -31,7 +31,6 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping("/api/v1/bookmarks")
 @RequiredArgsConstructor
-@SecurityRequirement(name = "accessToken")
 public class BookmarkController {
 
     private final FranchiseBookMarkSearchService franchiseBookMarkSearchService;
@@ -44,10 +43,8 @@ public class BookmarkController {
      * 유저가 즐겨 찾기한 프랜차이즈 목록 조회
      */
     @Operation(summary = "즐겨 찾기한 프랜차이즈 목록 조회", description = "유저가 즐겨 찾기한 프랜차이즈 목록을 조회한다.")
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200", description = "즐겨 찾기한 프랜차이즈 목록을 조회 성공")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "즐겨 찾기한 프랜차이즈 목록을 조회 성공")})
+    @SecurityRequirement(name = "accessToken")
     @GetMapping("/franchises")
     public ResponseEntity<DataResponse<FranchiseBookMarkedResponseDto>> searchFranchiseBookMarked(
             @AuthenticationPrincipal CustomUserDetails userDetails
@@ -61,10 +58,8 @@ public class BookmarkController {
      * 유저가 즐겨 찾기한 음료 목록 조회
      */
     @Operation(summary = "즐겨 찾기한 음료 목록 조회", description = "유저가 즐겨 찾기한 음료 목록을 조회한다.")
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200", description = "즐겨 찾기한 음료 목록을 조회 성공")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "즐겨 찾기한 음료 목록을 조회 성공")})
+    @SecurityRequirement(name = "accessToken")
     @GetMapping("/drinks")
     public ResponseEntity<DataResponse<DrinkBookMarkedResponseDto>> searchDrinkBookMarked(
             @AuthenticationPrincipal CustomUserDetails userDetails
@@ -78,13 +73,12 @@ public class BookmarkController {
      * 유저가 특정 프랜차이즈를 즐겨 찾기 할 수 있다.
      */
     @Operation(summary = "프랜차이즈 즐겨 찾기", description = "유저가 특정 프랜차이즈를 즐겨 찾기 할 수 있다.")
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200", description = "프랜차이즈 즐겨 찾기 성공")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "프랜차이즈 즐겨 찾기 성공")})
+    @SecurityRequirement(name = "accessToken")
     @PostMapping("/franchises/{franchiseId}")
-    public ResponseEntity<MessageResponse> markFranchiseAsBookMark(@PathVariable @Parameter(description = "프랜차이즈 고유 Id") Long franchiseId,
-                                                                   @AuthenticationPrincipal CustomUserDetails userDetails
+    public ResponseEntity<MessageResponse> markFranchiseAsBookMark(
+            @PathVariable @Parameter(description = "프랜차이즈 고유 Id") Long franchiseId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         franchiseBookMarkRegisterService.register(userDetails.getId(), franchiseId);
         return ResponseEntity.ok(MessageResponse.of(OK, "프랜차이즈 즐겨 찾기 등록 성공"));
@@ -94,13 +88,12 @@ public class BookmarkController {
      * 유저가 특정 음료를 즐겨 찾기 할 수 있다.
      */
     @Operation(summary = "음료 즐겨 찾기", description = "유저가 특정 음료를 즐겨 찾기 할 수 있다.")
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200", description = "음료 즐겨 찾기 성공")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "음료 즐겨 찾기 성공")})
+    @SecurityRequirement(name = "accessToken")
     @PostMapping("/drinks/{drinkId}")
-    public ResponseEntity<MessageResponse> markDrinkAsBookMark(@PathVariable @Parameter(description = "음료 고유 Id") Long drinkId,
-                                                               @AuthenticationPrincipal CustomUserDetails userDetails
+    public ResponseEntity<MessageResponse> markDrinkAsBookMark(
+            @PathVariable @Parameter(description = "음료 고유 Id") Long drinkId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         drinkBookMarkRegisterService.register(userDetails.getId(), drinkId);
         return ResponseEntity.ok(MessageResponse.of(OK, "음료 즐겨 찾기 등록 성공"));
@@ -110,13 +103,12 @@ public class BookmarkController {
      * 유저가 특정 프랜차이즈를 즐겨 찾기 해제 할 수 있다.
      */
     @Operation(summary = "프랜차이즈 즐겨 찾기 해제", description = "유저가 특정 프랜차이즈를 즐겨 찾기 해제 할 수 있다.")
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200", description = "프랜차이즈 즐겨 찾기 해제 성공")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "프랜차이즈 즐겨 찾기 해제 성공")})
+    @SecurityRequirement(name = "accessToken")
     @DeleteMapping("/franchises/{franchiseId}")
-    public ResponseEntity<DataResponse<FranchiseBookMarkedResponseDto>> unMarkFranchiseAsBookMark(@PathVariable @Parameter(description = "프랜차이즈 고유 Id") Long franchiseId,
-                                                                                                  @AuthenticationPrincipal CustomUserDetails userDetails
+    public ResponseEntity<DataResponse<FranchiseBookMarkedResponseDto>> unMarkFranchiseAsBookMark(
+            @PathVariable @Parameter(description = "프랜차이즈 고유 Id") Long franchiseId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         FranchiseBookMarkedResponseDto response = franchiseBookMarkRegisterService.unregister(userDetails.getId(), franchiseId);
         return ResponseEntity.ok(DataResponse.of(OK, "프랜차이즈 즐겨 찾기 해제 성공", response));
@@ -126,13 +118,12 @@ public class BookmarkController {
      * 유저가 특정 음료를 즐겨 찾기 해제 할 수 있다.
      */
     @Operation(summary = "음료 즐겨 찾기 해제", description = "유저가 특정 음료를 즐겨 찾기 해제 할 수 있다.")
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200", description = "음료 즐겨 찾기 해제 성공")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "음료 즐겨 찾기 해제 성공")})
+    @SecurityRequirement(name = "accessToken")
     @DeleteMapping("/drinks/{drinkId}")
-    public ResponseEntity<DataResponse<DrinkBookMarkedResponseDto>> unMarkDrinkAsBookMark(@PathVariable @Parameter(description = "음료 고유 Id") Long drinkId,
-                                                                                          @AuthenticationPrincipal CustomUserDetails userDetails
+    public ResponseEntity<DataResponse<DrinkBookMarkedResponseDto>> unMarkDrinkAsBookMark(
+            @PathVariable @Parameter(description = "음료 고유 Id") Long drinkId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         DrinkBookMarkedResponseDto response = drinkBookMarkRegisterService.unregister(userDetails.getId(), drinkId);
         return ResponseEntity.ok(DataResponse.of(OK, "음료 즐겨 찾기 해제 성공", response));
