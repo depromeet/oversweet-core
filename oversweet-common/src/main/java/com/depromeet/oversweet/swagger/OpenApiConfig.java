@@ -40,6 +40,12 @@ public class OpenApiConfig {
                 .info(info);
     }
 
+    /**
+     * Swagger Security 적용
+     * - Bearer Authentication 설정
+     * - 토큰 검증이 필요한 엔드포인트에 @SecurityRequirement(name = "accessToken") 적용하여 사용 가능
+     * - key 값인 accessToken 은 자유롭게 설정 가능
+     */
     private Components securitySetting() {
         return new Components()
                 .addSecuritySchemes("accessToken",
@@ -51,6 +57,10 @@ public class OpenApiConfig {
                                 .name("Authorization"));
     }
 
+    /**
+     * Swagger Operation 커스텀
+     * - @SecurityExclusion 이 붙은 곳은 security 적용 제외
+     */
     @Bean
     public OperationCustomizer operationCustomizer() {
         return (Operation operation, HandlerMethod handlerMethod) -> {
