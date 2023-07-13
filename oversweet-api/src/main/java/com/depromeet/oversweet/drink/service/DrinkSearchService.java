@@ -32,8 +32,7 @@ public class DrinkSearchService {
         // 키워드로 검색된 음료 목록 중 이름이 같은 것들로 묶어주기
         // 묶은 목록 중 IsMiniMun 찾기
         final DrinkSameNameInfo sameNameInfo = new DrinkSameNameInfo(findDrinks);
-        final List<DrinkAllInfoResponse> response = sameNameInfo.getSameNameDrinksSize();
 
-        return response;
+        return sameNameInfo.getSameNameDrinksSize();
     }
 }
