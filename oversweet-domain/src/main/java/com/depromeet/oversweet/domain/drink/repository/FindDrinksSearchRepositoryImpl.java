@@ -15,11 +15,11 @@ import static com.depromeet.oversweet.domain.franchise.entity.QFranchiseEntity.f
  * 해당 프랜차이즈의 음료 목록을 키워드로 조회하는 Repository 구현벼
  */
 @Repository
-public class FindDrinksByFranchiseAndKeywordRepositoryImpl implements FindDrinksByFranchiseAndKeywordRepository {
+public class FindDrinksSearchRepositoryImpl implements FindDrinksSearchRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public FindDrinksByFranchiseAndKeywordRepositoryImpl(final EntityManager em) {
+    public FindDrinksSearchRepositoryImpl(final EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
@@ -29,6 +29,14 @@ public class FindDrinksByFranchiseAndKeywordRepositoryImpl implements FindDrinks
         return queryFactory.selectFrom(drinkEntity)
                 .join(drinkEntity.franchise, franchiseEntity).fetchJoin()
                 .where(drinkEntity.franchise.id.eq(franchiseId))
+                .where(drinkEntity.name.contains(keyword))
+                .fetch();
+    }
+
+    @Override
+    public List<DrinkEntity> findDrinksByKeyword(final String keyword) {
+        return queryFactory.selectFrom(drinkEntity)
+                .join(drinkEntity.franchise, franchiseEntity).fetchJoin()
                 .where(drinkEntity.name.contains(keyword))
                 .fetch();
     }

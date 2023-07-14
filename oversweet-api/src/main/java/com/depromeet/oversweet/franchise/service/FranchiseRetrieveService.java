@@ -17,22 +17,15 @@ import com.depromeet.oversweet.franchise.dto.response.MostPopularDrinkResponse;
 import lombok.RequiredArgsConstructor;
 
 /**
- * 프랜차이즈 검색 서비스
+ * 프랜차이즈 조회 서비스
  */
 @Service
 @RequiredArgsConstructor
-public class FranchiseSearchService {
+public class FranchiseRetrieveService {
 
     private final FindFranchiseSearchRepository findFranchiseSearchRepository;
     private final FindRecordsRepository findRecordsRepository;
     private final FindFranchiseBookMarkRepository findFranchiseBookMarkRepository;
-
-    public List<FranchiseInfo> getFranchiseByKeyword(final String keyword) {
-        final List<FranchiseEntity> findFranchise = findFranchiseSearchRepository.findFranchiseByKeyword(keyword);
-        return findFranchise.stream()
-                .map(franchise -> FranchiseInfo.of(franchise))
-                .toList();
-    }
 
     /**
      * 프랜차이즈 기준 가장 인기있는 음료 3개 조회 (어제 기준)
