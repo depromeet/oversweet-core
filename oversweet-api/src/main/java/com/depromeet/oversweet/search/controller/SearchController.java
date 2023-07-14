@@ -1,5 +1,6 @@
 package com.depromeet.oversweet.search.controller;
 
+import com.depromeet.oversweet.annotation.SecurityExclusion;
 import com.depromeet.oversweet.common.dto.response.FranchiseInfo;
 import com.depromeet.oversweet.search.dto.response.DrinkAllInfoResponse;
 import com.depromeet.oversweet.search.dto.response.SearchInfoResponse;
@@ -37,10 +38,11 @@ public class SearchController {
 
     @Operation(summary = "해당 프랜차이즈의 음료 목록을 키워드로 조회합니다.", description = "해당 프랜차이즈의 키워드에 매칭되는 음료 조회 API")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "해당 프랜차이즈의 키워드에 매칭되는 음료 조회 성공"))
+    @SecurityExclusion
     @GetMapping("/{franchiseId}")
     public ResponseEntity<DataResponse<List<DrinkAllInfoResponse>>> getDrinksByKeywordAndFranchise(
             @PathVariable @Parameter(description = "프랜차이즈 Id") final Long franchiseId,
-            @RequestParam @Parameter(description = "프랜차이즈 검색을 위한 키워드") final String keyword){
+            @RequestParam @Parameter(description = "음료 검색을 위한 키워드") final String keyword){
         final List<DrinkAllInfoResponse> drinks = drinkSearchService.getDrinksByKeywordAndFranchise(franchiseId, keyword);
         return ResponseEntity.ok()
                 .body(DataResponse.of(OK, "해당 프랜차이즈의 키워드에 매칭되는 음료 조회 성공", drinks));
@@ -49,6 +51,7 @@ public class SearchController {
 
     @Operation(summary = "검색 키워드로 해당하는 프랜차이즈 목록 조회", description = "프랜차이즈 검색 API")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "프랜차이즈 검색 성공"))
+    @SecurityExclusion
     @GetMapping("/franchise")
     public ResponseEntity<DataResponse<List<FranchiseInfo>>> getFranchiseByKeyword(@RequestParam @Parameter(description = "프랜차이즈 검색을 위한 키워드") final String keyword) {
         final List<FranchiseInfo> response = franchiseSearchService.getFranchiseByKeyword(keyword);
@@ -58,6 +61,7 @@ public class SearchController {
 
     @Operation(summary = "검색 키워드를 통해 해당하는 프랜차이즈 목록과 음료 목록을 조회합니다.", description = "해당 키워드에 매칭되는 프랜차이즈 목록과 음룍 목록 조회 API")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "해당 키워드에 매칭되는 프랜차이즈 목록 및 음료 목록 조회"))
+    @SecurityExclusion
     @GetMapping
     public ResponseEntity<DataResponse<SearchInfoResponse>> getSearchInfoByKeyword(@RequestParam @Parameter(description = "검색을 위한 키워드") final String keyword){
         final SearchInfoResponse response = searchService.getSearchInfoByKeyword(keyword);
