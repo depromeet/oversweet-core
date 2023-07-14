@@ -49,6 +49,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/franchises/search").permitAll()
                         .requestMatchers("/api/v1/drinks/redis").permitAll()
                         .requestMatchers("/api/v1/search/**").permitAll()
+                        .requestMatchers("/api/v1/drinks/list").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(handler -> handler
