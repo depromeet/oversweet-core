@@ -1,20 +1,22 @@
 package com.depromeet.oversweet.drink.service;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.depromeet.oversweet.common.dto.response.MemberInfo;
 import com.depromeet.oversweet.domain.member.entity.MemberEntity;
 import com.depromeet.oversweet.domain.member.repository.FindMemberRepository;
 import com.depromeet.oversweet.domain.record.entity.RecordEntity;
 import com.depromeet.oversweet.domain.record.repository.FindRecordsRepository;
-import com.depromeet.oversweet.drink.dto.request.DrinkWeeklySugarDateRequest;
-import com.depromeet.oversweet.drink.dto.response.DrinkWeeklySugarStatisticsResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarInfo;
-import com.depromeet.oversweet.drink.vo.DrinkStatisticsTotalInfo;
+import com.depromeet.oversweet.drink.dto.response.DrinkWeeklySugarStatisticsResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkWeeklySugarTotalStatisticsInfo;
+import com.depromeet.oversweet.drink.vo.DrinkStatisticsTotalInfo;
 import com.depromeet.oversweet.drink.vo.LocalDateTimeInfo;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 음료 주간 통계 서비스
@@ -27,17 +29,19 @@ public class DrinkWeeklyStatisticsService {
 
     /**
      * 유저의 주간 당 통계 정보 조회
-     * @param userId 해당 유저의 Id
-     * @param request 조회할 시작 날짜, 끝 날짜
+     *
+     * @param userId    해당 유저의 Id
+     * @param startDate 조회 시작일
+     * @param endDate   조회 종료일
      * @return 유저의 주간 당 총 통계 및 음료 차트 목록
      */
-    public DrinkWeeklySugarStatisticsResponse retrieveUserWeeklySugarStatistics(final Long userId, final DrinkWeeklySugarDateRequest request) {
+    public DrinkWeeklySugarStatisticsResponse retrieveUserWeeklySugarStatistics(final Long userId, final LocalDate startDate, final LocalDate endDate) {
 
         // 유저의 하루 적정 섭취량 가져오기 ( 유저의 정보를 가져온 후 찾기 )
         final MemberEntity findMember = findMemberRepository.findById(userId);
 
         // 주간 시작일, 끝낼일 가져오기.
-        final LocalDateTimeInfo dateTimeInfo = LocalDateTimeInfo.getWeeklyDateTime(request.startDate(), request.endDate());
+        final LocalDateTimeInfo dateTimeInfo = LocalDateTimeInfo.getWeeklyDateTime(startDate, endDate);
 
         // 주간 당 섭취량 가져오기.
         final List<RecordEntity> weeklyRecords = findRecordsRepository.findRecordsByLocalDateTime(findMember.getId(), dateTimeInfo.startDateTime(), dateTimeInfo.endDateTime());

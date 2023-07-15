@@ -12,7 +12,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/**")
-                .allowedOrigins("http://localhost:3000") // 프론트의 도메인 주소를 추후에 설정할 수 있음
+                .allowedOrigins("http://localhost:3000", "https://oversweet.vercel.app")
                 // Set the list of headers that a pre-flight request can list as allowed for use during an actual request.
                 .allowedHeaders("*")
                 .allowedMethods(
