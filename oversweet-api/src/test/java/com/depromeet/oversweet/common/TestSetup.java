@@ -8,18 +8,25 @@ import com.depromeet.oversweet.domain.member.enums.SocialProvider;
 import com.depromeet.oversweet.domain.record.entity.RecordEntity;
 
 public class TestSetup {
+
     private MemberEntity memberEntity;
-    private FranchiseEntity franchiseEntity;
+    private FranchiseEntity firstFranchiseEntity;
+    private FranchiseEntity secondFranchiseEntity;
     private DrinkEntity firstDrinkEntity;
     private DrinkEntity secondDrinkEntity;
+    private DrinkEntity thirdDrinkEntity;
+    private DrinkEntity fourthDrinkEntity;
     private RecordEntity firstRecordEntity;
     private RecordEntity secondRecordEntity;
 
     public void setUp() {
         memberEntity = getMemberEntity();
-        franchiseEntity = getFranchiseEntity();
-        firstDrinkEntity = getFirstDrinkEntity(franchiseEntity);
-        secondDrinkEntity = getSecondDrinkEntity(franchiseEntity);
+        firstFranchiseEntity = getFirstFranchiseEntity();
+        secondFranchiseEntity = getSecondFranchiseEntity();
+        firstDrinkEntity = getFirstDrinkEntity(firstFranchiseEntity);
+        secondDrinkEntity = getSecondDrinkEntity(firstFranchiseEntity);
+        thirdDrinkEntity = getThirdDrinkEntity(firstFranchiseEntity);
+        fourthDrinkEntity = getFourthDrinkEntity(secondFranchiseEntity);
         firstRecordEntity = getRecordEntity(1L, memberEntity, firstDrinkEntity);
         secondRecordEntity = getRecordEntity(2L, memberEntity, secondDrinkEntity);
     }
@@ -35,14 +42,14 @@ public class TestSetup {
         return recordEntity;
     }
 
-    private DrinkEntity getFirstDrinkEntity(final FranchiseEntity franchiseEntity) {
+    private DrinkEntity getFirstDrinkEntity(final FranchiseEntity firstFranchiseEntity) {
         final DrinkEntity drinkEntity = DrinkEntity.builder()
                 .id(1L)
                 .calorie(10)
                 .size(355)
                 .category(DrinkCategory.AMERICANO)
                 .sugar(10)
-                .franchise(franchiseEntity)
+                .franchise(firstFranchiseEntity)
                 .imageUrl(null)
                 .isMinimum(true)
                 .name("아메리카노")
@@ -50,14 +57,14 @@ public class TestSetup {
         return drinkEntity;
     }
 
-    private DrinkEntity getSecondDrinkEntity(final FranchiseEntity franchiseEntity) {
+    private DrinkEntity getSecondDrinkEntity(final FranchiseEntity firstFranchiseEntity) {
         final DrinkEntity drinkEntity = DrinkEntity.builder()
                 .id(2L)
                 .calorie(20)
                 .size(355)
                 .category(DrinkCategory.LATTE)
                 .sugar(30)
-                .franchise(franchiseEntity)
+                .franchise(firstFranchiseEntity)
                 .imageUrl(null)
                 .isMinimum(true)
                 .name("카페라떼")
@@ -65,10 +72,46 @@ public class TestSetup {
         return drinkEntity;
     }
 
-    private FranchiseEntity getFranchiseEntity() {
+    private DrinkEntity getThirdDrinkEntity(final FranchiseEntity firstFranchiseEntity) {
+        return DrinkEntity.builder()
+                .id(3L)
+                .calorie(10)
+                .size(475)
+                .category(DrinkCategory.AMERICANO)
+                .sugar(20)
+                .franchise(firstFranchiseEntity)
+                .imageUrl(null)
+                .isMinimum(false)
+                .name("아메리카노")
+                .build();
+    }
+
+    private DrinkEntity getFourthDrinkEntity(final FranchiseEntity secondFranchiseEntity) {
+        return DrinkEntity.builder()
+                .id(4L)
+                .calorie(10)
+                .size(600)
+                .category(DrinkCategory.AMERICANO)
+                .sugar(30)
+                .franchise(secondFranchiseEntity)
+                .imageUrl(null)
+                .isMinimum(true)
+                .name("아메리카노")
+                .build();
+    }
+
+    private FranchiseEntity getFirstFranchiseEntity() {
         final FranchiseEntity franchiseEntity = FranchiseEntity.builder()
                 .id(1L)
                 .name("스타벅스")
+                .build();
+        return franchiseEntity;
+    }
+
+    private FranchiseEntity getSecondFranchiseEntity() {
+        final FranchiseEntity franchiseEntity = FranchiseEntity.builder()
+                .id(2L)
+                .name("이디야")
                 .build();
         return franchiseEntity;
     }
@@ -87,8 +130,12 @@ public class TestSetup {
         return memberEntity;
     }
 
-    public FranchiseEntity getFranchise() {
-        return franchiseEntity;
+    public FranchiseEntity getFirstFranchise() {
+        return firstFranchiseEntity;
+    }
+
+    public FranchiseEntity getSecondFranchise() {
+        return secondFranchiseEntity;
     }
 
     public DrinkEntity getFirstDrink() {
@@ -101,6 +148,14 @@ public class TestSetup {
 
     public DrinkEntity getSecondDrink() {
         return secondDrinkEntity;
+    }
+
+    public DrinkEntity getThirdDrink() {
+        return thirdDrinkEntity;
+    }
+
+    public DrinkEntity getFourthDrink() {
+        return fourthDrinkEntity;
     }
 
     public RecordEntity getSecondRecord() {
