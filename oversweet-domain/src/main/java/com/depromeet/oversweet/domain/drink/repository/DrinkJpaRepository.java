@@ -1,13 +1,14 @@
 package com.depromeet.oversweet.domain.drink.repository;
 
-import com.depromeet.oversweet.domain.drink.dto.DrinkInfoWithScrapStatus;
-import com.depromeet.oversweet.domain.drink.dto.DrinkSimpleInfo;
-import com.depromeet.oversweet.domain.drink.entity.DrinkEntity;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
+import com.depromeet.oversweet.domain.drink.dto.DrinkInfoWithScrapStatus;
+import com.depromeet.oversweet.domain.drink.dto.DrinkSimpleInfo;
+import com.depromeet.oversweet.domain.drink.entity.DrinkEntity;
 
 public interface DrinkJpaRepository extends JpaRepository<DrinkEntity, Long> {
 
@@ -22,4 +23,8 @@ public interface DrinkJpaRepository extends JpaRepository<DrinkEntity, Long> {
 
     @Query(value = "select d.id, d.name from drink d", nativeQuery = true)
     List<DrinkSimpleInfo> findAllDrinkSimpleInfo();
+
+    List<DrinkEntity> findTop30BySugarBetween(int minSugar, int maxSugar);
+
+
 }

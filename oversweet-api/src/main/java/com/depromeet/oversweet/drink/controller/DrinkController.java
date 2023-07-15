@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.depromeet.oversweet.annotation.SecurityExclusion;
 import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarStatisticsResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkDetailInfoResponse;
+import com.depromeet.oversweet.drink.dto.response.DrinkRecommendResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkRedisInfo;
 import com.depromeet.oversweet.drink.dto.response.DrinkWeeklySugarStatisticsResponse;
 import com.depromeet.oversweet.drink.service.DrinkDailyStatisticsService;
 import com.depromeet.oversweet.drink.service.DrinkDetailSearchService;
+import com.depromeet.oversweet.drink.service.DrinkRecommendService;
 import com.depromeet.oversweet.drink.service.DrinkRedisService;
 import com.depromeet.oversweet.drink.service.DrinkWeeklyStatisticsService;
 import com.depromeet.oversweet.response.DataResponse;
@@ -47,6 +50,7 @@ public class DrinkController {
     private final DrinkWeeklyStatisticsService drinkWeeklyStatisticsService;
     private final DrinkDetailSearchService drinkDetailSearchService;
     private final DrinkRedisService drinkRedisService;
+    private final DrinkRecommendService drinkRecommendService;
 
     /**
      * 유저 하루(데일리) 먹은 당 통계 및 음료 목록 조회.
@@ -106,5 +110,18 @@ public class DrinkController {
         final List<DrinkRedisInfo> drinks = drinkRedisService.getDrinks();
         return ResponseEntity.ok()
                 .body(DataResponse.of(OK, "레디스에 저장된 음료 목록 조회 성공", drinks));
+    }
+
+
+    /**
+     * 음료 사이즈 기준으로 당 성분이 비슷한 음료 추천
+     */
+    @Operation(summary = "음료 사이즈 기준으로 당 성분이 비슷한 음료 추천", description = "음료 사이즈 기준으로 당 성분이 비슷한 음료 추천")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "음료 사이즈 기준으로 당 성분이 비슷한 음료 추천"))
+    @SecurityExclusion
+    @GetMapping("/recommend/{drinkId}")
+    public ResponseEntity<DataResponse<DrinkRecommendResponse>> recommendDrink(@PathVariable Long drinkId) {
+        DrinkRecommendResponse response = drinkRecommendService.recommendDrink(drinkId);
+        return ResponseEntity.ok().body(DataResponse.of(OK, "음료 사이즈 기준으로 당 성분이 비슷한 음료 추천 성공", response));
     }
 }
