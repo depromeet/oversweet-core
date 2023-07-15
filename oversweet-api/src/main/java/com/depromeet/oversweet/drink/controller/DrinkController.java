@@ -1,9 +1,23 @@
 package com.depromeet.oversweet.drink.controller;
 
 
+import static org.springframework.http.HttpStatus.OK;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.depromeet.oversweet.annotation.SecurityExclusion;
 import com.depromeet.oversweet.drink.dto.request.DrinkInfoRequest;
-import com.depromeet.oversweet.drink.dto.request.DrinkWeeklySugarDateRequest;
 import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarStatisticsResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkDetailInfoResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkRedisInfo;
@@ -14,6 +28,7 @@ import com.depromeet.oversweet.drink.service.DrinkRedisService;
 import com.depromeet.oversweet.drink.service.DrinkWeeklyStatisticsService;
 import com.depromeet.oversweet.response.DataResponse;
 import com.depromeet.oversweet.security.service.CustomUserDetails;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -21,17 +36,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-
-import static org.springframework.http.HttpStatus.OK;
 
 @Tag(name = "음료", description = "음료 관련 API")
 @RestController
@@ -69,10 +73,11 @@ public class DrinkController {
     @SecurityRequirement(name = "accessToken")
     @GetMapping("/statistics/weekly")
     public ResponseEntity<DataResponse<DrinkWeeklySugarStatisticsResponse>> retrieveUserWeeklySugarStatistics(
-            @RequestBody @Valid final DrinkWeeklySugarDateRequest request,
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-        final DrinkWeeklySugarStatisticsResponse response = drinkWeeklyStatisticsService.retrieveUserWeeklySugarStatistics(userDetails.getId(), request);
+        final DrinkWeeklySugarStatisticsResponse response = drinkWeeklyStatisticsService.retrieveUserWeeklySugarStatistics(userDetails.getId(), startDate, endDate);
         return ResponseEntity.ok()
                 .body(DataResponse.of(HttpStatus.OK, "유저가 먹은 주간 당 통계 조회 성공", response));
     }
