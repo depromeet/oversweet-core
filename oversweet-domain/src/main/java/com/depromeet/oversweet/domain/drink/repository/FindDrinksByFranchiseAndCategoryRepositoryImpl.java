@@ -10,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -24,9 +25,11 @@ import static com.querydsl.core.group.GroupBy.list;
 public class FindDrinksByFranchiseAndCategoryRepositoryImpl implements FindDrinksByFranchiseAndCategoryRepository {
 
     private final JPAQueryFactory queryFactory;
+    private final DrinkJpaRepository drinkJpaRepository;
 
-    public FindDrinksByFranchiseAndCategoryRepositoryImpl(final EntityManager em) {
+    public FindDrinksByFranchiseAndCategoryRepositoryImpl(final EntityManager em, DrinkJpaRepository drinkJpaRepository) {
         this.queryFactory = new JPAQueryFactory(JPQLTemplates.DEFAULT, em);
+        this.drinkJpaRepository = drinkJpaRepository;
     }
 
     @Override
@@ -35,7 +38,6 @@ public class FindDrinksByFranchiseAndCategoryRepositoryImpl implements FindDrink
         return queryFactory.selectFrom(drinkEntity)
                 .join(drinkEntity.franchise, franchiseEntity).fetchJoin()
                 .where(franchiseIdEq(franchiseId), categoryEq(category))
-                .orderBy(getOrderSpecifier(column, direction))
                 .distinct()
                 .transform(groupBy(drinkEntity.franchise.id).as(list(drinkEntity)));
     }
@@ -45,7 +47,7 @@ public class FindDrinksByFranchiseAndCategoryRepositoryImpl implements FindDrink
     }
 
     private BooleanExpression categoryEq(String category) {
-        return Objects.isNull(category) ? null : drinkEntity.category.eq(DrinkCategory.valueOf(category));
+        return StringUtils.hasText(category) ? drinkEntity.category.eq(DrinkCategory.valueOf(category)) : null;
     }
 
     private static OrderSpecifier<?> getOrderSpecifier(String column, String direction) {

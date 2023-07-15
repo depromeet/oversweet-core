@@ -12,9 +12,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
 
 /**
  * 해당 프랜차이즈의 음료 검색 서비스
@@ -42,17 +45,17 @@ public class DrinkSearchService {
     }
 
     public List<DrinkAllInfoResponse> getDrinksByFranchiseAndCategoryAndDirection(Long franchiseId, String category, String column, String direction) {
-        // 먼저, franchiseId 별로 List<DrinkEntity> 를 묶는다. 이유는 다른 프랜차이즈이지만 음료 이름이 같으면 중복으로 나오기 때문이다.
+        //franchiseId 별로 List<DrinkEntity> 를 묶는다. 이유는 다른 프랜차이즈이지만 음료 이름이 같으면 중복으로 나오기 때문이다.
         Map<Long, List<DrinkEntity>> drinkEntitiesWithFranchise = findDrinksByFranchiseAndCategoryRepository.findDrinksByFranchiseAndCategoryAndDirection(franchiseId, category, column, direction);
 
-        // 프랜차이즈별 && 음료명 별로 묶는다.
+        //프랜차이즈별 && 음료명 별로 묶는다.
         Map<Long, Map<String, List<DrinkEntity>>> drinkEntitiesWithFranchiseGroupByName = drinkEntitiesWithFranchise
                 .entrySet()
                 .stream()
-                .collect(Collectors.toMap(
+                .collect(toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue().stream()
-                                .collect(Collectors.groupingBy(DrinkEntity::getName))
+                                .collect(groupingBy(DrinkEntity::getName))
                 ));
 
         List<DrinkAllInfoResponse> drinkAllInfoResponses = new ArrayList<>();
@@ -64,14 +67,31 @@ public class DrinkSearchService {
                                 List<DrinkEntity> drinkEntities = innerEntry.getValue();
 
                                 DrinkEntity minimumDrinkEntity = drinkEntities.stream().filter(DrinkEntity::getIsMinimum).findFirst().get();
-                                List<Integer> sizes = drinkEntities.stream().map(DrinkEntity::getSize).toList();
+                                List<Integer> sizes = drinkEntities.stream().map(DrinkEntity::getSize).sorted().toList();
 
                                 DrinkAllInfoResponse drinkAllInfoResponse = DrinkAllInfoResponse.of(minimumDrinkEntity, sizes);
                                 drinkAllInfoResponses.add(drinkAllInfoResponse);
                             });
                 });
 
-        return drinkAllInfoResponses;
+        return sortByColumnAndDirection(drinkAllInfoResponses, column, direction);
+    }
+
+    private List<DrinkAllInfoResponse> sortByColumnAndDirection(List<DrinkAllInfoResponse> drinkAllInfoResponses, String column, String direction) {
+        switch (column) {
+            case "sugar":
+                if (direction.equalsIgnoreCase("desc")) {
+                    return drinkAllInfoResponses.stream()
+                            .sorted(Comparator.comparing(DrinkAllInfoResponse::sugar).reversed())
+                            .toList();
+                }
+
+                return drinkAllInfoResponses.stream()
+                        .sorted(Comparator.comparing(DrinkAllInfoResponse::sugar))
+                        .toList();
+            default:
+                return drinkAllInfoResponses;
+        }
     }
 
 }
