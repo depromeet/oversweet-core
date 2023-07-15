@@ -11,13 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.depromeet.oversweet.annotation.SecurityExclusion;
-import com.depromeet.oversweet.drink.dto.request.DrinkInfoRequest;
 import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarStatisticsResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkDetailInfoResponse;
 import com.depromeet.oversweet.drink.dto.response.DrinkRedisInfo;
@@ -35,6 +33,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
 @Tag(name = "음료", description = "음료 관련 API")
@@ -90,10 +90,11 @@ public class DrinkController {
     @SecurityRequirement(name = "accessToken")
     @GetMapping("/detail")
     public ResponseEntity<DataResponse<DrinkDetailInfoResponse>> retrieveDrinkDetail(
-            @RequestBody @Valid final DrinkInfoRequest request,
+            @RequestParam @Valid @NotNull(message = "필수 값 입니다.") Long franchiseId,
+            @RequestParam @Valid @NotEmpty(message = "필수 값 입니다.") String drinkName,
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-        DrinkDetailInfoResponse response = drinkDetailSearchService.retrieveDrinkDetail(userDetails.getId(), request);
+        DrinkDetailInfoResponse response = drinkDetailSearchService.retrieveDrinkDetail(userDetails.getId(), franchiseId, drinkName);
         return ResponseEntity.ok().body(DataResponse.of(HttpStatus.OK, "음료 상세 조회 성공", response));
     }
 
