@@ -1,15 +1,12 @@
 package com.depromeet.oversweet.domain.drink.repository;
 
-import com.depromeet.oversweet.domain.drink.dto.DrinkSearchInfo;
 import com.depromeet.oversweet.domain.drink.entity.DrinkEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface FindDrinksByFranchiseAndCategoryRepository {
 
-    List<DrinkEntity> findDrinksByFranchiseAndCategory(Long franchiseId, String category, Pageable pageable);
+    Map<Long, List<DrinkEntity>> findDrinksByFranchiseAndCategoryAndDirection(Long franchiseId, String category, String column, String direction);
 
-    Page<DrinkSearchInfo> getDrinksByFranchiseAndCategoryWithPagination(List<DrinkSearchInfo> drinkSearchInfos, Long franchiseId, String category, Pageable pageable);
 }
