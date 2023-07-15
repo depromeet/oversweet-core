@@ -51,12 +51,12 @@ class DrinkSearchServiceTest {
     }
 
     @Test
-    void 스타벅스_아메리카노_당_높은순_조회() {
+    void 스타벅스_아메리카노_당_낮은순_조회() {
         //given
         Long franchiseId = firstFranchiseEntity.getId();
         String category = firstDrinkEntity.getCategory().name();
         String column = "sugar";
-        String order = "deSc";
+        String order = "asC";
 
         Map<Long, List<DrinkEntity>> drinkEntityMap = new HashMap<>();
         drinkEntityMap.put(franchiseId, Arrays.asList(firstDrinkEntity, thirdDrinkEntity));
@@ -71,15 +71,15 @@ class DrinkSearchServiceTest {
     }
 
     @Test
-    void 전체_프랜차이즈_아메리카노_당_낮은순_조회() {
+    void 전체_프랜차이즈_아메리카노_당_높은순_조회() {
         //given
         String category = firstDrinkEntity.getCategory().name();
         String column = "sugar";
         String order = "DeSc";
 
         Map<Long, List<DrinkEntity>> drinkEntityMap = new HashMap<>();
+        drinkEntityMap.put(1L, Arrays.asList(thirdDrinkEntity, firstDrinkEntity));
         drinkEntityMap.put(2L, Arrays.asList(fourthDrinkEntity));
-        drinkEntityMap.put(1L, Arrays.asList(firstDrinkEntity, thirdDrinkEntity));
 
         Mockito.when(findDrinksByFranchiseAndCategoryRepository.findDrinksByFranchiseAndCategoryAndDirection(null, category, column, order)).thenReturn(drinkEntityMap);
 
@@ -88,5 +88,24 @@ class DrinkSearchServiceTest {
 
         //then
         assertThat(result.size()).isEqualTo(2);
+    }
+
+    @Test
+    void 전체_프랜차이즈_전체_음료_당_높은순_조회() {
+        //given
+        String column = "sugar";
+        String order = "DeSc";
+
+        Map<Long, List<DrinkEntity>> drinkEntityMap = new HashMap<>();
+        drinkEntityMap.put(1L, Arrays.asList(secondDrinkEntity, thirdDrinkEntity, firstDrinkEntity));
+        drinkEntityMap.put(2L, Arrays.asList(fourthDrinkEntity));
+
+        Mockito.when(findDrinksByFranchiseAndCategoryRepository.findDrinksByFranchiseAndCategoryAndDirection(null, null, column, order)).thenReturn(drinkEntityMap);
+
+        //when
+        List<DrinkAllInfoResponse> result = drinkSearchService.getDrinksByFranchiseAndCategoryAndDirection(null, null, column, order);
+
+        //then
+        assertThat(result.size()).isEqualTo(3);
     }
 }
