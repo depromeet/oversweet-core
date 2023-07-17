@@ -28,6 +28,7 @@ jobs:
           spring.datasource.url: ${{ secrets.DB_URL }}
           spring.datasource.username: ${{ secrets.DB_USERNAME }}
           spring.datasource.password: ${{ secrets.DB_PASSWORD }}
+          spring.data.redis.host: ${{ secrets.REDIS_HOST }}
 
       - name: Grant execute permission for gradlew And Build with Gradle
         run: chmod +x ./gradlew && ./gradlew :oversweet-api:build
