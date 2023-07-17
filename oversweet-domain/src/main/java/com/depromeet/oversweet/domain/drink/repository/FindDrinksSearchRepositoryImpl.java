@@ -12,7 +12,7 @@ import static com.depromeet.oversweet.domain.drink.entity.QDrinkEntity.drinkEnti
 import static com.depromeet.oversweet.domain.franchise.entity.QFranchiseEntity.franchiseEntity;
 
 /**
- * 해당 프랜차이즈의 음료 목록을 키워드로 조회하는 Repository 구현벼
+ * 해당 프랜차이즈의 음료 목록을 키워드로 조회하는 Repository 구현체
  */
 @Repository
 public class FindDrinksSearchRepositoryImpl implements FindDrinksSearchRepository {

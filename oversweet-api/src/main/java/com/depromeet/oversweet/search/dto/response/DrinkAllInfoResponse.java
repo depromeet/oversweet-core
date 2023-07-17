@@ -22,8 +22,8 @@ public record DrinkAllInfoResponse(
         @Schema(name = "음료 당도", example = "10")
         Integer sugar
 ) {
-        public static DrinkAllInfoResponse of(final DrinkEntity drinkEntity, final List<Integer> sizes){
-                return new DrinkAllInfoResponse(drinkEntity.getId(), drinkEntity.getName(), drinkEntity.getImageUrl(),
-                        sizes, FranchiseInfo.of(drinkEntity.getFranchise()), drinkEntity.getCalorie(), drinkEntity.getSugar());
-        }
+    public static DrinkAllInfoResponse of(final DrinkEntity drinkEntity, final List<Integer> sizes) {
+        return new DrinkAllInfoResponse(drinkEntity.getId(), drinkEntity.getName(), drinkEntity.getImageUrl(),
+                sizes, FranchiseInfo.of(drinkEntity.getFranchise()), drinkEntity.getCalorie(), drinkEntity.getSugar());
+    }
 }

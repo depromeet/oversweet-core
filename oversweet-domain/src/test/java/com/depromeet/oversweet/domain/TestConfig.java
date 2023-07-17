@@ -6,7 +6,6 @@ import com.depromeet.oversweet.domain.franchise.repository.FindFranchiseReposito
 import com.depromeet.oversweet.domain.franchise.repository.FranchiseJpaRepository;
 import com.depromeet.oversweet.domain.record.repository.FindRecordsRepositoryImpl;
 import com.depromeet.oversweet.domain.record.repository.RecordJpaRepository;
-
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -22,17 +21,17 @@ public class TestConfig {
     private final RecordJpaRepository recordJpaRepository;
 
     @Bean
-    public FindRecordsRepositoryImpl findRecordsRepository(){
+    public FindRecordsRepositoryImpl findRecordsRepository() {
         return new FindRecordsRepositoryImpl(entityManager, recordJpaRepository);
     }
 
     @Bean
-    public FindFranchiseRepositoryImpl findFranchiseRepositoryImpl(){
+    public FindFranchiseRepositoryImpl findFranchiseRepositoryImpl() {
         return new FindFranchiseRepositoryImpl(franchiseJpaRepository);
     }
 
     @Bean
-    public FindFranchiseBookMarkRepositoryImpl findFranchiseBookMarkRepositoryImpl(){
+    public FindFranchiseBookMarkRepositoryImpl findFranchiseBookMarkRepositoryImpl() {
         return new FindFranchiseBookMarkRepositoryImpl(franchiseBookMarkJpaRepository);
     }
 }

@@ -6,6 +6,9 @@ import static org.springframework.http.HttpStatus.OK;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.depromeet.oversweet.search.dto.response.DrinkAllInfoResponse;
+import com.depromeet.oversweet.search.service.DrinkSearchService;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +54,7 @@ public class DrinkController {
     private final DrinkDetailSearchService drinkDetailSearchService;
     private final DrinkRedisService drinkRedisService;
     private final DrinkRecommendService drinkRecommendService;
+    private final DrinkSearchService drinkSearchService;
 
     /**
      * 유저 하루(데일리) 먹은 당 통계 및 음료 목록 조회.
@@ -123,5 +127,22 @@ public class DrinkController {
     public ResponseEntity<DataResponse<DrinkRecommendResponse>> recommendDrink(@PathVariable Long drinkId) {
         DrinkRecommendResponse response = drinkRecommendService.recommendDrink(drinkId);
         return ResponseEntity.ok().body(DataResponse.of(OK, "음료 사이즈 기준으로 당 성분이 비슷한 음료 추천 성공", response));
+    }
+
+    /**
+     * 음료 목록 조회 - 필터링(프랜차이즈, 음료 카테고리, 정렬)
+     */
+    @Operation(summary = "프랜차이즈, 음료 카테고리, 정렬 조건에 따라 음료 목록을 조회합니다.", description = "조건에 따라 음료 목록 조회 API")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "조건에 따라 음료 목록 조회 성공"))
+    @SecurityExclusion
+    @GetMapping("/list")
+    public ResponseEntity<DataResponse<List<DrinkAllInfoResponse>>> getDrinksByFranchiseAndCategoryWithPagination(
+            @RequestParam(required = false) @Parameter(description = "프랜차이즈 Id") final Long franchiseId,
+            @RequestParam(required = false) @Parameter(description = "음료 카테고리(ex: AMERICANO, LATTE)") final String category,
+            @RequestParam @Parameter(description = "정렬 기준 컬럼(ex: sugar)") final String column,
+            @RequestParam @Parameter(description = "DESC or ASC") final String direction
+    ) {
+        List<DrinkAllInfoResponse> drinkAllSearchInfos = drinkSearchService.getDrinksByFranchiseAndCategoryAndDirection(franchiseId, category, column, direction);
+        return ResponseEntity.ok().body(DataResponse.of(OK, "조건에 따라 음료 목록 조회 성공", drinkAllSearchInfos));
     }
 }
