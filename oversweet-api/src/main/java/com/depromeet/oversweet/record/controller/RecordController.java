@@ -50,7 +50,7 @@ public class RecordController {
     }
 
     @Operation(summary = "마신 음료 삭제", description = "유저가 마신 음료를 삭제할 수 있는 기능입니다.")
-    @ApiResponses(@ApiResponse(responseCode = "201", description = "음료 기록 삭제 성공"))
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "음료 기록 삭제 성공"))
     @SecurityRequirement(name = "accessToken")
     @DeleteMapping("/drink/{drinkId}")
     public ResponseEntity<MessageResponse> deleteDrinkRecord(

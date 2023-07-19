@@ -66,8 +66,8 @@ public class DrinkRecordSaveService {
 
         final DrinkEntity findDrink = findDrinkRepository.findDrinkById(drinkId);
 
-        final RecordEntity findRecord = findRecordsRepository.findRecordByMemberIdAndDrinkId(memberId, drinkId);
+        final RecordEntity findRecord = findRecordsRepository.findRecordByMemberIdAndDrinkId(findMember.getId(), findDrink.getId());
 
-        deleteRecordRepository.deleteRecordByMemberIdAndDrinkId(memberId, drinkId);
+        deleteRecordRepository.deleteById(findRecord.getId());
     }
 }

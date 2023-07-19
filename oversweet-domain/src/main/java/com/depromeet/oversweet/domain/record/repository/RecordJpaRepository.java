@@ -27,6 +27,4 @@ public interface RecordJpaRepository extends JpaRepository<RecordEntity, Long> {
             Pageable pageable);
 
     Optional<RecordEntity> findByMemberIdAndDrinkId(Long memberId, Long drinkId);
-
-    void deleteByMemberIdAndDrinkId(Long memberId, Long drinkId);
 }
