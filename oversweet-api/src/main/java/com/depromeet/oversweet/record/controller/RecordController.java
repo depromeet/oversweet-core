@@ -4,8 +4,10 @@ import com.depromeet.oversweet.record.dto.request.DrinkRecordSaveRequest;
 import com.depromeet.oversweet.record.dto.response.DrinkRecordSaveResponse;
 import com.depromeet.oversweet.record.service.DrinkRecordSaveService;
 import com.depromeet.oversweet.response.DataResponse;
+import com.depromeet.oversweet.response.MessageResponse;
 import com.depromeet.oversweet.security.service.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -15,9 +17,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "기록", description = "마신 음료 당 기록 관련 API")
@@ -38,10 +43,21 @@ public class RecordController {
     @PostMapping("/drink")
     public ResponseEntity<DataResponse<DrinkRecordSaveResponse>> saveDrinkRecord(
             @RequestBody @Valid final DrinkRecordSaveRequest drinkRecordSaveRequest,
-            @AuthenticationPrincipal CustomUserDetails userDetails
+            @AuthenticationPrincipal final CustomUserDetails userDetails
     ) {
-        DrinkRecordSaveResponse response = drinkRecordSaveService.saveDrinkRecord(userDetails.getId(), drinkRecordSaveRequest);
+        final DrinkRecordSaveResponse response = drinkRecordSaveService.saveDrinkRecord(userDetails.getId(), drinkRecordSaveRequest);
         return ResponseEntity.ok().body(DataResponse.of(HttpStatus.CREATED, "마신 음료 당 기록 성공", response));
     }
 
+    @Operation(summary = "마신 음료 삭제", description = "유저가 마신 음료를 삭제할 수 있는 기능입니다.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "음료 기록 삭제 성공"))
+    @SecurityRequirement(name = "accessToken")
+    @DeleteMapping("/drink/{drinkId}")
+    public ResponseEntity<MessageResponse> deleteDrinkRecord(
+            @AuthenticationPrincipal final CustomUserDetails userDetails,
+            @PathVariable @Parameter(description = "해당 음료의 Id") final Long drinkId
+    ) {
+        drinkRecordSaveService.deleteDrinkRecord(userDetails.getId(), drinkId);
+        return ResponseEntity.ok().body(MessageResponse.of(HttpStatus.OK, "마신 음료 기록 삭제 성공"));
+    }
 }

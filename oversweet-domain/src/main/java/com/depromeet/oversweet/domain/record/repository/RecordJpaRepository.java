@@ -2,6 +2,7 @@ package com.depromeet.oversweet.domain.record.repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import com.depromeet.oversweet.domain.record.dto.RankingDrink;
 import com.depromeet.oversweet.domain.record.entity.RecordEntity;
@@ -24,4 +25,6 @@ public interface RecordJpaRepository extends JpaRepository<RecordEntity, Long> {
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate,
             Pageable pageable);
+
+    Optional<RecordEntity> findByMemberIdAndDrinkId(Long memberId, Long drinkId);
 }

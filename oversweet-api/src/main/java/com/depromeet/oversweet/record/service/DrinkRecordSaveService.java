@@ -5,6 +5,7 @@ import com.depromeet.oversweet.domain.drink.repository.FindDrinkRepository;
 import com.depromeet.oversweet.domain.member.entity.MemberEntity;
 import com.depromeet.oversweet.domain.member.repository.FindMemberRepository;
 import com.depromeet.oversweet.domain.record.entity.RecordEntity;
+import com.depromeet.oversweet.domain.record.repository.DeleteRecordRepository;
 import com.depromeet.oversweet.domain.record.repository.FindRecordsRepository;
 import com.depromeet.oversweet.domain.record.repository.SaveRecordRepository;
 import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarTotalStatisticsInfo;
@@ -25,6 +26,7 @@ public class DrinkRecordSaveService {
     private final FindDrinkRepository findDrinkRepository;
     private final FindRecordsRepository findRecordsRepository;
     private final SaveRecordRepository saveRecordRepository;
+    private final DeleteRecordRepository deleteRecordRepository;
 
     public DrinkRecordSaveResponse saveDrinkRecord(Long memberId, DrinkRecordSaveRequest drinkRecordSaveRequest) {
 
@@ -53,5 +55,19 @@ public class DrinkRecordSaveService {
 
         // 기록 관련 response 로 반환
         return DrinkRecordSaveResponse.of(record.getIntakeSugar(), dailyTotalStatisticsInfo);
+    }
+
+    /**
+     *  마신 당 기록 삭제
+     */
+    public void deleteDrinkRecord(final Long memberId, final Long drinkId) {
+
+        final MemberEntity findMember = findMemberRepository.findMemberById(memberId);
+
+        final DrinkEntity findDrink = findDrinkRepository.findDrinkById(drinkId);
+
+        final RecordEntity findRecord = findRecordsRepository.findRecordByMemberIdAndDrinkId(findMember.getId(), findDrink.getId());
+
+        deleteRecordRepository.deleteById(findRecord.getId());
     }
 }
