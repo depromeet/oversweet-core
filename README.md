@@ -1,4 +1,4 @@
-#  🌟 [Oversweet Admin](https://oversweet.vercel.app/)
+#  🌟 [Oversweet](https://oversweet.vercel.app/)
 
 ![Layer_1](https://github.com/depromeet/oversweet-admin/assets/81547780/6aed32b9-8800-41e2-8b1e-5647f9c61e86)
 
