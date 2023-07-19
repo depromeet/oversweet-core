@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.depromeet.oversweet.exception.ErrorCode;
+import com.depromeet.oversweet.exception.record.NotFoundRecordException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,6 +85,13 @@ public class FindRecordsRepositoryImpl implements FindRecordsRepository {
                 .orderBy(recordEntity.count().desc())
                 .limit(3)
                 .fetch();
+    }
+
+    @Override
+    @Transactional
+    public RecordEntity findRecordByMemberIdAndDrinkId(final Long memberId, final Long drinkId) {
+        return recordJpaRepository.findByMemberIdAndDrinkId(memberId, drinkId)
+                .orElseThrow(() -> new NotFoundRecordException(ErrorCode.NOT_FOUND_RECORD));
     }
 }
 
