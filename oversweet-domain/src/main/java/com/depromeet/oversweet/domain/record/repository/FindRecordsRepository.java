@@ -17,5 +17,5 @@ public interface FindRecordsRepository {
 
     List<RankingDrink> findPopularDrinkRecordsByFranchiseId(Long franchiseId, LocalDateTime startDate, LocalDateTime endDate);
 
-    RecordEntity findRecordByMemberIdAndDrinkId(Long memberId, Long drinkId);
+    RecordEntity findRecordByIdAndMemberId(Long memberId, Long recordId);
 }

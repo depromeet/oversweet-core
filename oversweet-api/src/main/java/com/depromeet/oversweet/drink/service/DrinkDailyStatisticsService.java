@@ -61,7 +61,7 @@ public class DrinkDailyStatisticsService {
 
     private List<DrinkDailyDetailInfo> getDailyDrinks(final List<RecordEntity> dailyRecords) {
         return dailyRecords.stream()
-                .map(dr -> DrinkDailyDetailInfo.of(dr.getDrink()))
+                .map(dr -> DrinkDailyDetailInfo.of(dr.getDrink(), dr.getId()))
                 .toList();
     }
 }

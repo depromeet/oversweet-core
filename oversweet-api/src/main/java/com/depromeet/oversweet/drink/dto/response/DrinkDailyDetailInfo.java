@@ -21,9 +21,12 @@ public record DrinkDailyDetailInfo(
 
         @Schema(description = "음료 칼로리", example = "100") int calorie,
 
-        @Schema(description = "음료 당도", example = "10") int sugar
+        @Schema(description = "음료 당도", example = "10") int sugar,
+
+        @Schema(description = "해당 기록 Id", example = "1") Long recordId
+
 ) {
-    public static DrinkDailyDetailInfo of(final DrinkEntity drink){
+    public static DrinkDailyDetailInfo of(final DrinkEntity drink, final Long recordId){
         return new DrinkDailyDetailInfo(
                 drink.getId(),
                 drink.getName(),
@@ -31,7 +34,8 @@ public record DrinkDailyDetailInfo(
                 drink.getImageUrl(),
                 drink.getSize(),
                 drink.getCalorie(),
-                drink.getSugar()
+                drink.getSugar(),
+                recordId
         );
     }
 }

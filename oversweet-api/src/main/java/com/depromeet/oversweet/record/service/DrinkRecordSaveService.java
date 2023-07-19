@@ -11,6 +11,8 @@ import com.depromeet.oversweet.domain.record.repository.SaveRecordRepository;
 import com.depromeet.oversweet.drink.dto.response.DrinkDailySugarTotalStatisticsInfo;
 import com.depromeet.oversweet.drink.vo.DrinkStatisticsTotalInfo;
 import com.depromeet.oversweet.drink.vo.LocalDateTimeInfo;
+import com.depromeet.oversweet.exception.ErrorCode;
+import com.depromeet.oversweet.exception.record.NotFoundRecordException;
 import com.depromeet.oversweet.record.dto.request.DrinkRecordSaveRequest;
 import com.depromeet.oversweet.record.dto.response.DrinkRecordSaveResponse;
 import lombok.RequiredArgsConstructor;
@@ -60,13 +62,9 @@ public class DrinkRecordSaveService {
     /**
      *  마신 당 기록 삭제
      */
-    public void deleteDrinkRecord(final Long memberId, final Long drinkId) {
+    public void deleteDrinkRecord(final Long memberId, final Long recordId) {
 
-        final MemberEntity findMember = findMemberRepository.findMemberById(memberId);
-
-        final DrinkEntity findDrink = findDrinkRepository.findDrinkById(drinkId);
-
-        final RecordEntity findRecord = findRecordsRepository.findRecordByMemberIdAndDrinkId(findMember.getId(), findDrink.getId());
+        final RecordEntity findRecord = findRecordsRepository.findRecordByIdAndMemberId(memberId, recordId);
 
         deleteRecordRepository.deleteById(findRecord.getId());
     }

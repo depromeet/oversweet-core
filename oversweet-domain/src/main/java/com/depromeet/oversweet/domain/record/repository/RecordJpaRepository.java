@@ -26,5 +26,5 @@ public interface RecordJpaRepository extends JpaRepository<RecordEntity, Long> {
             @Param("endDate") LocalDateTime endDate,
             Pageable pageable);
 
-    Optional<RecordEntity> findByMemberIdAndDrinkId(Long memberId, Long drinkId);
+    Optional<RecordEntity> findByIdAndMemberId(Long id, Long memberId);
 }

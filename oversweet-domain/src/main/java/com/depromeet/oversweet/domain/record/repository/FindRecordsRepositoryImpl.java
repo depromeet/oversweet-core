@@ -88,9 +88,8 @@ public class FindRecordsRepositoryImpl implements FindRecordsRepository {
     }
 
     @Override
-    @Transactional
-    public RecordEntity findRecordByMemberIdAndDrinkId(final Long memberId, final Long drinkId) {
-        return recordJpaRepository.findByMemberIdAndDrinkId(memberId, drinkId)
+    public RecordEntity findRecordByIdAndMemberId(final Long memberId, final Long recordId) {
+        return recordJpaRepository.findByIdAndMemberId(recordId, memberId)
                 .orElseThrow(() -> new NotFoundRecordException(ErrorCode.NOT_FOUND_RECORD));
     }
 }
