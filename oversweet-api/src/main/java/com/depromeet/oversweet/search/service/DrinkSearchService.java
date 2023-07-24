@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
@@ -66,11 +67,13 @@ public class DrinkSearchService {
                                 //프랜차이즈별 && 음료명별 안에서 가장 작은 사이즈의 음료와 그 음료가 가지는 사이즈 list 를 찾아서 넣어준다.
                                 List<DrinkEntity> drinkEntities = innerEntry.getValue();
 
-                                DrinkEntity minimumDrinkEntity = drinkEntities.stream().filter(DrinkEntity::getIsMinimum).findFirst().get();
-                                List<Integer> sizes = drinkEntities.stream().map(DrinkEntity::getSize).sorted().toList();
+                                Optional<DrinkEntity> minimumDrinkEntityOptional = drinkEntities.stream().filter(DrinkEntity::getIsMinimum).findFirst();
+                                if (minimumDrinkEntityOptional.isPresent()) {
+                                    List<Integer> sizes = drinkEntities.stream().map(DrinkEntity::getSize).sorted().toList();
 
-                                DrinkAllInfoResponse drinkAllInfoResponse = DrinkAllInfoResponse.of(minimumDrinkEntity, sizes);
-                                drinkAllInfoResponses.add(drinkAllInfoResponse);
+                                    DrinkAllInfoResponse drinkAllInfoResponse = DrinkAllInfoResponse.of(minimumDrinkEntityOptional.get(), sizes);
+                                    drinkAllInfoResponses.add(drinkAllInfoResponse);
+                                }
                             });
                 });
 
